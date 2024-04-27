@@ -1,0 +1,214 @@
+/**=====================
+     Common scss
+==========================**/
+/* ======= Display Flex Css Start ======= */
+@mixin flex_common ($dis: flex, $align: center, $justify: center) {
+    display: $dis;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+/* ======= Display Flex Css End ======= */
+
+/* ======= Gap Flex Css Start ======= */
+@mixin flex_wrap ($dis: flex, $wrap: wrap, $gap: 15px) {
+    display: $dis;
+    flex-wrap: $wrap;
+    gap: $gap;
+}
+
+/* ======= Gap Flex Css End ======= */
+
+/*======= position css starts  ======= */
+@mixin pos($pos: absolute, $content: "") {
+    content: $content;
+    position: $pos;
+}
+
+@mixin pseudowh($width: 100%, $height: 100%) {
+    width: $width;
+    height: $height;
+}
+
+@mixin center($position) {
+    @if $position=="vertical" {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    @else if $position=="horizontal" {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    @else if $position=="both" {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/*======= position css ends  ======= */
+
+/*======= font awesome css start  ======= */
+@mixin line($line: 1) {
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+}
+
+/*======= font awesome css ends  ======= */
+
+/*======= font awesome css start  ======= */
+@mixin font($weight: 900, $family: $fontawesome) {
+    font-family: $family;
+    font-weight: $weight;
+}
+
+/*======= font awesome css ends  ======= */
+
+/*======= font awesome css start  ======= */
+@mixin remixicon {
+    font-family: remixicon;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+}
+
+/*======= font awesome css ends  ======= */
+
+/*======= align css starts  ======= */
+@mixin rtl($property, $ltr-value, $rtl-value) {
+    #{$property}: $ltr-value;
+
+    body[dir="rtl"] & {
+        #{$property}: $rtl-value;
+    }
+}
+
+// @include rtl(float, left, right);
+/*======= align css ends  ======= */
+/*header */
+header .navbar.navbar-expand-xl .navbar-nav .nav-item > a {
+    color: #fff !important;
+  }
+  header .delivery-login-box .delivery-icon svg{
+    color: #fff !important;
+  }
+  header .top-nav .navbar-top .rightside-box .right-side-menu .right-side .header-wishlist svg{
+    color: #fff !important;
+  }
+  header.active .sticky-header{
+    background-color: #002598 !important;
+    padding: 0 !important;
+  }
+  .align-center{
+    text-align: center;
+  }
+  .homePage-title {
+    margin-bottom: calc(16px + 14*(100vw - 320px) / 1600);
+    text-align: center;
+  }
+  .title-padding-top {
+    padding-top: calc(15px + (50 - 30) * ((100vw - 320px) / (1920 - 320)));
+  }
+  
+  /**** */
+  .category-product-image{
+    max-width: 100%;
+    height: auto;
+    width: fit-content;
+  }
+  .text-justify{
+    text-align: justify;
+  }
+  .product-box .product-image img{
+  
+    max-width: 100%;
+    height: auto !important;
+    width: fit-content;
+  }
+  /****main banner slider image */
+  .slider-image{
+    width: 100%;
+    max-height: auto;
+  }
+  /* 360 view product css */
+  .text-section {
+    background-color: $light-gray;
+    height: 100%;
+    .title {
+      font-family: Inter;
+      font-size: 50px;
+      font-weight: 800;
+      line-height: 120px;
+      letter-spacing: -0.011em;
+      text-align: left;
+      color: #CCCCCC;
+    }
+    .col-sm-12.qty-box.product-qty.quantity-box {
+      width: 80% !important;
+      margin-left: 10%;
+      max-width: 800px !important;
+      margin-top: 10%;
+  }
+  .dynamic-checkout{
+    display: flex;
+      align-items: center;
+      gap: 11%;
+      max-width: 820px;
+  }
+  .dynamic-checkout button.border-theme-color{
+    background-color: #fff;
+  }
+  .dynamic-checkout button.btn, .dynamic-checkout button.btn {
+    background-color: #ffffff;
+    color: var(--theme-color); 
+  }
+  
+  .dynamic-checkout button.btn.disabled, .dynamic-checkout button.btn:disabled {
+    background-color:#CCCCCC;
+    color: var(--theme-color); 
+  }
+}
+header .navbar.navbar-expand-xl .navbar-nav .nav-item .dropdown-menu a{padding:0;color: #000000 !important;}
+
+@media (max-width: 1199px){
+header .navbar.navbar-expand-xl .navbar-nav .nav-item.dropdown>a {
+    padding-inline: 0;
+    color: #000 !important;
+}
+}
+.text-content-white{
+  color: $white !important;
+}
+.image img {
+  min-width: 100% !important;
+  width: 100%;
+  max-width: 100%;
+  margin: auto !important;
+  vertical-align: middle !important;
+}
+.product-section-box .custom-tab .tab-pane .product-description.more-less-box {
+  max-height: 100% !important;
+  position: relative;
+  overflow: hidden;
+}
+.category-box img{
+  width: 230px !important;
+  height: 100% !important;
+  margin: 0 auto !important;
+}
+.text-align-center{
+  text-align:center;
+}
+.cursor{
+  cursor: pointer;
+}
+.image-border{
+  border-radius: 10px;
+}
+.activeClass{
+  border: 1px solid gray;
+  border-radius: 10px;
+}
