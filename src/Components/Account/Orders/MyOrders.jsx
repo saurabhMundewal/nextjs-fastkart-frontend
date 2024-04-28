@@ -13,12 +13,14 @@ import { useQuery } from '@tanstack/react-query';
 import emptyImage from '../../../../public/assets/svg/empty-items.svg';
 import { useTranslation } from "react-i18next";
 import AccountHeading from '@/Components/Common/AccountHeading';
+import { useRouter } from 'next/navigation';
 
 const MyOrders = () => {
   const [page, setPage] = useState(1);
+  const router = useRouter()
   const { t } = useTranslation( 'common');
   const { convertCurrency } = useContext(SettingContext);
-  const { data, isLoading, refetch } = useQuery([page], () => request({ url: OrderAPI, params: { page: page, paginate: 10 } }), {
+  const { data, isLoading, refetch } = useQuery([page], () => request({ url: OrderAPI, params: { page: page, paginate: 10 } },router), {
     enabled: true,
     refetchOnWindowFocus: false,
     refetchOnMount: false,

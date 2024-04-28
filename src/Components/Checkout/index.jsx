@@ -1,30 +1,33 @@
 'use client';
-import { Fragment } from 'react';
+import AccountContext from '@/Helper/AccountContext';
+import SettingContext from '@/Helper/SettingContext';
+import { AddressAPI } from '@/Utils/AxiosUtils/API';
+import useCreate from '@/Utils/Hooks/useCreate';
+import { emailSchema, nameSchema, idCreateAccount, phoneSchema } from '@/Utils/Validation/ValidationSchemas';
+import { Form, Formik } from 'formik';
+import Cookies from 'js-cookie';
+import { usePathname, useRouter } from 'next/navigation';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { Col, Row } from 'reactstrap';
+import * as Yup from "yup";
 import Breadcrumb from '../Common/Breadcrumb';
 import WrapperComponent from '../Common/WrapperComponent';
-import { Form, Formik } from 'formik';
-import { Col, Row } from 'reactstrap';
+import CheckoutForm from './CheckoutForm';
+import CheckoutSidebar from './CheckoutSidebar';
 import DeliveryAddress from './DeliveryAddress';
 import DeliveryOptions from './DeliveryOptions';
 import PaymentOptions from './PaymentOptions';
-import { useContext, useEffect, useState } from 'react';
-import AccountContext from '@/Helper/AccountContext';
-import useCreate from '@/Utils/Hooks/useCreate';
-import { AddressAPI } from '@/Utils/AxiosUtils/API';
-import CheckoutSidebar from './CheckoutSidebar';
-import { PaymentMethods } from '../../../Data/PaymentMethods';
-import SettingContext from '@/Helper/SettingContext';
-import Cookies from 'js-cookie';
-import CheckoutForm from './CheckoutForm';
-import * as Yup from "yup";
-import { YupObject, emailSchema, nameSchema, passwordSchema, phoneSchema, recaptchaSchema } from '@/Utils/Validation/ValidationSchemas';
+
 
 const CheckoutContent = () => {
   const { accountData, refetch } = useContext(AccountContext);
   const { settingData } = useContext(SettingContext);
   const [address, setAddress] = useState([]);
   const [modal, setModal] = useState('');
-  const access_token = Cookies.get('uat');
+  const access_token = Cookies.get('uaf');
+  let cart = Cookies.get('cartData');
+  const path = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     accountData?.address.length > 0 && setAddress((prev) => [...accountData?.address]);
@@ -93,7 +96,7 @@ const CheckoutContent = () => {
             name: nameSchema,
             email: emailSchema,
             phone: phoneSchema,
-            password: passwordSchema,
+            password: idCreateAccount,
             shipping_address: addressSchema,
             billing_address: addressSchema
           })}
@@ -112,11 +115,12 @@ const CheckoutContent = () => {
                       {access_token &&
                         <div className='checkout-detail-box'>
                           <ul>
-                            <DeliveryAddress key='shipping' type='shipping' title={'Shipping'} values={values} updateId={values['consumer_id']} setFieldValue={setFieldValue} address={address} modal={modal} mutate={mutate} isLoading={isLoading} setModal={setModal}
-                            />
+                            {console.log("setFieldValue", cart)}
+                           {cart == 'physical'  &&<DeliveryAddress key='shipping' type='shipping' title={'Shipping'} values={values} updateId={values['consumer_id']} setFieldValue={setFieldValue} address={address} modal={modal} mutate={mutate} isLoading={isLoading} setModal={setModal}
+                            />}
                             <DeliveryAddress key='billing' type='billing' title={'Billing'} values={values} updateId={values['consumer_id']} setFieldValue={setFieldValue} address={address} modal={modal} mutate={mutate} isLoading={isLoading} setModal={setModal}
                             />
-                            <DeliveryOptions values={values} setFieldValue={setFieldValue} />
+                            {cart == 'physical' && <DeliveryOptions values={values} setFieldValue={setFieldValue} />}
                             <PaymentOptions values={values} setFieldValue={setFieldValue} />
                           </ul>
                         </div>

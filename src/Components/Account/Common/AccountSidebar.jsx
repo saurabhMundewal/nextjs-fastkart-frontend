@@ -1,15 +1,31 @@
-import React, { useContext, useState } from 'react';
+import NavTabTitles from '@/Components/Common/NavTabs';
+import Btn from '@/Elements/Buttons/Btn';
+import AccountContext from '@/Helper/AccountContext';
+import request from '@/Utils/AxiosUtils';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
+import { RiCloseLine } from 'react-icons/ri';
 import { Col } from 'reactstrap';
 import SidebarProfile from '.';
-import NavTabTitles from '@/Components/Common/NavTabs';
 import { sidebarMenu } from '../../../../Data/AccountSidebarMenu';
-import AccountContext from '@/Helper/AccountContext';
-import Btn from '@/Elements/Buttons/Btn';
-import { RiCloseLine } from 'react-icons/ri';
 
 const AccountSidebar = ({ tabActive }) => {
   const [activeTab, setActiveTab] = useState({ id: tabActive });
+  const [notification, setNotification] = useState();
+
   const { mobileSideBar, setMobileSideBar } = useContext(AccountContext);
+  const router = useRouter();
+  const { data, isLoading, refetch } = useQuery(['NotificationsAPI'], () => request({ url: "/notifications" },router), { enabled: false, select: (res) => (res?.data?.data) });
+  useEffect(() => {
+    isLoading && refetch();
+  }, [isLoading])
+
+  
+useEffect(() => {
+    setNotification(data?.filter(item => !item.read_at)?.length)
+  }, [data])
+
   const handelCallback = () => {
     setMobileSideBar(!mobileSideBar);
   };
@@ -22,7 +38,7 @@ const AccountSidebar = ({ tabActive }) => {
           </Btn>
         </div>
         <SidebarProfile />
-        <NavTabTitles classes={{ navClass: 'nav-pills user-nav-pills' }} setActiveTab={setActiveTab} activeTab={activeTab} titleList={sidebarMenu} isLogout callBackFun={handelCallback} />
+        <NavTabTitles notification={notification} classes={{ navClass: 'nav-pills user-nav-pills' }} setActiveTab={setActiveTab} activeTab={activeTab} titleList={sidebarMenu} isLogout callBackFun={handelCallback} />
       </div>
     </Col>
   );

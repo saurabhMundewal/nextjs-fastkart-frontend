@@ -1,8 +1,8 @@
 'use client';
 import Breadcrumb from '@/Components/Common/Breadcrumb';
 import WrapperComponent from '@/Components/Common/WrapperComponent';
-import AccountSidebar from '../Common/AccountSidebar';
 import { Col, TabContent, TabPane } from 'reactstrap';
+import AccountSidebar from '../Common/AccountSidebar';
 import ResponsiveMenuOpen from '../Common/ResponsiveMenuOpen';
 import NotificationData from './NotificationData';
 

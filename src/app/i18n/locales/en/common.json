@@ -462,16 +462,20 @@
   "total_amount": "Total Amount",
   "status": "Status",
   "action": "Action",
-  "Available":"Available",
-  "NotAvailable":"Not Available",
-  "GoToStore":"Go to Store",
-  "ClearCart":"Clear Cart",
-  "related_categories":"Related Categories",
-  "preview_image":"Preview Image",
-  "preview_video":"Preview Video",
-  "related_product":"Related Product",
-  "see_all":"See All",
-  "Validate":"Validate"
-
-
+  "Available": "Available",
+  "NotAvailable": "Not Available",
+  "GoToStore": "Go to Store",
+  "ClearCart": "Clear Cart",
+  "related_categories": "Related Categories",
+  "preview_image": "Preview Image",
+  "preview_video": "Preview Video",
+  "related_product": "Related Product",
+  "see_all": "See All",
+  "Validate": "Validate",
+  "ThereWasAProblem": "There Was A Problem",
+  "MoveToCart": "Move To Cart",
+  "OrderTrackingDescription":"Please enter your Order ID and click the Track button to see the progress of your order.",
+  "search_your_download": "Search your download",
+  "image":"Image",
+  "name":"Name"
 }

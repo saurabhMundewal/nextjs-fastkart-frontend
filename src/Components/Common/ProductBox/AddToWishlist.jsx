@@ -13,7 +13,7 @@ const AddToWishlist = ({ productObj, customClass }) => {
   const pathname = usePathname();
   const router = useRouter()
   const handelWishlist = (productObj) => {
-    if (Cookies.get('uat')) {
+    if (Cookies.get('uaf')) {
       if (!productWishlist) {
         addToWishlist(productObj)
         setProductWishlist(prev => !prev) 

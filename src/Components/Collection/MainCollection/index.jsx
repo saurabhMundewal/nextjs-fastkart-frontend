@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useCustomSearchParams } from '@/Utils/Hooks/useCustomSearchParams';
 import { RiFilterFill } from 'react-icons/ri';
 
-const MainCollection = ({ filter, setFilter, isBanner, isOffcanvas, classicStoreCard, initialGrid = 4, noSidebar, sellerClass }) => {
+const MainCollection = ({ filter, setFilter, isBanner, isOffcanvas, classicStoreCard, initialGrid = 4, noSidebar, sellerClass ,categorySlug }) => {
   const [grid, setGrid] = useState(initialGrid);
   const { themeOption, setCollectionMobile } = useContext(ThemeOptionContext);
   const { t } = useTranslation( 'common');
@@ -45,7 +45,7 @@ const MainCollection = ({ filter, setFilter, isBanner, isOffcanvas, classicStore
           <GridBox grid={grid} setGrid={setGrid} />
         </div>
       </div>
-      <CollectionProducts filter={filter} grid={grid} setFilter={setFilter} />
+      <CollectionProducts filter={filter} grid={grid} setFilter={setFilter} categorySlug={categorySlug} />
     </div>
   );
 };

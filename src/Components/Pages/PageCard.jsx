@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
-import Loader from '@/Layout/Loader';
-import request from '@/Utils/AxiosUtils';
-import { PageAPI } from '@/Utils/AxiosUtils/API';
-import { useQuery } from '@tanstack/react-query';
+import Loader from "@/Layout/Loader";
+import request from "@/Utils/AxiosUtils";
+import { PageAPI } from "@/Utils/AxiosUtils/API";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const PageCard = ({ params }) => {
-  const { data: Page, isLoading, refetch } = useQuery([params], () => request({ url: `${PageAPI}/slug/${params}` }), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data });
+  const router = useRouter();
+  const { data: Page, isLoading, refetch } = useQuery([params], () => request({ url: `${PageAPI}/slug/${params}` }, router), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data });
   useEffect(() => {
     params && refetch();
   }, [params]);

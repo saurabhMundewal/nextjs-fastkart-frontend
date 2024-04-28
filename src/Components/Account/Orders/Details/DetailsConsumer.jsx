@@ -6,7 +6,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 
 const DetailsConsumer = ({ data }) => {
   const { convertCurrency } = useContext(SettingContext);
-  const { t } = useTranslation( 'common');
+  const { t } = useTranslation('common');
   return (
     <>
       <Row>
@@ -20,7 +20,7 @@ const DetailsConsumer = ({ data }) => {
                     <li className='col-sm-6'>
                       <label>{t('BillingAddress')}:</label>
                       <h4>
-                     
+
                         {data.billing_address.street}
                         {data.billing_address.city} {data.billing_address.state_id} {data.billing_address.country_id}
                         {data.billing_address.pincode} <br></br>
@@ -28,7 +28,8 @@ const DetailsConsumer = ({ data }) => {
                       </h4>
                     </li>
                   ) : null}
-                  {data?.shipping_address ? (
+                  {!data?.is_digital_only &&
+                    data?.shipping_address ? (
                     <li className='col-sm-6'>
                       <label>{t('ShippingAddress')}:</label>
                       <h4>
@@ -38,8 +39,10 @@ const DetailsConsumer = ({ data }) => {
                         {t('Phone')} : +{data.shipping_address.country_code} {data.shipping_address.phone}
                       </h4>
                     </li>
-                  ) : null}
-                  {data?.delivery_description ? (
+                  ) : null
+                  }
+                  {!data?.is_digital_only &&
+                  data?.delivery_description ? (
                     <li className='col-sm-6'>
                       <label>{t('DeliverySlot')}:</label>
                       <h4>{data.delivery_description}</h4>
@@ -50,6 +53,14 @@ const DetailsConsumer = ({ data }) => {
                       <label>{t('PaymentMode')}:</label>
                       <div className='d-flex align-items-center gap-2'>
                         <h4>{data.payment_method}</h4>
+                      </div>
+                    </li>
+                  ) : null}
+                    {data?.payment_status ? (
+                    <li className='col-3'>
+                      <label>{t('Payment Status')}:</label>
+                      <div className='d-flex align-items-center gap-2'>
+                        <h4>{data.payment_status}</h4>
                       </div>
                     </li>
                   ) : null}

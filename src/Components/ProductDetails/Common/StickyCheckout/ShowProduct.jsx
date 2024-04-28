@@ -10,7 +10,7 @@ const ShowProduct = ({ productState, setProductState }) => {
   const { convertCurrency } = useContext(SettingContext);
   return (
     <div className='sticky-bottom-cart'>
-      <div className='container-fluid-lg'>
+      <div className='container-fluid'>
         <Row>
           <Col xs={12}>
             <div className='cart-content'>

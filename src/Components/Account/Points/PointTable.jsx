@@ -38,7 +38,7 @@ const PointTable = ({ data, setPage }) => {
                 <tr>
                   <th>{t("No.")}</th>
                   <th>{t("Date")}</th>
-                  <th>{t("Amount")}</th>
+                  <th>{t("Point")}</th>
                   <th>{t("Remark")}</th>
                   <th>{t("Status")}</th>
                 </tr>

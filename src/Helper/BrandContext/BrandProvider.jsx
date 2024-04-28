@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
-import BrandContext from '.';
-import { useQuery } from '@tanstack/react-query';
-import { BrandAPI } from '@/Utils/AxiosUtils/API';
-import request from '@/Utils/AxiosUtils';
+import request from "@/Utils/AxiosUtils";
+import { BrandAPI } from "@/Utils/AxiosUtils/API";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import BrandContext from ".";
 
 const BrandProvider = (props) => {
+  const router = useRouter();
   const [brandState, setBrandState] = useState([]);
-  const [brandParams, setBrandParams] = useState('');
-  const { data: BrandData, isLoading, refetch } = useQuery([BrandAPI], () => request({ url: BrandAPI }), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
+  const [brandParams, setBrandParams] = useState("");
+  const { data: BrandData, isLoading, refetch } = useQuery([BrandAPI], () => request({ url: BrandAPI, params: { status: 1 } }, router), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
 
   useEffect(() => {
-    refetch()
-  }, []);
+    isLoading && refetch();
+  }, [isLoading]);
 
   useEffect(() => {
     BrandData && setBrandState(BrandData);
@@ -19,7 +21,7 @@ const BrandProvider = (props) => {
 
   const handleSetQueryParams = (value) => {
     setBrandParams(value);
-   };
+  };
 
   return (
     <>

@@ -21,16 +21,16 @@ const transformLocalStorageData = (localStorageData) => {
   return transformedData
     
 };
-const LoginHandle = (responseData, router, refetch,compareRefetch,search,mutate,cartRefetch ,addToWishlist ,compareCartMutate) => {
+const LoginHandle = (responseData, router, refetch,compareRefetch,search,mutate,cartRefetch,setShowBoxMessage ,addToWishlist ,compareCartMutate) => {
   if (responseData.status === 200 || responseData.status === 201) {
-    Cookies.set('uat', responseData.data?.access_token, { path: '/', expires: new Date(Date.now() + 24 * 60 * 6000) });
+    Cookies.set('uaf', responseData.data?.access_token, { path: '/', expires: new Date(Date.now() + 24 * 60 * 6000) });
     const ISSERVER = typeof window === 'undefined';
     if (typeof window !== 'undefined') {
       Cookies.set('account', JSON.stringify(responseData.data));
       localStorage.setItem('account', JSON.stringify(responseData.data));
     }
 
-    const oldCartValue = JSON.parse(localStorage.getItem('cart')).items;
+    const oldCartValue = JSON.parse(localStorage.getItem('cart'))?.items;
     mutate(transformLocalStorageData(oldCartValue))
     refetch();
     compareRefetch()
@@ -45,17 +45,18 @@ const LoginHandle = (responseData, router, refetch,compareRefetch,search,mutate,
     Cookies.remove("wishListID")
     Cookies.remove("compareId")
     localStorage.removeItem('cart');
+  }else {
+    setShowBoxMessage(responseData.response.data.message);
   }
 };
 
-const useHandleLogin = () => {
+const useHandleLogin = (setShowBoxMessage) => { 
   const { mutate } = useCreate(SyncCart, false, false, 'No',);
   const searchParams = useSearchParams()
   const { addToWishlist} = useContext(WishlistContext);
   const { mutate:compareCartMutate } = useCreate(CompareAPI, false, false, 'Added to Compare List');
 
   const CallBackUrl = Cookies.get('CallBackUrl')
-  
   const { refetch } = useContext(AccountContext);
   const { refetch:cartRefetch } = useContext(CartContext);
   const { refetch:compareRefetch } = useContext(CompareContext);
@@ -66,9 +67,9 @@ const useHandleLogin = () => {
         url: LoginAPI,
         method: 'post',
         data,
-      }),
+      },router),
     {
-      onSuccess: (responseData) => LoginHandle(responseData, router, refetch,compareRefetch,CallBackUrl,mutate,cartRefetch ,addToWishlist ,compareCartMutate),
+      onSuccess: (responseData) => LoginHandle(responseData, router, refetch,compareRefetch,CallBackUrl,mutate,cartRefetch, setShowBoxMessage ,addToWishlist ,compareCartMutate),
     },
   );
 };

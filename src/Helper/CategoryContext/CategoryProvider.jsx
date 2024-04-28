@@ -3,10 +3,12 @@ import { CategoryAPI } from '@/Utils/AxiosUtils/API';
 import { useQuery } from '@tanstack/react-query';
 import request from '@/Utils/AxiosUtils';
 import CategoryContext from '.';
+import { useRouter } from 'next/navigation';
 
 const CategoryProvider = (props) => {
+  const router = useRouter()
   const [categoryAPIData, setCategoryAPIData] = useState({ data: [], refetchCategory: '', params: {}, categoryIsLoading: false });
-  const { data: categoryData,refetch, isLoading: categoryIsLoading } = useQuery([CategoryAPI], () => request({ url: CategoryAPI, params: { ...categoryAPIData.params, status: 1 } }), {
+  const { data: categoryData,refetch, isLoading: categoryIsLoading } = useQuery([CategoryAPI], () => request({ url: CategoryAPI, params: { ...categoryAPIData.params, status: 1 } },router), {
     enabled: false,
     refetchOnWindowFocus: false,
     select: (data) => data.data.data,

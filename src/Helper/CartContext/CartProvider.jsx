@@ -1,40 +1,38 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Cookies from 'js-cookie';
-import CartContext from '.';
-import { ToastNotification } from '@/Utils/CustomFunctions/ToastNotification';
-import useCreate from '@/Utils/Hooks/useCreate';
-import { AddToCartAPI, ClearCart, ReplaceCartAPI } from '@/Utils/AxiosUtils/API';
-import request from '@/Utils/AxiosUtils';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import useDelete from '@/Utils/Hooks/useDelete';
+import request from "@/Utils/AxiosUtils";
+import { AddToCartAPI, ClearCart, ReplaceCartAPI } from "@/Utils/AxiosUtils/API";
+import { ToastNotification } from "@/Utils/CustomFunctions/ToastNotification";
+import useCreate from "@/Utils/Hooks/useCreate";
+import useDelete from "@/Utils/Hooks/useDelete";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import CartContext from ".";
 
 const CartProvider = (props) => {
-  const isCookie = Cookies.get('uat');
+  const router = useRouter();
+  const isCookie = Cookies.get("uaf");
   const [cartProducts, setCartProducts] = useState([]);
-  const [variationModal, setVariationModal] = useState('');
+  const [variationModal, setVariationModal] = useState("");
   const [cartTotal, setCartTotal] = useState(0);
   const [cartToggle, setCartToggle] = useState(false);
-
+  // const cookies = useCookies();
   // Getting data from Cart API
-  const {
-    data: CartAPIData,
-    isLoading: getCartLoading,
-    refetch,
-  } = useQuery([AddToCartAPI], () => request({ url: AddToCartAPI }), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data });
+  const { data: CartAPIData, isLoading: getCartLoading, refetch } = useQuery([AddToCartAPI], () => request({ url: AddToCartAPI }, router), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data });
 
   // Adding data to Cart API
   const {
     data: addData,
     mutate,
     isLoading,
-  } = useCreate(AddToCartAPI, false, false, 'No', (resDta) => {
+  } = useCreate(AddToCartAPI, false, false, "No", (resDta) => {
     if (resDta?.status == 200 || resDta?.status == 201) {
       setCartProducts((prevCart) =>
         prevCart?.map((elem) => {
           if (elem?.product_id == resDta?.data?.items[0]?.product_id) {
             return resDta?.data?.items[0];
           } else return elem;
-        }),
+        })
       );
     }
   });
@@ -42,15 +40,14 @@ const CartProvider = (props) => {
   const { mutate: deleteCart, isLoading: deleteCartLoader } = useDelete(AddToCartAPI, false);
 
   // Replace Cart API
-  const { mutate: replaceCartMutate, isLoading: replaceCartLoader } = useCreate(ReplaceCartAPI, false, false, 'No');
+  const { mutate: replaceCartMutate, isLoading: replaceCartLoader } = useCreate(ReplaceCartAPI, false, false, "No");
 
   //Clear Cart API
-  const { mutate: ClearCartData, isLoading: clearCartLoader } = useMutation(() => request({ url: ClearCart, method: 'delete' }), {
+  const { mutate: ClearCartData, isLoading: clearCartLoader } = useMutation(() => request({ url: ClearCart, method: "delete" }), {
     onSuccess: (responseData, requestData) => {
       if (responseData.status === 200 || responseData.status === 201) {
-        ToastNotification('success', responseData.data.message);
-      }
-      else{
+        ToastNotification("success", responseData.data.message);
+      } else {
         ToastNotification("error", responseData?.data?.message);
       }
     },
@@ -71,8 +68,7 @@ const CartProvider = (props) => {
         setCartTotal(CartAPIData?.total);
       }
     } else {
-      const isProductInCart = Cookies.get('cartData');
-      const isCartAvaliable = JSON.parse(localStorage.getItem('cart'));
+      const isCartAvaliable = JSON.parse(localStorage.getItem("cart"));
       if (isCartAvaliable?.items?.length > 0) {
         setCartProducts(isCartAvaliable?.items);
         setCartTotal(isCartAvaliable?.total);
@@ -82,14 +78,14 @@ const CartProvider = (props) => {
 
   // Adding data in localstorage when not Login
   useEffect(() => {
-    storeInCookies()
+    storeInCookies();
     if (isCookie == undefined) {
-      storeInCookies()
+      storeInCookies();
       storeInLocalStorage();
     }
   }, [cartProducts, isLoading]);
 
-  // Getting total  
+  // Getting total
   const total = useMemo(() => {
     return cartProducts?.reduce((prev, curr) => {
       return prev + Number(curr.sub_total);
@@ -104,9 +100,9 @@ const CartProvider = (props) => {
   };
 
   const clearCartProduct = () => {
-    setCartProducts([])
-    if(isCookie){
-      ClearCartData()
+    setCartProducts([]);
+    if (isCookie) {
+      ClearCartData();
     }
   };
 
@@ -115,7 +111,7 @@ const CartProvider = (props) => {
     const updatedCart = cartProducts?.filter((item) => item.product_id !== id);
     setCartProducts(updatedCart);
     if (isCookie && cartId) {
-      let id = typeof cartId == 'object' ? cartId.id : cartId;
+      let id = typeof cartId == "object" ? cartId.id : cartId;
       deleteCart(id);
     }
   };
@@ -124,7 +120,7 @@ const CartProvider = (props) => {
     (productObj) => {
       return addData?.data?.items?.find((elem) => elem.product_id == productObj?.id);
     },
-    [getCartLoading, cartProducts, addData?.data?.items],
+    [getCartLoading, cartProducts, addData?.data?.items]
   );
   // Common Handler for Increment and Decerement
   const handleIncDec = (qty, productObj, isProductQty, setIsProductQty, isOpenFun, cloneVariation) => {
@@ -157,12 +153,12 @@ const CartProvider = (props) => {
       // Checking the Stock QTY of paricular product
       const productStockQty = cart[index]?.variation?.quantity ? cart[index]?.variation?.quantity : cart[index]?.product?.quantity;
       if (productStockQty < cart[index]?.quantity + qty) {
-        ToastNotification('error', `You can not add more items than available. In stock ${productStockQty} items.`);
+        ToastNotification("error", `You can not add more items than available. In stock ${productStockQty} items.`);
         return false;
       }
 
       if (cart[index]?.variation) {
-        cart[index].variation.selected_variation = cart[index]?.variation?.attribute_values?.map((values) => values.value).join('/');
+        cart[index].variation.selected_variation = cart[index]?.variation?.attribute_values?.map((values) => values.value).join("/");
       }
 
       const newQuantity = cart[index].quantity + qty;
@@ -179,7 +175,6 @@ const CartProvider = (props) => {
         isCookie ? !isLoading && setCartProducts([...cart]) : setCartProducts([...cart]);
       }
     }
-   
 
     // Update the productQty state immediately after updating the cartProducts state
     if (isCookie) {
@@ -199,16 +194,16 @@ const CartProvider = (props) => {
     };
     if (isCookie && !isLoading) {
       if (index !== -1) {
-        obj._method = 'PUT';
+        obj._method = "PUT";
       }
       mutate(obj);
     }
   };
 
-   //Toggle open
-   const cartToggleValue = (value) => {
-    setCartToggle(value)
-  }
+  //Toggle open
+  const cartToggleValue = (value) => {
+    setCartToggle(value);
+  };
 
   // Replace Cart
   const replaceCart = (updatedQty, productObj, cloneVariation) => {
@@ -220,12 +215,12 @@ const CartProvider = (props) => {
     const productQty = cart[index]?.variation ? cart[index]?.variation?.quantity : cart[index]?.product?.quantity;
 
     if (cart[index]?.variation) {
-      cart[index].variation.selected_variation = cart[index]?.variation?.attribute_values?.map((values) => values.value).join('/');
+      cart[index].variation.selected_variation = cart[index]?.variation?.attribute_values?.map((values) => values.value).join("/");
     }
 
     // Checking the Stock QTY of paricular product
     if (productQty < cart[index]?.quantity + updatedQty) {
-      ToastNotification('error', `You can not add more items than available. In stock ${productQty} items.`);
+      ToastNotification("error", `You can not add more items than available. In stock ${productQty} items.`);
       return false;
     }
 
@@ -241,27 +236,27 @@ const CartProvider = (props) => {
 
     isCookie
       ? !isLoading &&
-      setCartProducts((prevCartProducts) =>
-        prevCartProducts.map((elem) => {
-          if (elem?.product_id === cloneVariation?.selectedVariation?.product_id) {
-            return params;
-          } else {
-            return elem;
-          }
-        }),
-      )
+        setCartProducts((prevCartProducts) =>
+          prevCartProducts.map((elem) => {
+            if (elem?.product_id === cloneVariation?.selectedVariation?.product_id) {
+              return params;
+            } else {
+              return elem;
+            }
+          })
+        )
       : setCartProducts((prevCartProducts) =>
-        prevCartProducts.map((elem) => {
-          if (elem?.product_id === cloneVariation?.selectedVariation?.product_id) {
-            return params;
-          } else {
-            return elem;
-          }
-        }),
-      );
+          prevCartProducts.map((elem) => {
+            if (elem?.product_id === cloneVariation?.selectedVariation?.product_id) {
+              return params;
+            } else {
+              return elem;
+            }
+          })
+        );
     if (isCookie && !replaceCartLoader) {
       replaceCartMutate({
-        _method: 'PUT',
+        _method: "PUT",
         id: cartUid?.id ? cartUid?.id : null,
         product_id: productObj?.id,
         variation_id: cloneVariation?.selectedVariation?.id ? cloneVariation?.selectedVariation?.id : null,
@@ -272,20 +267,40 @@ const CartProvider = (props) => {
 
   const storeInCookies = () => {
     setCartTotal(total);
-    Cookies.set('cartData',JSON.stringify({ items: cartProducts, total: total }) )
+    var newArray = cartProducts.filter(function (el) {
+      return el.product.product_type == "digital";
+    });
+    Cookies.set("cartData", newArray.length ? newArray[0].product?.product_type : "physical");
   };
 
-  // Setting data to localstroage when UAT is not there
+  // Setting data to localstroage when uaf is not there
   const storeInLocalStorage = () => {
     setCartTotal(total);
-    localStorage.setItem('cart', JSON.stringify({ items: cartProducts, total: total }));
+    localStorage.setItem("cart", JSON.stringify({ items: cartProducts, total: total }));
   };
 
   return (
     <CartContext.Provider
       value={{
-        ...props, cartProducts, setCartProducts, cartTotal, setCartTotal, removeCart, clearCartProduct, getTotal, handleIncDec, cartToggle,cartToggleValue, variationModal, refetch, setVariationModal, isLoading, replaceCartLoader, replaceCart,
-      }}>
+        ...props,
+        cartProducts,
+        setCartProducts,
+        cartTotal,
+        setCartTotal,
+        removeCart,
+        clearCartProduct,
+        getTotal,
+        handleIncDec,
+        cartToggle,
+        cartToggleValue,
+        variationModal,
+        refetch,
+        setVariationModal,
+        isLoading,
+        replaceCartLoader,
+        replaceCart,
+      }}
+    >
       {props.children}
     </CartContext.Provider>
   );

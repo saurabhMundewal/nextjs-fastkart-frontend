@@ -10,7 +10,7 @@ export const ForgotPasswordSchema = YupObject({ email: emailSchema });
 
 const useHandleForgotPassword = () => {
   const router = useRouter();
-  return useMutation((data) => request({ url: ForgotPasswordAPI, method: 'post', data }), {
+  return useMutation((data) => request({ url: ForgotPasswordAPI, method: 'post', data },router), {
     onSuccess: (responseData, requestData) => {
       if (responseData.status === 200 || responseData.status === 201) {
         ToastNotification('success', responseData.data.message);

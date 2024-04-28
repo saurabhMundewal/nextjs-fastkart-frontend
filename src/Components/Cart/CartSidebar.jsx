@@ -7,17 +7,15 @@ import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { RiArrowLeftLine } from 'react-icons/ri';
 import SettingContext from '@/Helper/SettingContext';
-import { useRouter } from "next/navigation";
 
 const CartSidebar = () => {
-  const router = useRouter();
   const { cartProducts, getTotal } = useContext(CartContext);
   const { convertCurrency } = useContext(SettingContext)
   const { t } = useTranslation( 'common');
-  const isAuth = Cookies.get('uat');
-  const handleGoBack = () => {
-    router.back();
-  };
+  const handelCheckout = () => {
+    Cookies.set('CallBackUrl', '/checkout');
+  }
+  const isAuth = Cookies.get('uaf');
   return (
     <Col xxl={3} xl={4}>
       <div className='summery-box p-sticky'>
@@ -54,13 +52,13 @@ const CartSidebar = () => {
         <div className='button-group cart-button'>
           <ul>
             <li>
-              <Link href={isAuth ? `/checkout` : `/auth/login`} className='btn btn-animation proceed-btn fw-bold'>
+              <Link  href={`/checkout`} onClick={handelCheckout}  className='btn btn-animation proceed-btn fw-bold'>
                 {t('ProcessToCheckout')}
               </Link>
             </li>
 
             <li>
-              <Btn className='btn btn-light shopping-button text-dark' onClick={handleGoBack}>
+              <Btn className='btn btn-light shopping-button text-dark'>
                 <RiArrowLeftLine /> {t('ReturnToShopping')}
               </Btn>
             </li>

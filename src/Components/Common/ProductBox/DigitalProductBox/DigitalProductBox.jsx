@@ -75,7 +75,7 @@ const DigitalProductBox = ({ product, isClose }) => {
           <div className="d-block">
             <h6>
               by <a href="#!"> {product?.store?.store_name}</a> in{" "}
-              <a href="#!">{product?.categories[0]?.name}</a>
+              <a href="#!">{product?.categories?.name}</a>
             </h6>
             <div className="product-rating review-rating">
             <ProductRating totalRating={product?.rating_count || 0} />

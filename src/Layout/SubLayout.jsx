@@ -70,7 +70,7 @@ const SubLayout = ({ children }) => {
       let value =
         themeOption?.general?.site_title && themeOption?.general?.site_tagline
           ? `${themeOption?.general?.site_title} | ${themeOption?.general?.site_tagline}`
-          : 'Vector-X Marketplace: Where Vendors Shine Together';
+          : 'FastKart Marketplace: Where Vendors Shine Together';
       document.title = value;
       clearTimeout(timer);
     }
@@ -97,7 +97,7 @@ const SubLayout = ({ children }) => {
       {themeOption?.popup?.news_letter?.is_enable &&  !isNewsLetter && <NewsLetterModal  dataApi={themeOption?.popup?.news_letter} headerLogo={themeOption?.logo?.header_logo?.original_url} />}
       {themeOption?.popup?.exit?.is_enable &&   <ExitModal dataApi={themeOption?.popup?.exit} headerLogo={themeOption?.logo?.header_logo?.original_url} />}
     </>
-  );
+  );  
 };
 
 export default SubLayout;

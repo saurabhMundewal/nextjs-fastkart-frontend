@@ -3,10 +3,12 @@ import CurrencyContext from '.';
 import { CurrencyAPI } from '@/Utils/AxiosUtils/API';
 import { useQuery } from '@tanstack/react-query';
 import request from '@/Utils/AxiosUtils';
+import { useRouter } from 'next/navigation';
 
 const CurrencyProvider = (props) => {
+  const router = useRouter()
   const [currencyState, setCurrencyState] = useState([]);
-  const { data, isLoading, refetch } = useQuery([CurrencyAPI], () => request({ url: CurrencyAPI }), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
+  const { data, isLoading, refetch } = useQuery([CurrencyAPI], () => request({ url: CurrencyAPI },router), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
   useEffect(() => {
     if (data) {
       setCurrencyState(data);

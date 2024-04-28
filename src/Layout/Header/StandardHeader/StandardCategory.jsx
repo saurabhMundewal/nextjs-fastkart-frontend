@@ -37,7 +37,7 @@ const StandardCategory = () => {
           <ul className='category-list'>
             {filteredCategories?.map((elem, i) => (
               <li className='onhover-category-list' key={i}>
-                <Link href={`/collections?category=${elem?.slug}`} className='category-name'>
+                <Link href={`/category/${elem?.slug}`} className='category-name'>
                   <Avatar data={elem?.category_icon} placeHolder={placeHolderImage} name={elem.name} />
                   <h6>{elem?.name}</h6>
                 </Link>

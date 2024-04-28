@@ -10,7 +10,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import ConfirmationModal from './ConfirmationModal';
 import AccountContext from '@/Helper/AccountContext';
 
-const NavTabTitles = ({ classes = {}, activeTab, setActiveTab, titleList, isLogout, callBackFun }) => {
+const NavTabTitles = ({ classes = {}, activeTab, setActiveTab, titleList, isLogout, callBackFun ,notification }) => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const { setAccountData } = useContext(AccountContext);
@@ -24,7 +24,7 @@ const NavTabTitles = ({ classes = {}, activeTab, setActiveTab, titleList, isLogo
   };
   const { mutate, isLoading } = useCreate(LogoutAPI, false, false, 'No', () => {
     setAccountData();
-    Cookies.remove('uat', { path: '/' });
+    Cookies.remove('uaf', { path: '/' });
     Cookies.remove('ue');
     Cookies.remove('account');
     Cookies.remove('CookieAccept');
@@ -49,6 +49,7 @@ const NavTabTitles = ({ classes = {}, activeTab, setActiveTab, titleList, isLogo
             <NavLink className={checkType(elem, i) ? 'active' : ''} onClick={() => onNavClick(elem, i)}>
               {elem.icon && elem.icon}
               {t(elem?.title) || t(elem?.name)}
+              {elem.notification && notification > 0 &&  <span className="notification-count" >{notification}</span>}
             </NavLink>
           </NavItem>
         ))}

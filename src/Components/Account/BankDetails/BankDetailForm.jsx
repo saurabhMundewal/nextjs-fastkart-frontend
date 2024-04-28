@@ -10,14 +10,16 @@ import { useQuery } from '@tanstack/react-query';
 import useCreate from '@/Utils/Hooks/useCreate';
 import AccountHeading from '@/Components/Common/AccountHeading';
 import Loader from '@/Layout/Loader';
+import { useRouter } from 'next/navigation';
 
 const BankDetailForm = () => {
   const { t } = useTranslation( 'common');
+  const router = useRouter()
   const {
     data,
     refetch,
     isLoading: paymentLoader,
-  } = useQuery([PaymentAccountAPI], () => request({ url: PaymentAccountAPI }), {
+  } = useQuery([PaymentAccountAPI], () => request({ url: PaymentAccountAPI },router), {
     enabled: false,
     refetchOnWindowFocus: false,
     select: (res) => res?.data,

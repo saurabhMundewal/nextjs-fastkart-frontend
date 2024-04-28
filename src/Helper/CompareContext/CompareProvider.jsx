@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import CompareContext from '.';
-import Cookies from 'js-cookie';
-import { CompareAPI } from '@/Utils/AxiosUtils/API';
-import request from '@/Utils/AxiosUtils';
-import { useQuery } from '@tanstack/react-query';
+import request from "@/Utils/AxiosUtils";
+import { CompareAPI } from "@/Utils/AxiosUtils/API";
+import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import CompareContext from ".";
 
 const CompareProvider = (props) => {
-  const cookieUAT = Cookies.get('uat');
+  const cookieUAT = Cookies.get("uaf");
+  const router = useRouter();
   const [compareState, setCompareState] = useState([]);
-  const {
-    data: CompareData,
-    isLoading: getCompareLoading,
-    refetch,
-  } = useQuery([CompareAPI], () => request({ url: CompareAPI }), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
+  const { data: CompareData, isLoading: getCompareLoading, refetch } = useQuery([CompareAPI], () => request({ url: CompareAPI }, router), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
   useEffect(() => {
     if (cookieUAT) {
       refetch();

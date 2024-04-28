@@ -1,23 +1,25 @@
-import { useContext, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { AccordionHeader, AccordionItem, UncontrolledAccordion } from 'reactstrap';
-import CollectionCategory from './CollectionCategory';
-import request from '@/Utils/AxiosUtils';
-import { AttributesAPI } from '@/Utils/AxiosUtils/API';
-import CollectionAttributes from './CollectionAttributes';
-import CollectionFilter from './CollectionFilter';
-import CollectionPrice from './CollectionPrice';
-import CollectionRating from './CollectionRating';
+import ThemeOptionContext from "@/Helper/ThemeOptionsContext";
+import request from "@/Utils/AxiosUtils";
+import { AttributesAPI } from "@/Utils/AxiosUtils/API";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ThemeOptionContext from '@/Helper/ThemeOptionsContext';
-import { RiCloseFill } from 'react-icons/ri';
-import CollectionBrand from './CollectionBrand';
-import AccordionLoader from './AccordionLoader';
+import { RiCloseFill } from "react-icons/ri";
+import { AccordionHeader, AccordionItem, UncontrolledAccordion } from "reactstrap";
+import AccordionLoader from "./AccordionLoader";
+import CollectionAttributes from "./CollectionAttributes";
+import CollectionBrand from "./CollectionBrand";
+import CollectionCategory from "./CollectionCategory";
+import CollectionFilter from "./CollectionFilter";
+import CollectionPrice from "./CollectionPrice";
+import CollectionRating from "./CollectionRating";
 
-const CollectionSidebar = ({ filter, setFilter, isOffcanvas, basicStoreCard, rightSideClass, sellerClass, isAttributes = true }) => {
+const CollectionSidebar = ({ filter, setFilter, hideCategory, isOffcanvas, basicStoreCard, rightSideClass, sellerClass, isAttributes = true }) => {
   const { collectionMobile, setCollectionMobile } = useContext(ThemeOptionContext);
-  const { t } = useTranslation( 'common');
-  const [open, setOpen] = useState('1');
+  const router = useRouter();
+  const { t } = useTranslation("common");
+  const [open, setOpen] = useState("1");
   const toggle = (id) => {
     if (open === id) {
       setOpen();
@@ -25,40 +27,44 @@ const CollectionSidebar = ({ filter, setFilter, isOffcanvas, basicStoreCard, rig
       setOpen(id);
     }
   };
-  const { data: attributeAPIData, isLoading } = useQuery([AttributesAPI], () => request({ url: AttributesAPI, params: { status: 1 } }), {
+  const { data: attributeAPIData, isLoading } = useQuery([AttributesAPI], () => request({ url: AttributesAPI, params: { status: 1 } }, router), {
     enabled: true,
     refetchOnWindowFocus: false,
     select: (res) => res?.data?.data,
   });
   const defaultOpenList = Array.from({ length: attributeAPIData?.length + 3 }, (_, index) => (index + 1).toString());
-  if (isLoading) { return <AccordionLoader/>}
+  if (isLoading) {
+    return <AccordionLoader />;
+  }
   return (
     <>
-      {collectionMobile && <div className='bg-overlay show' onClick={() => setCollectionMobile(false)} />}
-      <div className={`${sellerClass ? sellerClass : `col-custome-${isOffcanvas ? '12' : '3'}`} `}>
-        <div className={`left-box ${rightSideClass ? rightSideClass : ''} ${collectionMobile ? 'show' : ''}`}>
-          <div className='shop-left-sidebar'>
-            <div className='back-button' onClick={() => setCollectionMobile((prev) => !prev)}>
+      {collectionMobile && <div className="bg-overlay show" onClick={() => setCollectionMobile(false)} />}
+      <div className={`${sellerClass ? sellerClass : `col-custome-${isOffcanvas ? "12" : "3"}`} `}>
+        <div className={`left-box ${rightSideClass ? rightSideClass : ""} ${collectionMobile ? "show" : ""}`}>
+          <div className="shop-left-sidebar">
+            <div className="back-button" onClick={() => setCollectionMobile((prev) => !prev)}>
               <h3>
-                <a className='text-title'>
+                <a className="text-title">
                   <RiCloseFill />
-                  <span>{t('Back')}</span>
+                  <span>{t("Back")}</span>
                 </a>
               </h3>
             </div>
             {basicStoreCard && basicStoreCard}
             {!isOffcanvas && <CollectionFilter filter={filter} setFilter={setFilter} />}
             {attributeAPIData && (
-              <UncontrolledAccordion className='accordion custome-accordion' open={open} toggle={toggle} stayOpen defaultOpen={defaultOpenList}>
+              <UncontrolledAccordion className="accordion custome-accordion" open={open} toggle={toggle} stayOpen defaultOpen={defaultOpenList}>
+                {!hideCategory && (
+                  <AccordionItem>
+                    <AccordionHeader targetId="1">
+                      <span>{t("Categories")}</span>
+                    </AccordionHeader>
+                    <CollectionCategory filter={filter} setFilter={setFilter} />
+                  </AccordionItem>
+                )}
                 <AccordionItem>
-                  <AccordionHeader targetId='1'>
-                    <span>{t('Categories')}</span>
-                  </AccordionHeader>
-                  <CollectionCategory filter={filter} setFilter={setFilter} />
-                </AccordionItem>
-                <AccordionItem>
-                  <AccordionHeader targetId='2'>
-                    <span>{t('Brand')}</span>
+                  <AccordionHeader targetId="2">
+                    <span>{t("Brand")}</span>
                   </AccordionHeader>
                   <CollectionBrand filter={filter} setFilter={setFilter} />
                 </AccordionItem>

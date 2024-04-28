@@ -4,6 +4,7 @@ export const YupObject = (schemaObject) => Yup.object().shape(schemaObject);
 
 export const emailSchema = Yup.string().email("Enter Valid Email").required();
 export const passwordSchema = Yup.string().min(8, "Too Short!").max(20, "Too Long!").required();
+export const loginPasswordSchema = Yup.string().required();
 export const recaptchaSchema = Yup.string().required();
 export const nameSchema = Yup.string().required();
 export const descriptionSchema = Yup.string().required().min(10, "The description must be at least 10 characters.");
@@ -23,6 +24,12 @@ export const visibleTimeSchema = Yup.date().when("stock_status", {
 
 export const ifTypeSimpleSchema = Yup.string().when("type", {
   is: (val) => val == "simple",
+  then: Yup.string().required(),
+  otherwise: Yup.string().notRequired()
+});
+
+export const idCreateAccount = Yup.string().when("create_account", {
+  is: true,
   then: Yup.string().required(),
   otherwise: Yup.string().notRequired()
 });

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
-
 import { useTranslation } from "react-i18next";
 import Cookies from 'js-cookie';
 import { LogoutAPI } from '@/Utils/AxiosUtils/API';
@@ -16,11 +15,11 @@ const HeaderProfile = ({ extraClass }) => {
   const router = useRouter();
   const { accountData, setAccountData } = useContext(AccountContext);
   const [modal, setModal] = useState(false);
-  const isAuthenticated = Cookies.get('uat');
+  const isAuthenticated = Cookies.get('uaf');
   const { t } = useTranslation('common');
   const { mutate, isLoading } = useCreate(LogoutAPI, false, false, 'No', () => {
     setAccountData();
-    Cookies.remove('uat');
+    Cookies.remove('uaf');
     Cookies.remove('ue');
     Cookies.remove('account');
     Cookies.remove('CookieAccept');
@@ -47,13 +46,13 @@ const HeaderProfile = ({ extraClass }) => {
             <RiUserLine />
           )}
         </div>
-        {/* <div className='delivery-detail'>
+        <div className='delivery-detail'>
           <h6>
             {' '}
             {t('Hi')}, {accountData?.name ?? t('Guest')}
           </h6>
           <h5>{t('MyAccount')}</h5>
-        </div> */}
+        </div>
       </div>
 
       <div className='onhover-div onhover-div-login'>

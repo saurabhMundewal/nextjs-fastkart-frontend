@@ -20,8 +20,8 @@ const FooterContact = () => {
                         <div className='footer-number'>
                             <FiPhone />
                             <div className='contact-number'>
-                                <h6 className=''>{t("Hotline")}  24/7 :</h6>
-                                <h5  className='text-content-white'>{themeOption?.footer?.support_number}</h5>
+                                <h6 className='text-content-white'>{t("Hotline")}  24/7 :</h6>
+                                <h5 className='text-content-white'>{themeOption?.footer?.support_number}</h5>
                             </div>
                         </div>
                     </li>

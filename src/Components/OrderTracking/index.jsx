@@ -3,15 +3,16 @@ import Breadcrumb from '@/Components/Common/Breadcrumb';
 import WrapperComponent from '@/Components/Common/WrapperComponent';
 import { Col } from 'reactstrap';
 import { useTranslation } from "react-i18next";
-import orderTracking from '../../../../public/assets/images/inner-page/order-tracking.svg';
+import orderTracking from '../../../public/assets/images/inner-page/order-tracking.svg';
 import TrackingForm from './TrackingForm';
+import Image from 'next/image';
 
 const TrackingData = ({ params }) => {
     const { t } = useTranslation('common');
     return (
         <>
             <Breadcrumb title={'Order Tracking'} subNavigation={[{ name: 'Order Tracking' }]} />
-            <WrapperComponent classes={{ sectionClass: 'user-dashboard-section section-b-space' }} customCol={true}>
+            <WrapperComponent classes={{ sectionClass: 'log-in-section section-b-space d-block' }} customCol={true}>
                 <Col xxl={6} xl={5} lg={6} className='d-lg-block d-none ms-auto'>
                     <div className='image-contain'>
                         {orderTracking && <Image src={orderTracking} className='img-fluid' alt='orderTracking' height={465} width={550} />}

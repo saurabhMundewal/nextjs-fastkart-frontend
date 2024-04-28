@@ -20,7 +20,7 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
   const [errorCoupon, setErrorCoupon] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const { settingData } = useContext(SettingContext);
-  const access_token = Cookies.get('uat');
+  const access_token = Cookies.get('uaf');
   
   const { data, mutate, isLoading } = useCreate(CheckoutAPI, false, false, true, (resDta) => {
     if (resDta?.status == 200 || resDta?.status == 201) {

@@ -1,10 +1,11 @@
+import Cookies from "js-cookie";
 import { NextResponse } from "next/server";
 
 export async function middleware(request) {
   let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    `Bearer ${request.cookies.get("uat")?.value}`
+    `Bearer ${request.cookies.get("uaf")?.value}`
   );
   let requestOptions = {
     method: "GET",
@@ -12,14 +13,12 @@ export async function middleware(request) {
   };
   let settingData = await (await fetch(process.env.API_PROD_URL + "/settings", requestOptions))?.json();
   
-  let cartData = await (await fetch(process.env.API_PROD_URL + "/cart", requestOptions))?.json();
-
   const path = request.nextUrl.pathname;
   if (request.cookies.has("maintenance") && path !== `/maintenance`) {
     let myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
-      `Bearer ${request.cookies.get("uat")?.value}`
+      `Bearer ${request.cookies.get("uaf")?.value}` 
     );
     let requestOptions = {
       method: "GET",
@@ -63,14 +62,15 @@ export async function middleware(request) {
     `/compare`,
   ];
 
-  if (protectedRoutes.includes(path) && !request.cookies.has("uat")) {
+  if (protectedRoutes.includes(path) && !request.cookies.has("uaf")) {
     return NextResponse.redirect(new URL(`/auth/login`, request.url));
+  }else{
+
   }
 
-
-  if (path == `/checkout` && request.cookies.has("uat")) {
-    if (settingData?.values?.activation?.guest_checkout) {
-      if (cartData?.is_digital_only) {
+  if (path ==  `/checkout` && !request.cookies.has("uaf")) {
+    if (settingData?.values?.activation?.guest_checkout ) {
+      if (request.cookies.get('cartData').value == "digital") {
         return NextResponse.redirect(new URL(`/auth/login`, request.url));
       }
     }else{
@@ -78,7 +78,9 @@ export async function middleware(request) {
     }
   }
 
-  if (path == `/auth/login` && request.cookies.has("uat")) {
+
+
+  if (path == `/auth/login` && request.cookies.has("uaf")) {
     return NextResponse.redirect(new URL(`/`, request.url));
   }
 

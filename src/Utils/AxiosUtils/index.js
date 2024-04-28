@@ -1,5 +1,6 @@
 import axios from "axios";
 import getCookie from "../CustomFunctions/GetCookie";
+import Cookies from "js-cookie";
 
 const client = axios.create({
   baseURL: process.env.API_PROD_URL,
@@ -9,13 +10,17 @@ const client = axios.create({
 });
 
 const request = async ({ ...options }, router) => {
-  client.defaults.headers.common.Authorization = `Bearer ${getCookie("uat")}`;
+  client.defaults.headers.common.Authorization = `Bearer ${getCookie("uaf")}`;
   const onSuccess = (response) => response;
   const onError = (error) => {
-    if (error?.response?.status == 403) {
-      router && router.push("/403")
+    if (error?.response?.status == 401) {
+      Cookies.remove("uaf");
+      Cookies.remove("ue");
+      Cookies.remove("account");
+      localStorage.clear();
+      router && router.push("/auth/login");
     }
-    router && router.push('/404')
+    // router && router.push('/404')
     return error;
   };
   try {

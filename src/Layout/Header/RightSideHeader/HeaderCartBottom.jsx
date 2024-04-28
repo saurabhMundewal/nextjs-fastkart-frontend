@@ -10,19 +10,24 @@ import SettingContext from '@/Helper/SettingContext';
 import CartContext from '@/Helper/CartContext';
 import SelectedCart from './SelectedCart';
 import ThemeOptionContext from '@/Helper/ThemeOptionsContext';
+import { usePathname, useRouter } from 'next/navigation';
 
 const HeaderCartBottom = ({ modal, setModal, shippingFreeAmt, shippingCal }) => {
   const { convertCurrency } = useContext(SettingContext);
   const { setCartCanvas } = useContext(ThemeOptionContext);
   const [selectedVariation, setSelectedVariation] = useState('');
-  
   const { t } = useTranslation( 'common');
   const { cartProducts, getTotal } = useContext(CartContext);
-  const isAuth = Cookies.get('uat');
+  const pathname = usePathname();
+  const isAuth = Cookies.get('uaf');
   // Getting total when cartProducts changes
   const total = useMemo(() => {
     return getTotal(cartProducts);
   }, [cartProducts, modal]);
+
+  const handelCheckout = () => {
+    Cookies.set('CallBackUrl', '/checkout');
+  }
   return (
     <>
       {cartProducts?.length > 0 && (
@@ -83,7 +88,7 @@ const HeaderCartBottom = ({ modal, setModal, shippingFreeAmt, shippingCal }) => 
             <Link href={`/cart`} className='btn btn-sm cart-button' onClick={() => setCartCanvas('')}>
                 {t('ViewCart')}
               </Link>
-              <Link href={`/checkout`} className='btn btn-sm cart-button theme-bg-color text-white' onClick={() => setCartCanvas('')}>
+              <Link href={'/checkout'} className='btn btn-sm cart-button theme-bg-color text-white' onClick={() => setCartCanvas(''), handelCheckout}>
                 {t('Checkout')}
               </Link>
             </div>

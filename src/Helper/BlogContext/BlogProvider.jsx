@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-import BlogContext from '.';
-import { useQuery } from '@tanstack/react-query';
-import { BlogAPI } from '@/Utils/AxiosUtils/API';
-import request from '@/Utils/AxiosUtils';
+import request from "@/Utils/AxiosUtils";
+import { BlogAPI } from "@/Utils/AxiosUtils/API";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import BlogContext from ".";
 
 const BlogProvider = (props) => {
+  const router = useRouter();
   const [blogState, setBlogState] = useState([]);
-  const [blogParams, setBlogParams] = useState('');
+  const [blogParams, setBlogParams] = useState("");
 
-  const { data: BlogData, isLoading, refetch } = useQuery([BlogAPI], () => request({ url: BlogAPI , params:{status:1} }), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
+  const { data: BlogData, isLoading, refetch } = useQuery([BlogAPI], () => request({ url: BlogAPI, params: { status: 1 } }, router), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
 
   useEffect(() => {
     BlogData && setBlogState(BlogData);

@@ -20,7 +20,8 @@ const BasicProductBox = ({ product, isClose, classObj, isProductAction=true }) =
         <div>
             <div className={`product-box ${classObj?.productBoxClass}`}>
                 <ProductBagde productDetail={product} />
-                 <div className='product-image'>
+
+                <div className='product-image'>
                     <Link href={`/product/${product?.slug}`}>
                         {product.product_thumbnail.original_url && <Image className="img-fluid" src={product.product_thumbnail ? product.product_thumbnail.original_url : ''} height={500} width={500} alt="product" />}
                     </Link>

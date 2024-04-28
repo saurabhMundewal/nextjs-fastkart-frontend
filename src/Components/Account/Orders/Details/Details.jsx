@@ -7,9 +7,11 @@ import DetailTitle from './DetailTitle';
 import DetailsTable from './DetailsTable';
 import DetailsConsumer from './DetailsConsumer';
 import SubOrdersTable from './SubOrdersTable';
+import { useRouter } from 'next/navigation';
 
 const Details = ({ params }) => {
-  const { data, isLoading, refetch } = useQuery([OrderAPI, params], () => request({ url: `${OrderAPI}/${params}` }), {
+  const router = useRouter()
+  const { data, isLoading, refetch } = useQuery([OrderAPI, params], () => request({ url: `${OrderAPI}/${params}` },router), {
     enabled: true,
     refetchOnWindowFocus: false,
     select: (res) => res?.data,

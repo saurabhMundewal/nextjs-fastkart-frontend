@@ -59,8 +59,8 @@ const AccountSection = ({ values, setFieldValue, }) => {
                         </Label>
                     </div>
                 </Col>
-
-                {values.create_account &&
+        
+                {values.create_account == true &&
                     <Col md={6}>
                         <div className='mb-3 form-box'>
                             <SimpleInputField

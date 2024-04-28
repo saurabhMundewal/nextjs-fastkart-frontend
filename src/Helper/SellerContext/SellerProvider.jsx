@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
-import SellerContext from '.';
-import { useQuery } from '@tanstack/react-query';
-import { StoreAPI } from '@/Utils/AxiosUtils/API';
-import request from '@/Utils/AxiosUtils';
+import request from "@/Utils/AxiosUtils";
+import { StoreAPI } from "@/Utils/AxiosUtils/API";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import SellerContext from ".";
 
 const SellerProvider = (props) => {
   const [getSellerIds, setGetSellerIds] = useState({});
+  const router = useRouter();
   const [filterStore, setFilteredStore] = useState([]);
-  const { data, isLoading, refetch } = useQuery([StoreAPI,getSellerIds.ids], () => request({ url: StoreAPI, params: { ...getSellerIds, status: 1 }}), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
+  const { data, isLoading, refetch } = useQuery([StoreAPI, getSellerIds.ids], () => request({ url: StoreAPI, params: { ...getSellerIds, status: 1 } }, router), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
 
   useEffect(() => {
-    Object.keys(getSellerIds).length > 0  &&  refetch()
+    Object.keys(getSellerIds).length > 0 && refetch();
   }, [getSellerIds?.ids]);
 
   useEffect(() => {
@@ -19,9 +21,7 @@ const SellerProvider = (props) => {
     }
   }, [isLoading, getSellerIds]);
 
-  return (
-      <SellerContext.Provider value={{ ...props, filterStore, setGetSellerIds, isLoading}}>{props.children}</SellerContext.Provider> 
-  );
+  return <SellerContext.Provider value={{ ...props, filterStore, setGetSellerIds, isLoading }}>{props.children}</SellerContext.Provider>;
 };
 
 export default SellerProvider;

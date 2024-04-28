@@ -82,6 +82,8 @@ export const OrderAPI = '/order';
 // Tracking API
 export const TrackingAPI = '/trackOrder';
 
+
+
 // Verify Payment API
 export const VerifyPayment = '/verifyPayment';
 
@@ -126,6 +128,9 @@ export const ReplaceCartAPI = '/replace/cart'
 export const FaqAPI = '/faq'
 
 export const RePaymentAPI = "/rePayment"
+
+// Faq API
+export const OrderInvoiceAPI = "/order/invoice"
 
 // Menu API
 export const MenuAPI = "/menu"

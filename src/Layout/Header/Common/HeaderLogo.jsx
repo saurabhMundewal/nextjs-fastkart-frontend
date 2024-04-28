@@ -1,7 +1,5 @@
 'use client';
-import Avatar from '@/Components/Common/Avatar';
 import Btn from '@/Elements/Buttons/Btn';
-
 import ThemeOptionContext from '@/Helper/ThemeOptionsContext';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';

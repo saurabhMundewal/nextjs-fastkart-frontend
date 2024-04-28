@@ -22,8 +22,8 @@ const UpdatePasswordForm = () => {
         <Form className='row g-2'>
           <SimpleInputField
             nameList={[
-              { name: 'password', placeholder: t('EmailAddress'), title: 'Password', label: 'Password' },
-              { name: 'password_confirmation', placeholder: t('EnterConfirmPassword'), title: 'ConfirmPassword', label: 'Confirm Password' },
+              { name: 'password', placeholder: t('EmailAddress'), title: 'Password',type: 'password', label: 'Password' },
+              { name: 'password_confirmation', placeholder: t('EnterConfirmPassword'),type: 'password', title: 'ConfirmPassword', label: 'Confirm Password' },
             ]}
           />
           <FormBtn title={'ForgotPassword'} classes={{ btnClass: 'btn-animation w-100 justify-content-center' }} loading={isLoading} />

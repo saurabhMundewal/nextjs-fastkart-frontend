@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
-
 import { footerMenuItems } from '../../../Data/FooterData';
 import { usePathname } from 'next/navigation';
 
@@ -29,7 +28,7 @@ const MobileMenu = () => {
       <ul>
         {footerMenuItems.map((data, index) => (
           <li className={`${active?.title == data?.title ? 'active' : ''} ${data.className ? data.className : ''}`} key={index} onClick={() => setActive(data)}>
-            <Link href={`/${data.path}`}>
+            <Link href={`${data.path}`} >
               {active?.title == data?.title ? data.fillIcon : data.lineIcon}
               <span>{data.title}</span>
             </Link>

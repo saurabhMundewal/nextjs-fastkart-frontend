@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import CartContext from '@/Helper/CartContext';
 import ThemeOptionContext from '@/Helper/ThemeOptionsContext';
 import HeaderCartData from '../RightSideHeader/HeaderCartData';
-import { RiUserLine } from 'react-icons/ri';
 import HeaderProfile from '../RightSideHeader/HeaderProfile';
 
 const MinimalRightSidebar = ({setSearchBarOpen}) => {
@@ -37,11 +36,6 @@ const MinimalRightSidebar = ({setSearchBarOpen}) => {
         ))}
         <HeaderProfile extraClass="header-icon" />
       </ul>
-      {/* <Link href='/' className='user-box'>
-        <span className='header-icon'>
-          <RiUserLine />
-        </span>
-      </Link>  */}
     </div>
   );
 };

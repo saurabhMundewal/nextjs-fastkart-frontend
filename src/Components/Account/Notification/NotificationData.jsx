@@ -5,15 +5,16 @@ import request from '@/Utils/AxiosUtils';
 import { MarkAsReadAPI, NotificationAPI } from '@/Utils/AxiosUtils/API';
 import { dateFormate } from '@/Utils/CustomFunctions/DateFormate';
 import { useQuery } from '@tanstack/react-query';
-
 import { useTranslation } from "react-i18next";
 import AccountHeading from '@/Components/Common/AccountHeading';
 import useCreate from '@/Utils/Hooks/useCreate';
+import { useRouter } from 'next/navigation';
 
 const NotificationData = () => {
   const { t } = useTranslation( 'common');
+  const router = useRouter()
   const [isRead, setIsRead] = useState('');
-  const { data, isLoading } = useQuery([NotificationAPI], () => request({ url: NotificationAPI }), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
+  const { data, isLoading } = useQuery([NotificationAPI], () => request({ url: NotificationAPI },router), { enabled: true, refetchOnWindowFocus: false, select: (res) => res?.data?.data });
   const { mutate } = useCreate(MarkAsReadAPI, false, false, 'No', (resDta) => {
     if (resDta.status === 200 || resDta.status === 201) {
       setIsRead('read');

@@ -1,9 +1,9 @@
-import OrderDetails1Page from "@/Components/OrderDetails/Index"
+import TrackingData from "@/Components/OrderTracking"
 
 const OrderDetails = () => {
     return (
         <>
-            <OrderDetails1Page  />
+            <TrackingData/>
         </>
     )
 }

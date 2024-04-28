@@ -13,8 +13,8 @@ const PlaceOrder = ({ values }) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { settingData } = useContext(SettingContext);
-  const access_token = Cookies.get('uat');
-  const { cartProducts } = useContext(CartContext);
+  const access_token = Cookies.get('uaf');
+  const { cartProducts, setCartProducts } = useContext(CartContext);
   const [getOrderNumber, setGetOrderNumber] = useState('');
   const [errorOrder, setErrorOrder] = useState('');
  
@@ -23,9 +23,11 @@ const PlaceOrder = ({ values }) => {
       resDta?.data?.order_number && setGetOrderNumber(resDta?.data?.order_number);
       if (values['payment_method'] == "cod" || values['payment_method'] == "bank_transfer" && !resDta?.data?.is_guest) {
         router.push(`/account/order/details/${resDta?.data?.order_number}`);
+        setCartProducts([])
       } else if (values['payment_method'] == "cod" ||values['payment_method'] == "bank_transfer"  && resDta?.data?.is_guest) {
         const queryParams = new URLSearchParams({ order_number: resDta?.data?.order_number,email_or_phone: values?.email }).toString();
         router.push(`${'/order/details'}?${queryParams}`);
+        setCartProducts([])
       } else {
         window.open(resDta?.data?.url, '_self');
       }
@@ -36,10 +38,12 @@ const PlaceOrder = ({ values }) => {
 
   const handleClick = () => {
     if (settingData?.activation?.guest_checkout && !access_token) {
-      if (Object.keys(errors).length == 0 && values['delivery_description'] && values['payment_method']) {
-        values['products'] = cartProducts;
-        values['products']?.length > 0 && mutate(values);
-      }
+      values['products'] = cartProducts;
+      values['products']?.length > 0 && mutate(values);
+      // if (Object?.keys(errors).length == 0 && values['delivery_description'] && values['payment_method']) {
+      //   values['products'] = cartProducts;
+      //   values['products']?.length > 0 && mutate(values);
+      // }
     } else {
       if (access_token &&   values['billing_address_id'] && values['shipping_address_id'] && values['delivery_description'] && values['payment_method']) {
         const targetObject = { 

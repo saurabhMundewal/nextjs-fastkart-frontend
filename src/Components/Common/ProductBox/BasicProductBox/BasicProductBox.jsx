@@ -45,7 +45,6 @@ const BasicProductBox = ({ product, isClose, classObj = {} , isProductAction=tru
                 {product?.store &&
                     <h6 className="byers">{('By')}<span className="text-title">{product?.store?.store_name}</span></h6>
                 }
-                
                 <h5 className='sold text-content'>
                     <span className='theme-color price'>{convertCurrency(product?.sale_price)}</span>
                     {product?.discount && <del className='ms-1'>{convertCurrency(product?.price)}</del>}

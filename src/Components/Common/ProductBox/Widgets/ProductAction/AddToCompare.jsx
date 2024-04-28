@@ -11,7 +11,7 @@ import { useCustomSearchParams } from '@/Utils/Hooks/useCustomSearchParams';
 const AddToCompare = ({ productObj, customClass, hideAction }) => {
   const [category,brand, attribute, price, rating, sortBy, field, layout,theme] = useCustomSearchParams(["category" , "brand", "attribute", "price", "rating", "sortBy", "field", "layout","theme"]);
   const { compareState, setCompareState } = useContext(CompareContext);
-  const cookieUAT = Cookies.get('uat');
+  const cookieUAT = Cookies.get('uaf');
   const router = useRouter();
   const pathname = usePathname();
   const { data, mutate, isLoading } = useCreate(CompareAPI, false, false, 'Added to Compare List');

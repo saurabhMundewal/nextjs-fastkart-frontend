@@ -56,6 +56,7 @@ const AddressHeader = () => {
         <CustomModal modal={modal == 'add' || modal == 'edit' ? true : false} setModal={setModal} classes={{ modalClass: 'theme-modal view-modal address-modal modal-lg', modalHeaderClass: 'p-0' }}>
           <div className='right-sidebar-box'>
             <AddAddressForm
+              method={modal == "add" ? "POST" : ""}
               mutate={modal == 'add' ? mutate : editMutate}
               isLoading={isLoading || editLoader}
               setModal={setModal}

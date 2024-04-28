@@ -17,7 +17,7 @@ const ClassicHeader = ({headerClass}) => {
       {themeOption?.header?.page_top_bar_enable && <HeaderTopBar />}
 
       <div className='top-nav top-header sticky-header'>
-        <div className='container-fluid'>
+        <div className='container-fluid-lg'>
           <Row>
             <Col xs='12'>
               <div className='navbar-top'>

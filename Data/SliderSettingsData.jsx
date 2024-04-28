@@ -462,7 +462,7 @@ export const featureBlogSliderOption3 = {
     {
       breakpoint: 1684,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 3,
       },
     },
     {

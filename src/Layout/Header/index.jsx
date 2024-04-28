@@ -1,6 +1,6 @@
 "use client";
 import ThemeOptionContext from "@/Helper/ThemeOptionsContext";
-import {  useSearchParams } from "next/navigation";
+import {  usePathname, useSearchParams } from "next/navigation";
 import { useContext, useMemo } from "react";
 import { headerOptionsMap } from "../../../Data/LayoutData";
 import StandardHeader from "./StandardHeader";
@@ -11,20 +11,21 @@ import ClassicHeader from "./ClassicHeader";
 const MainHeader = () => {
   const path = useSearchParams()
   const theme = path.get('theme')
+  const pathName = usePathname()
   const { themeOption ,isCairoThemeActive } = useContext(ThemeOptionContext);
 
   const headerList = {
-    basic_header: <BasicHeader extraClass={theme == "tokyo" ? true : ""} headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive ? "header-gradient":""}/>,
-    classic_header: <ClassicHeader  headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive ? "header-gradient":""}/>,
-    minimal_header: <MinimalHeader headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive ? "header-gradient":""}/>,
-    standard_header: <StandardHeader  headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive ? "header-gradient":""}/>,
+    basic_header: <BasicHeader extraClass={theme == "tokyo" ? true : ""} headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive && theme === null && pathName === "/" ? "header-gradient":""}/>,
+    classic_header: <ClassicHeader  headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive && theme === null && pathName === "/" ? "header-gradient":""}/>,
+    minimal_header: <MinimalHeader headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive && theme === null && pathName === "/" ? "header-gradient":""}/>,
+    standard_header: <StandardHeader  headerClass={theme == 'cairo' ? 'header-gradient' : isCairoThemeActive && theme === null && pathName === "/" ? "header-gradient":""}/>,
   };
 
   const showHeader = useMemo(() => {
     return headerOptionsMap[theme] || themeOption?.header?.header_options;
   }, [theme, themeOption?.header?.header_options]);
   
-  return headerList[showHeader] || <ClassicHeader />
+  return headerList[showHeader] || <BasicHeader />
 };  
 
 export default MainHeader;

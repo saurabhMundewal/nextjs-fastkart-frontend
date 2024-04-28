@@ -21,14 +21,12 @@ const BasicHeader = ({ headerClass}) => {
             <Col xs='12'>
               <div className='navbar-top'>
                 <HeaderLogo />
-
                 <HeaderSearchBar style={"basic"} />
-
                 <RightSideHeader  />
               </div>
             </Col>
           </Row>
-        </div>
+        </div>  
       </div>
 
       <div className='container-fluid-lg'>

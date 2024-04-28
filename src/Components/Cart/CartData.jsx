@@ -15,7 +15,7 @@ const CartData = ({ elem }) => {
   const { cartProducts, setCartProducts, removeCart } = useContext(CartContext);
   const { convertCurrency } = useContext(SettingContext);
   const { mutate } = useCreate(WishlistAPI, false,);
-  const isCookie = Cookies.get('uat');
+  const isCookie = Cookies.get('uaf');
   const { mutate: deleteCart } = useDelete(AddToCartAPI, false, true);
 
   const saveForLater = (product_id, id) => {

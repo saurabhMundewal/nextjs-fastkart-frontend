@@ -1,19 +1,12 @@
-import Loader from '@/Layout/Loader';
-import request from '@/Utils/AxiosUtils';
-import { TrackingAPI } from '@/Utils/AxiosUtils/API';
-import { useQuery } from '@tanstack/react-query';
-import TitleDetails from './Common/TitleDetails';
-import StatusDetail from './Common/StatusDetails';
-import TableDetails from './Common/TableDetails';
-import ConsumerDetails from './Common/ConsumerDetails';
-import SubTable from './Common/SubTable';
+import Loader from "@/Layout/Loader";
+import ConsumerDetails from "./Common/ConsumerDetails";
+import StatusDetail from "./Common/StatusDetails";
+import SubTable from "./Common/SubTable";
+import TableDetails from "./Common/TableDetails";
+import TitleDetails from "./Common/TitleDetails";
 
-const TrackOrderDetails = ({ orderNumber, emailPhone }) => {
-  const { data, isLoading, refetch } = useQuery([TrackingAPI], () => request({ url: TrackingAPI, params: { order_number: orderNumber, email_or_phone: emailPhone } }), {
-    enabled: true,
-    refetchOnWindowFocus: false,
-    select: (res) => res?.data,
-  });
+const TrackOrderDetails = ({ data,isLoading, orderNumber }) => {
+  
   if (isLoading) return <Loader />;
   return (
     <>
@@ -21,7 +14,8 @@ const TrackOrderDetails = ({ orderNumber, emailPhone }) => {
       <StatusDetail data={data} />
       <TableDetails data={data} />
       <ConsumerDetails data={data} />
-      {data?.sub_orders?.length ? <SubTable data={data?.sub_orders} />: null }
+      {data?.sub_orders?.length ? <SubTable data={data?.sub_orders} /> : null}
+      
     </>
   );
 };

@@ -3,7 +3,7 @@ import { Col, Input, Label } from 'reactstrap';
 import { useTranslation } from "react-i18next";
 import { RegisterAPI } from '@/Utils/AxiosUtils/API';
 import useCreate from '@/Utils/Hooks/useCreate';
-import { YupObject, emailSchema, nameSchema, passwordConfirmationSchema, passwordSchema, phoneSchema, requiredSchema } from '@/Utils/Validation/ValidationSchemas';
+import { YupObject, emailSchema, nameSchema, passwordConfirmationSchema, passwordSchema, phoneSchema } from '@/Utils/Validation/ValidationSchemas';
 import FormBtn from '@/Components/Common/FormBtn';
 import SimpleInputField from '@/Components/Common/InputFields/SimpleInputField';
 import { AllCountryCode } from '../../../../Data/AllCountryCode';
@@ -12,7 +12,6 @@ import SearchableSelectInput from '@/Components/Common/InputFields/SearchableSel
 const RegisterForm = () => {
   const { t } = useTranslation('common');
   const { mutate, isLoading } = useCreate(RegisterAPI, false, `/account/dashboard`, 'Register Successfully');
- 
   return (
     <Formik
       initialValues={{
@@ -33,7 +32,6 @@ const RegisterForm = () => {
       onSubmit={mutate}>
       {({ values, errors, touched, setFieldValue }) => (
         <Form className='row g-md-4 g-3'>
-          
           <SimpleInputField
             nameList={[
               { name: 'name', placeholder: t('EmailAddress'), title: 'Name', label: 'FullName' },
@@ -80,8 +78,8 @@ const RegisterForm = () => {
           <Col xs={12}>
             <div className='forgot-box'>
               <div className='form-check remember-box'>
-                <Input className='checkbox_animated check-box' type='checkbox' id='flexCheckDefault' name='termsCondition' value={!values?.termsCondition} required ={true} />
-                <Label className='form-check-label'name='termsCondition' htmlFor='flexCheckDefault'>
+                <Input className='checkbox_animated check-box' type='checkbox' id='flexCheckDefault' />
+                <Label className='form-check-label' htmlFor='flexCheckDefault'>
                   {t('Iagreewith')}
                   <span>{t('Terms')}</span> {t('and')} <span>{t('Privacy')}</span>
                 </Label>

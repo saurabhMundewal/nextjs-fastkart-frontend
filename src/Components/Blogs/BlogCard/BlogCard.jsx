@@ -1,10 +1,7 @@
-import { useContext } from 'react';
 import Link from 'next/link';
-import RatioImage from '@/Utils/RatioImage';
 import BlogContain from './BlogContain';
-
-import { placeHolderImage } from '../../../../Data/CommonPath';
 import Image from 'next/image';
+import { placeHolderImage } from '../../../../Data/CommonPath';
 
 const BlogCardContain = ({ blog }) => {
   

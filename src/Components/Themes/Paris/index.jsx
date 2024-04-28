@@ -70,7 +70,7 @@ const ParisTheme = () => {
       {data?.content?.brands?.status && (
         data?.content?.brands?.brand_ids.length > 0 && (
           <div className="brand-effect">
-            <div className="container-fluid-lg">
+            <div className="container-fluid">
               <BrandData
                 dataAPI={data?.content?.brands?.brand_ids}
                 height={113}
