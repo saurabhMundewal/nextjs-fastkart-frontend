@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import SettingContext from '@/Helper/SettingContext';
+import React, { useContext, useState, useEffect } from "react";
+import SettingContext from "@/Helper/SettingContext";
 import { Input, InputGroup } from "reactstrap";
 import Btn from "@/Elements/Buttons/Btn";
 import CartContext from "@/Helper/CartContext";
@@ -7,7 +7,7 @@ import { RiAddLine, RiSubtractLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import AddToWishlist from "@/Components/Common/ProductBox/AddToWishlist";
 import AddToCompare from "@/Components/Common/ProductBox/AddToCompare";
-import AddToCartButton from "./AddToCartButton";
+import OfferTimer from "@/Components/ProductDetails/Common/OfferTimer"; // Import the OfferTimer component
 
 const ProductDetailAction360 = ({
   productState,
@@ -17,19 +17,15 @@ const ProductDetailAction360 = ({
 }) => {
   const { handleIncDec, isLoading } = useContext(CartContext);
   const { convertCurrency } = useContext(SettingContext);
-  const [selectedImage, setSelectedImage] = useState(ProductData[0]?.variations[0]);
+  const [selectedImage, setSelectedImage] = useState(null); // Initialize selectedImage state
   const router = useRouter();
 
-  const addToCart = () => {
-    handleIncDec(
-      productState?.productQty,
-      productState?.product,
-      false,
-      false,
-      false,
-      productState
-    );
-  };
+  // Automatically select the first product variation when component mounts
+  useEffect(() => {
+    if (ProductData[0]?.variations.length > 0) {
+      setSelectedImage(ProductData[0]?.variations[0]);
+    }
+  }, [ProductData]);
 
   const buyNow = () => {
     handleIncDec(
@@ -43,8 +39,8 @@ const ProductDetailAction360 = ({
     router.push(`/checkout`);
   };
 
-  const handleImageClick = (imageId) => {
-    setSelectedImage(ProductData[0]?.variations?.find(image => image.id === imageId));
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
   };
 
   const updateQty = (qty) => {
@@ -54,86 +50,91 @@ const ProductDetailAction360 = ({
     });
     checkStockAvailable();
   };
+
   const checkStockAvailable = () => {
-    if (productState?.selectedVariation) {
-      setProductState((prevState) => {
-        const tempSelectedVariation = { ...prevState.selectedVariation };
-        tempSelectedVariation.stock_status =
-          tempSelectedVariation.quantity < prevState.productQty
-            ? "out_of_stock"
-            : "in_stock";
-        return {
-          ...prevState,
-          selectedVariation: tempSelectedVariation,
-        };
-      });
-    } else {
-      setProductState((prevState) => {
-        const tempProduct = { ...prevState.product };
-        tempProduct.stock_status =
-          tempProduct.quantity < prevState.productQty
-            ? "out_of_stock"
-            : "in_stock";
-        return {
-          ...prevState,
-          product: tempProduct,
-        };
-      });
-    }
+    const selected = productState?.selectedVariation || productState?.product;
+    const stockQuantity = selected?.quantity || 0;
+    const isOutOfStock = stockQuantity < productState?.productQty;
+    selected.stock_status = isOutOfStock ? "out_of_stock" : "in_stock";
+    setProductState((prevState) => ({
+      ...prevState,
+      selectedVariation: productState?.selectedVariation
+        ? { ...selected }
+        : null,
+      product: productState?.selectedVariation
+        ? { ...prevState.product }
+        : { ...selected },
+    }));
   };
+
   return (
     <>
-      <div className="note-box product-package">
-      {selectedImage && (
-        <div className="row mt-1 text-align-center">
-          <div className="col">
-          <h3 className='name'>{selectedImage?.sku}</h3>
-      <div className='price-rating'>
-        <h3 className='theme-color price'>
-          {`Price : ${selectedImage?.sale_price && convertCurrency(selectedImage?.sale_price)}`}
-          {
-            selectedImage?.discount || selectedImage?.discount ? (
-              <del className='text-content'>{convertCurrency(selectedImage?.price)}</del>
-            ) :null 
-          }
-            </h3>
+      <div className="row justify-content-center">
+        <div className="col-md-12 text-center">
+         {productState?.product?.sale_starts_at ? <OfferTimer productState={productState} />: (<h3>Sale is over</h3>)}
+          {/* Render the OfferTimer component */}
+        </div>
       </div>
 
+      <div className="note-box product-package">
+        {selectedImage && (
+          <div className="row mt-1 text-align-center">
+            <div className="col">
+              <h3 className="name">{selectedImage?.sku}</h3>
+              <div className="price-rating">
+                <h3 className="theme-color price">
+                  {`Price : ${
+                    selectedImage?.sale_price &&
+                    convertCurrency(selectedImage?.sale_price)
+                  }`}
+                  {selectedImage?.discount || selectedImage?.discount ? (
+                    <del className="text-content">
+                      {convertCurrency(selectedImage?.price)}
+                    </del>
+                  ) : null}
+                </h3>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="container mt-4">
+          <div className="row justify-content-center mt-2">
+            {ProductData[0]?.variations?.map((image) => (
+              <div
+                key={image.id}
+                className="col-md-2 col-xs-3 mb-2 cursor"
+                onClick={() => handleImageClick(image)}
+              >
+                <span
+                  className={
+                    image.id === selectedImage?.id ? "activeClass" : ""
+                  }
+                >
+                  <img
+                    src={image?.variation_image?.original_url}
+                    alt={`Image ${image?.id}`}
+                    className="img-fluid image-border"
+                  />
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-      )}
-      <div className="container mt-4">
-      <div className="row">
-       {ProductData[0]?.variations?.map(image => (
-          <div className="col-md-2 mb-2 cursor" key={image?.id} onClick={() => handleImageClick(image?.id)}>
-            <span className={image?.id ===selectedImage?.id && 'activeClass'}>
-            <img src={image?.variation_image?.original_url} alt={`Image ${image?.id}`} className="img-fluid image-border" />
-            </span>
-          </div>
-        ))}
-        </div>
-           
-        </div>
-        {extraOption !== false ? (
-          <div className="wishlist-btn-group">
-            <AddToWishlist
-              productObj={productState?.product}
-              customClass={"wishlist-button btn"}
-            />
-            <AddToCompare
-              productObj={productState?.product}
-              customClass={"wishlist-button btn"}
-            />
-          </div>
-        ) : null}
       </div>
-      <AddToCartButton
-        productState={productState}
-        isLoading={isLoading}
-        addToCart={addToCart}
-        buyNow={buyNow}
-        extraOption={true}
-      />
+
+      <div className="text-center mt-2">
+        <center>
+          <div className="dynamic-checkout">
+            <Btn
+              className="bg-theme btn-md scroll-button btn btn-secondary"
+              onClick={buyNow}
+              disabled={isLoading}
+            >
+              Buy Now
+            </Btn>
+          </div>
+        </center>
+      </div>
     </>
   );
 };

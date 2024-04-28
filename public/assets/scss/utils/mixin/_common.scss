@@ -164,11 +164,13 @@ header .navbar.navbar-expand-xl .navbar-nav .nav-item > a {
   .dynamic-checkout button.btn, .dynamic-checkout button.btn {
     background-color: #ffffff;
     color: var(--theme-color); 
+    border: 0.5px solid var(--theme-color)
   }
   
   .dynamic-checkout button.btn.disabled, .dynamic-checkout button.btn:disabled {
     background-color:#CCCCCC;
     color: var(--theme-color); 
+    border: 0.5px solid var(--theme-color)
   }
 }
 header .navbar.navbar-expand-xl .navbar-nav .nav-item .dropdown-menu a{padding:0;color: #000000 !important;}
@@ -211,4 +213,44 @@ header .navbar.navbar-expand-xl .navbar-nav .nav-item.dropdown>a {
 .activeClass{
   border: 1px solid gray;
   border-radius: 10px;
+}
+/*----Rishav CSS-----*/
+
+// this css clickablePoint page
+.clickable-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red; /* Example background color */
+  border-radius: 50%; /* Make it round */
+  cursor: pointer; /* Default cursor style */
+}
+
+.clickable-point.hovered {
+  cursor: crosshair; /* Change cursor to crosshair when hovered */
+}
+
+section, .section-t-space{
+  text-align: center;
+}
+.deal-timer.product-deal-timer {
+  width: auto !important;
+  margin-top: 24px;
+  /* text-align: center; */
+  padding: 20px 100px;
+}
+.title-360 {  
+  color: #ff7923 !important;
+}
+.zoomed-image-container {
+  position: absolute;
+  padding: 1px;
+  margin-top: 0%;
+  top: 30% !important;
+  left: 30% !important ;
+  background-color: white;
+  width: 230px !important;
+}
+.drs-img {
+  width: 100% !important;
 }

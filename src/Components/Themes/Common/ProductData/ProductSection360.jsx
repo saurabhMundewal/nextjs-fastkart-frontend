@@ -54,7 +54,7 @@ const ProductSection360 = ({
 
   return (
     <>
-      <div className="best-selling-slider product-wrapper  pt-4 mt-4">
+      <div className="best-selling-slider product-wrapper  pt-4 mt-4 ">
         <CustomHeading
           title={dataAPI?.title}
           svgUrl={svgUrl}
@@ -72,8 +72,21 @@ const ProductSection360 = ({
 
           <div className="container-fluid">
             <div className="row ">
+              
               <div className="col-sm-6">
-                <div className="p-3 border text-section">
+                <div className="p-3  bg-white mt-2">
+                  <ReactImageTurntable
+                    images={uniqueImagesArray}
+                    autoRotate={{ disabled: rotationDisabled, interval: 800 }}
+                    onPointerDown={() => setRotationDisabled(true)}
+                    onPointerUp={() => setRotationDisabled(true)}
+                    onKeyDown={handleKeyDown}
+                    onKeyUp={() => setRotationDisabled(true)}
+                  />
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div className="p-3  text-section">
                   <div className="title-360">
                     {ProductData[0]?.name?.substring(0, 16)}
                   </div>
@@ -82,18 +95,6 @@ const ProductSection360 = ({
                     setProductState={setProductState}
                     ProductData={ProductData}
                     extraOption={false}
-                  />
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div className="p-3 border bg-light mt-2">
-                  <ReactImageTurntable
-                    images={uniqueImagesArray}
-                    autoRotate={{ disabled: rotationDisabled, interval: 500 }}
-                    onPointerDown={() => setRotationDisabled(true)}
-                    onPointerUp={() => setRotationDisabled(false)}
-                    onKeyDown={handleKeyDown}
-                    onKeyUp={() => setRotationDisabled(false)}
                   />
                 </div>
               </div>

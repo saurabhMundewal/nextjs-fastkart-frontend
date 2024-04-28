@@ -267,8 +267,8 @@ const CartProvider = (props) => {
 
   const storeInCookies = () => {
     setCartTotal(total);
-    var newArray = cartProducts.filter(function (el) {
-      return el.product.product_type == "digital";
+    var newArray = cartProducts?.filter(function (el) {
+      return el?.product?.product_type == "digital";
     });
     Cookies.set("cartData", newArray.length ? newArray[0].product?.product_type : "physical");
   };

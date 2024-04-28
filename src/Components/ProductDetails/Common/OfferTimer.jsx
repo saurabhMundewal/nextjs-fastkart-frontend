@@ -5,21 +5,22 @@ import { useContext } from 'react';
 
 const OfferTimer = ({ productState }) => {
   const [days, hours, minutes, seconds] = useCountdown(productState?.product?.sale_starts_at, productState?.product?.sale_expired_at);
-  
+  console.log(productState, 'productState')
   const { t } = useTranslation( 'common');
   if (days + hours + minutes + seconds <= 0) {
     return null;
   } else {
     return (
-      <div className='time deal-timer product-deal-timer mx-md-0 mx-auto' id='clockdiv-1'>
-        <div className='product-title'>
+      <div className='time deal-timer product-deal-timer mx-md-0 mx-auto' id='clockdiv-1' >
+        <div className='product-title text-center'>
           <h4>{t("HurryUpSalesEndsIn")}</h4>
         </div>
         <ul>
           <li>
+          
             <div className='counter d-block'>
               <div className='days d-block'>
-                <h5>{days}</h5>
+                <h5>{days} </h5>
               </div>
               <h6>{t("Days")}</h6>
             </div>
@@ -49,9 +50,14 @@ const OfferTimer = ({ productState }) => {
             </div>
           </li>
         </ul>
+        
       </div>
+      
     );
   }
 };
 
 export default OfferTimer;
+
+
+

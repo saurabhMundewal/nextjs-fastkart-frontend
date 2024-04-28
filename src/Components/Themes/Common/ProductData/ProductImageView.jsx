@@ -1,18 +1,24 @@
 import React, { useState, useContext } from 'react';
 import ClickablePoint from './ClickablePoint';
-import AddToCartButton from './../../../ProductDetails/Common/AddToCartButton';
 import CartContext from '@/Helper/CartContext';
+import Btn from "@/Elements/Buttons/Btn";
 
-const ProductImageView = ({ imagePath, points}) => {
+const ProductImageView = ({ imagePath, points }) => {
   const { handleIncDec, isLoading } = useContext(CartContext);
-  const [selectedPoint, setSelectedPoint] = useState(null);
+  const [hoveredPoint, setHoveredPoint] = useState(null);
 
-  const handlePointClick = (pointInfo) => {  
-    setSelectedPoint(pointInfo);
+  const handlePointHover = (pointInfo) => {
+    setHoveredPoint(pointInfo);
   };
 
-   const addToCart = () => {
-    handleIncDec(1, productDetails?.product, false, false, false, productDetails);
+  const handlePointLeave = () => {
+    setHoveredPoint(null);
+  };
+
+  const buyNow = () => {
+    if (hoveredPoint) {
+      handleIncDec(1, hoveredPoint?.id[0], false, false, false, hoveredPoint);
+    }
   };
 
   return (
@@ -22,17 +28,25 @@ const ProductImageView = ({ imagePath, points}) => {
         <ClickablePoint
           key={index}
           point={point}
-          onPointClick={handlePointClick}
+          onPointHover={handlePointHover}
+          onPointLeave={handlePointLeave}
         />
       ))}
-      {selectedPoint && (
+      {hoveredPoint && (
         <div className="zoomed-image-container">
-          <img src={selectedPoint.zoomedImage} alt="Zoomed" className="zoomed-image" />
+          <img src={hoveredPoint.zoomedImage} alt="Zoomed" className="img-fluid drs-img" />
           <div className="product-info">
-            {/* <h2>{selectedPoint.info}</h2> */}
-            <p>{selectedPoint.info}</p>
-            <AddToCartButton productDetails={selectedPoint?.id} isLoading={isLoading} addToCart={addToCart} yy extraOption={true} />
-    
+            <h2>{hoveredPoint.name}</h2>
+            <p>{hoveredPoint.info}</p>
+            <div className='dynamic-checkout'>
+            <Btn
+              className="bg-theme btn-md scroll-button btn btn-secondary"
+              onClick={buyNow}
+              disabled={isLoading}
+            >
+              Buy Now
+            </Btn>
+            </div>
           </div>
         </div>
       )}
