@@ -462,7 +462,7 @@ export const featureBlogSliderOption3 = {
     {
       breakpoint: 1684,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 2,
       },
     },
     {
@@ -1516,55 +1516,6 @@ export const featuredBlogs = {
         slidesToShow: 1,
         dots: true,
         fade: true,
-      },
-    },
-  ],
-};
-
-export const mainBannerSlider = {
-  arrows: true,
-  infinite: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  responsive: [
-    {
-      breakpoint: 1745,
-      settings: {
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-      },
-    },
-    {
-      breakpoint: 1540,
-      settings: {
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-      },
-    },
-    {
-      breakpoint: 910,
-      settings: {
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-      },
-    },
-    {
-      breakpoint: 730,
-      settings: {
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-      },
-    },
-    {
-      breakpoint: 410,
-      settings: {
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
       },
     },
   ],
