@@ -3,3 +3,12 @@
         node_modules/
         package-lock.json
 node_modules
+
+# Ignore .eslintrc.json file
+.eslintrc.json
+
+# Ignore the .next/ directory
+.next/
+
+# Ignore package-lock.json file
+package-lock.json
