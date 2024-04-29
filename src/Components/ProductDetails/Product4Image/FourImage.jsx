@@ -2,7 +2,7 @@ import React from "react"
 import { useContext, useState } from 'react';
 import Image from 'next/image';
 import { Col, Row } from 'reactstrap';
-
+import ImageZoom from "react-image-zooom";
 import { useTranslation } from "react-i18next";
 
 const FourImage = ({ productState }) => {
@@ -40,8 +40,9 @@ const FourImage = ({ productState }) => {
                                         </audio>
                                     </div>
                                 ) : image?.original_url &&
-                                <Image src={image?.original_url} alt={image?.name} zoom="200" className='img-fluid' height={130} width={130} />
-                                }
+                                <ImageZoom src={image?.original_url} alt={image?.name} zoom="300" className='img-fluid' height={130} width={130} />
+                
+                                                             }
                             </div>
                             {/* </div> */}
                         </Col>
