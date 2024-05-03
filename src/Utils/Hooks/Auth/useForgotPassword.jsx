@@ -15,7 +15,7 @@ const useHandleForgotPassword = () => {
       if (responseData.status === 200 || responseData.status === 201) {
         ToastNotification('success', responseData.data.message);
         Cookies.set('ue', requestData.email);
-        router.push('/auth/otp-verification');
+        router.push('/auth/otp');
       }
     },
   });
