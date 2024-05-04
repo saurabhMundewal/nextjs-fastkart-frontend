@@ -1,6 +1,6 @@
 import ThemeOptionContext from "@/Helper/ThemeOptionsContext";
 import request from "@/Utils/AxiosUtils";
-import { AttributesAPI } from "@/Utils/AxiosUtils/API";
+import { AttributesAPI, newAttributesAPI } from "@/Utils/AxiosUtils/API";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -43,11 +43,11 @@ const CollectionSidebar = ({
   };
   const { data: attributeAPIData, isLoading } = useQuery(
     [AttributesAPI],
-    () => request({ url: AttributesAPI, params: { status: 1 } }, router),
+    () => request({ url: newAttributesAPI, params: { status: 1 } }, router),
     {
       enabled: true,
       refetchOnWindowFocus: false,
-      select: (res) => res?.data?.data,
+      select: (res) => res?.data,
     }
   );
   const defaultOpenList = Array.from(
@@ -107,21 +107,6 @@ const CollectionSidebar = ({
                     <CollectionCategory filter={filter} setFilter={setFilter} />
                   </AccordionItem>
                 )}
-                <AccordionItem>
-                  <AccordionHeader targetId="2">
-                    <span>{t("Brand")}</span>
-                  </AccordionHeader>
-                  <CollectionBrand filter={filter} setFilter={setFilter} />
-                </AccordionItem>
-                {console.log(attributeAPIData, "attributeAPIData")}
-                {isAttributes ? (
-                  <CollectionAttributes
-                    attributeAPIData={attributeAPIData}
-                    filter={filter}
-                    setFilter={setFilter}
-                  />
-                ) : null}
-
                 <CollectionPrice
                   filter={filter}
                   setFilter={setFilter}
@@ -132,6 +117,19 @@ const CollectionSidebar = ({
                   setFilter={setFilter}
                   attributeAPIData={attributeAPIData}
                 />
+                {/* <AccordionItem>
+                  <AccordionHeader targetId="2">
+                    <span>{t("Brand")}</span>
+                  </AccordionHeader>
+                  <CollectionBrand filter={filter} setFilter={setFilter} />
+                </AccordionItem> */}
+                {isAttributes ? (
+                  <CollectionAttributes
+                    attributeAPIData={attributeAPIData}
+                    filter={filter}
+                    setFilter={setFilter}
+                  />
+                ) : null}
               </UncontrolledAccordion>
             )}
           </div>

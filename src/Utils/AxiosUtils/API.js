@@ -64,6 +64,9 @@ export const CompareAPI = '/compare'
 // Attributes API
 export const AttributesAPI = '/attribute'
 
+export const newAttributesAPI = '/attributes/used-in-products'
+
+
 // Wallet API
 export const WalletConsumerAPI = '/wallet/consumer'
 
