@@ -54,7 +54,7 @@ const CollectionPrice = ({ filter, setFilter, attributeAPIData }) => {
                     </span>
                   ) : (
                     <span className='name'>
-                      ${price.minPrice} - ₹{price.maxPrice}
+                      ₹{price.minPrice} - ₹{price.maxPrice}
                     </span>
                   )}
                 </Label>
