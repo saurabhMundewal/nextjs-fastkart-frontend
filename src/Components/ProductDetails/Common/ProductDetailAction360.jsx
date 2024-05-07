@@ -102,7 +102,7 @@ const ProductDetailAction360 = ({
             {ProductData[0]?.variations?.map((image) => (
               <div
                 key={image.id}
-                className="col-md-2 col-xs-3 mb-2 cursor"
+                className="col-md-2 col-xs-3 col-3 mb-2 cursor"
                 onClick={() => handleImageClick(image)}
               >
                 <span
