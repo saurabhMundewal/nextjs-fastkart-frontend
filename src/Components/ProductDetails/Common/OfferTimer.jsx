@@ -5,7 +5,6 @@ import { useContext } from 'react';
 
 const OfferTimer = ({ productState }) => {
   const [days, hours, minutes, seconds] = useCountdown(productState?.product?.sale_starts_at, productState?.product?.sale_expired_at);
-  console.log(productState, 'productState')
   const { t } = useTranslation( 'common');
   if (days + hours + minutes + seconds <= 0) {
     return null;

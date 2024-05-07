@@ -115,8 +115,7 @@ const CheckoutContent = () => {
                       {access_token &&
                         <div className='checkout-detail-box'>
                           <ul>
-                            {console.log("setFieldValue", cart)}
-                           {cart == 'physical'  &&<DeliveryAddress key='shipping' type='shipping' title={'Shipping'} values={values} updateId={values['consumer_id']} setFieldValue={setFieldValue} address={address} modal={modal} mutate={mutate} isLoading={isLoading} setModal={setModal}
+                             {cart == 'physical'  &&<DeliveryAddress key='shipping' type='shipping' title={'Shipping'} values={values} updateId={values['consumer_id']} setFieldValue={setFieldValue} address={address} modal={modal} mutate={mutate} isLoading={isLoading} setModal={setModal}
                             />}
                             <DeliveryAddress key='billing' type='billing' title={'Billing'} values={values} updateId={values['consumer_id']} setFieldValue={setFieldValue} address={address} modal={modal} mutate={mutate} isLoading={isLoading} setModal={setModal}
                             />

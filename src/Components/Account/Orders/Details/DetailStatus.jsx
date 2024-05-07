@@ -28,7 +28,6 @@ const DetailStatus = ({ data }) => {
   return (
     <div className="mb-4">
       <div className="tracking-panel">
-      {console.log("data==>", data)}
         {data && !data?.sub_orders?.length ? (
           
           <ul>

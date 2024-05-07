@@ -7,39 +7,108 @@ import { RiSearchLine } from "react-icons/ri";
 import { AccordionBody, Input, InputGroup, Label } from "reactstrap";
 
 const CollectionCategory = ({ filter, setFilter }) => {
-  const [brand, attribute, price, rating, sortBy, field, layout, page] = useCustomSearchParams(["brand", "attribute", "price", "rating", "sortBy", "field", "layout", "page"]);
+  const [brand, attribute, price, rating, sortBy, field, layout, page] =
+    useCustomSearchParams([
+      "brand",
+      "attribute",
+      "price",
+      "rating",
+      "sortBy",
+      "field",
+      "layout",
+      "page",
+    ]);
   const { categoryAPIData, filterCategory } = useContext(CategoryContext);
   const [showList, setShowList] = useState(filterCategory("product"));
-  useEffect(() => {
-    const test = categoryAPIData?.data?.filter((elem) => elem.type === "product")
-    setShowList(test)
 
-  }, [categoryAPIData])
+  useEffect(() => {
+    let abc = "";
+    if (window.location.search) {
+      const match = window.location.search?.match(/=(.*)/);
+      const valueAfterEqualSign = match ? match[1] : null;
+      const indexOfAmpersand = valueAfterEqualSign.indexOf("&");
+      if (indexOfAmpersand !== -1) {
+        abc = valueAfterEqualSign.split("&");
+        const test = categoryAPIData?.data?.filter(
+          (elem) => elem.slug === abc[0]
+        );
+        if (test?.length) {
+          setShowList(test);
+        } else {
+          const matchingSubcategories = categoryAPIData?.data?.reduce(
+            (matches, category) => {
+              return matches.concat(
+                category.subcategories.filter(
+                  (subcategory) => subcategory.slug === abc[0]
+                )
+              );
+            },
+            []
+          );
+          setShowList(matchingSubcategories);
+        }
+      } else {
+        abc = valueAfterEqualSign;
+        const test = categoryAPIData?.data?.filter((elem) => elem.slug === abc);
+        if (test?.length) {
+          setShowList(test);
+        } else {
+          const matchingSubcategories = categoryAPIData?.data?.reduce(
+            (matches, category) => {
+              return matches.concat(
+                category.subcategories.filter(
+                  (subcategory) => subcategory.slug === abc
+                )
+              );
+            },
+            []
+          );
+          setShowList(matchingSubcategories);
+        }
+      }
+    } else {
+      setShowList(filterCategory("product"));
+    }
+  }, [window.location.search]);
+
+  useEffect(() => {
+    const test = categoryAPIData?.data?.filter(
+      (elem) => elem.type === "product"
+    );
+    setShowList(test);
+  }, [categoryAPIData]);
 
   const router = useRouter();
   const pathname = usePathname();
   const hasValue = (item, term) => {
     let valueToReturn = false;
-    if (item && item["name"] && item["name"].toLowerCase().includes(term?.toLowerCase())) {
+    if (
+      item &&
+      item["name"] &&
+      item["name"].toLowerCase().includes(term?.toLowerCase())
+    ) {
       valueToReturn = true;
     }
-    item["subcategories"]?.length && item["subcategories"].forEach((child) => {
-      if (hasValue(child, term)) {
-        valueToReturn = true
-      }
-    })
-    return valueToReturn
-  }
+    item["subcategories"]?.length &&
+      item["subcategories"].forEach((child) => {
+        if (hasValue(child, term)) {
+          valueToReturn = true;
+        }
+      });
+    return valueToReturn;
+  };
   const handleChange = (event) => {
     const keyword = event.target.value;
     if (keyword !== "") {
-      const updatedData = []
-      filterCategory("product")?.forEach(item => { hasValue(item, keyword) && updatedData.push(item) })
-      setShowList(updatedData)
+      const updatedData = [];
+      filterCategory("product")?.forEach((item) => {
+        hasValue(item, keyword) && updatedData.push(item);
+      });
+      setShowList(updatedData);
     } else {
-      setShowList(filterCategory("product"))
+      setShowList(filterCategory("product"));
     }
-  }
+  };
   const redirectToCollection = (event, slug) => {
     event.preventDefault();
     let temp = [...filter?.category];
@@ -56,10 +125,29 @@ const CollectionCategory = ({ filter, setFilter }) => {
       };
     });
     if (temp.length > 0) {
-      const queryParams = new URLSearchParams({ ...brand, ...attribute, ...price, ...sortBy, ...field, ...rating, ...layout, ...page, category: temp }).toString();
+      const queryParams = new URLSearchParams({
+        ...brand,
+        ...attribute,
+        ...price,
+        ...sortBy,
+        ...field,
+        ...rating,
+        ...layout,
+        ...page,
+        category: temp,
+      }).toString();
       router.push(`${pathname}?${queryParams}`);
     } else {
-      const queryParams = new URLSearchParams({ ...brand, ...attribute, ...price, ...sortBy, ...field, ...rating, ...layout, ...page }).toString();
+      const queryParams = new URLSearchParams({
+        ...brand,
+        ...attribute,
+        ...price,
+        ...sortBy,
+        ...field,
+        ...rating,
+        ...layout,
+        ...page,
+      }).toString();
       router.push(`${pathname}?${queryParams}`);
     }
   };
@@ -80,7 +168,11 @@ const CollectionCategory = ({ filter, setFilter }) => {
         )}
         {showList?.length > 0 ? (
           <ul className="category-list custom-padding custom-height">
-            <RecursiveCategory redirectToCollection={redirectToCollection} categories={showList} filter={filter} />
+            <RecursiveCategory
+              redirectToCollection={redirectToCollection}
+              categories={showList}
+              filter={filter}
+            />
           </ul>
         ) : (
           <NoDataFound
@@ -116,7 +208,11 @@ const RecursiveCategory = ({ redirectToCollection, categories, filter }) => (
           </div>
           {elem.subcategories.length > 0 ? (
             <ul className="sub-category-list">
-              <RecursiveCategory redirectToCollection={redirectToCollection} categories={elem?.subcategories} filter={filter} />
+              <RecursiveCategory
+                redirectToCollection={redirectToCollection}
+                categories={elem?.subcategories}
+                filter={filter}
+              />
             </ul>
           ) : null}
         </li>

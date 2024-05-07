@@ -30,7 +30,6 @@ const StatusDetail = ({ data }) => {
       <div className="tracking-panel">
         {data && !data?.sub_orders?.length ? (
           <ul>
-            {console.log("data==>", data)}
             {orderStatus?.length > 0
               ? orderStatus?.map((elem, index) => {
                 elem = elem;

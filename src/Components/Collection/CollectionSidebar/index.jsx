@@ -3,7 +3,7 @@ import request from "@/Utils/AxiosUtils";
 import { AttributesAPI, newAttributesAPI } from "@/Utils/AxiosUtils/API";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { RiCloseFill } from "react-icons/ri";
 import {
@@ -41,15 +41,25 @@ const CollectionSidebar = ({
       setOpen(id);
     }
   };
-  const { data: attributeAPIData, isLoading } = useQuery(
+
+ 
+  const { data: attributeAPIData, isLoading, error, refetch } = useQuery(
     [AttributesAPI],
-    () => request({ url: newAttributesAPI, params: { status: 1 } }, router),
+    () => request({ url: newAttributesAPI, params: { category: `${filter?.category}` } }, router),
     {
       enabled: true,
       refetchOnWindowFocus: false,
       select: (res) => res?.data,
     }
   );
+
+  useEffect(() => {
+       let timer = setTimeout(() => {
+      refetch();
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [window.location.search]);
+  
   const defaultOpenList = Array.from(
     { length: attributeAPIData?.length + 3 },
     (_, index) => (index + 1).toString()
@@ -57,6 +67,8 @@ const CollectionSidebar = ({
   if (isLoading) {
     return <AccordionLoader />;
   }
+
+
   return (
     <>
       {collectionMobile && (
@@ -123,13 +135,13 @@ const CollectionSidebar = ({
                   </AccordionHeader>
                   <CollectionBrand filter={filter} setFilter={setFilter} />
                 </AccordionItem> */}
-                {isAttributes ? (
+                {/* {isAttributes ? (
                   <CollectionAttributes
                     attributeAPIData={attributeAPIData}
                     filter={filter}
                     setFilter={setFilter}
                   />
-                ) : null}
+                ) : null} */}
               </UncontrolledAccordion>
             )}
           </div>
