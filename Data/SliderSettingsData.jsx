@@ -1461,6 +1461,14 @@ export const categoryPanelSlider = {
     },
   ],
 };
+export const mainBannerSlider = {
+  dots: true,
+  infinite: true,
+  autoplay: true,
+  autoplaySpeed: 2800,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+}
 export const featuredSlider = {
   slidesToShow: 3,
   slidesToScroll: 1,

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Row, Col } from "reactstrap";
 import {
   categorySliderOption7,
@@ -20,6 +20,7 @@ import TopSeller from "@/Components/Themes/Common/TopSeller";
 import CategoryStyle from "@/Components/Themes/Common/CategoryData/CategoryStyle";
 import ThemeOptionContext from "@/Helper/ThemeOptionsContext";
 import { useSearchParams } from "next/navigation";
+import ProductBox from "@/Components/Common/ProductBox";
 import HomePageYouTube from "@/Components/ProductDetails/Common/HomePageYouTube";
 
 const RightSection = ({ dataAPI }) => {
@@ -27,6 +28,15 @@ const RightSection = ({ dataAPI }) => {
   const [sliderOptions, setSliderOptions] = useState(productSliderOptions5);
   const [section13Product, setSection13Product] = useState([]);
   const { themeOption } = useContext(ThemeOptionContext);
+
+  const topSellingProduct = useMemo(() => {
+    return filteredProduct?.filter((el) => dataAPI?.main_content?.section4_products?.product_ids?.includes(el.id));
+}, [dataAPI?.main_content?.section4_products, filteredProduct]);
+
+const trendingProduct = useMemo(() => {
+  return filteredProduct?.filter((el) => dataAPI?.main_content?.section7_products?.product_ids?.includes(el.id));
+}, [dataAPI?.main_content?.section4_products, filteredProduct]);
+
   const path = useSearchParams();
   const theme = path.get("theme");
 
@@ -163,14 +173,29 @@ const RightSection = ({ dataAPI }) => {
             subTitle={dataAPI?.main_content?.section4_products?.description}
             noCustomClass={true}
           />
-          <ProductData
+          <Row
+            className={"g-sm-4 g-4 product-list-section row-cols-xl-5 row-cols-xxl-5"}
+            xs={2}
+            md={3}
+          >
+            {topSellingProduct?.slice(0, 10)?.map((product, i) => (
+              <Col key={i}>
+               <ProductBox
+                  product={product}
+                  className="boxClass"
+                  style="'horizontal'"
+                />
+              </Col>
+            ))}
+          </Row>
+          {/* <ProductData
             style="horizontal"
             slider={true}
             customSliderOption={sliderOptions}
             products={filteredProduct}
             dataAPI={dataAPI?.main_content?.section4_products}
             classObj={{ productStyle: "product-modern", productBoxClass: "" }}
-          />
+          /> */}
         </>
       )}
 
@@ -239,7 +264,23 @@ const RightSection = ({ dataAPI }) => {
               subTitle={dataAPI?.main_content?.section7_products?.description}
               noCustomClass={true}
             />
-            <ProductData
+           <Row
+            className={"g-sm-4 g-4 product-list-section row-cols-xl-5 row-cols-xxl-5"}
+            xs={2}
+            md={3}
+          >
+            {trendingProduct?.slice(0, 10)?.map((product, i) => (
+              <Col key={i}>
+               <ProductBox
+                  product={product}
+                  className="boxClass"
+                  style="'horizontal'"
+                />
+              </Col>
+            ))}
+          </Row>
+            
+            {/* <ProductData
               style="horizontal"
               slider={true}
               customSliderOption={sliderOptions}
@@ -247,7 +288,7 @@ const RightSection = ({ dataAPI }) => {
               dataAPI={dataAPI?.main_content?.section7_products}
               classObj={{ productStyle: "product-modern", productBoxClass: "" }}
               spaceClass={false}
-            />
+            /> */}
           </div>
         </>
       )}

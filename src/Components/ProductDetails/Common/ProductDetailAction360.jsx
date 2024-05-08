@@ -18,12 +18,33 @@ const ProductDetailAction360 = ({
   const { handleIncDec, isLoading } = useContext(CartContext);
   const { convertCurrency } = useContext(SettingContext);
   const [selectedImage, setSelectedImage] = useState(null); // Initialize selectedImage state
+  const [allVariationImage, setAllVariationImage] = useState(null); // Initialize selectedImage state
   const router = useRouter();
+
+
+  const groupedValues = () => {
+    const groupedVariations = ProductData[0]?.variations.reduce((acc, item) => {
+      const firstAttributeValue = item.attribute_values[0];
+      const { slug } = firstAttributeValue;
+    
+      if (!acc[slug]) {
+        acc[slug] = [];
+      }
+    
+      acc[slug].push(item);
+      return acc;
+    }, {});
+  
+    // Set the state outside the reduce function
+    setAllVariationImage(groupedVariations);
+  };
+
 
   // Automatically select the first product variation when component mounts
   useEffect(() => {
     if (ProductData[0]?.variations.length > 0) {
       setSelectedImage(ProductData[0]?.variations[0]);
+      groupedValues()
     }
   }, [ProductData]);
 
@@ -67,6 +88,21 @@ const ProductDetailAction360 = ({
     }));
   };
 
+ 
+
+
+// const length = Object.keys(groupedValues).length;
+// console.log("Length of the object:", length);
+
+// // Getting the values of the object
+// Object.keys(groupedValues).forEach(key => {
+//   const value = groupedValues[key];
+//   console.log("Values for", key, ":", value);
+// });
+
+// console.log(groupedValues?.length, "????????????");
+
+
   return (
     <>
       <div className="row justify-content-center">
@@ -99,25 +135,27 @@ const ProductDetailAction360 = ({
         )}
         <div className="container mt-4">
           <div className="row justify-content-center mt-2">
-            {ProductData[0]?.variations?.map((image) => (
-              <div
-                key={image.id}
-                className="col-md-2 col-xs-3 col-3 mb-2 cursor"
-                onClick={() => handleImageClick(image)}
-              >
-                <span
-                  className={
-                    image.id === selectedImage?.id ? "activeClass" : ""
-                  }
-                >
-                  <img
-                    src={image?.variation_image?.original_url}
-                    alt={`Image ${image?.id}`}
-                    className="img-fluid image-border"
-                  />
-                </span>
-              </div>
-            ))}
+            {allVariationImage &&
+                  Object.keys(allVariationImage).map(key => {
+                    const value = allVariationImage[key];
+                    console.log("Values for", key, ":", value[0].id, allVariationImage[key]);
+                    return (
+                      <div
+                        key={key}
+                        className="col-md-2 col-xs-3 col-3 mb-2 cursor"
+                        onClick={() => handleImageClick(value[0])}
+                      >
+                        <span className={value[0].id === selectedImage?.id ? "activeClass" : ""}>
+                          <img
+                            src={value[0]?.variation_image?.original_url}
+                            alt={`Image ${value[0]?.id}`}
+                            className="img-fluid image-border"
+                          />
+                        </span>
+                      </div>
+                    );
+                  })
+                }          
           </div>
         </div>
       </div>
