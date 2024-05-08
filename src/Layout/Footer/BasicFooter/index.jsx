@@ -60,7 +60,7 @@ const BasicFooter = () => {
             </div>
           </Col>
           <Col xl={2} sm={3}>
-            <div
+             <div
               className={`footer-title ${footerMenu == "pages" ? "show" : ""}`}
               onClick={() =>
                 setFooterMenu((prev) => (prev !== "pages" ? "pages" : ""))

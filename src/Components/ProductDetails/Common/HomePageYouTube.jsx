@@ -36,7 +36,7 @@ const HomePageYouTube = ( dataAPI,
   
     <div className="container-fluid">
             <div className="row gx-5">
-              <div className="col-sm-6">
+              <div className="col-sm-6 hidden-on-mobile">
                <p className='text-justify'>{dataAPI?.dataAPI?.description}</p> 
               </div>
               <div className="col-sm-6">
