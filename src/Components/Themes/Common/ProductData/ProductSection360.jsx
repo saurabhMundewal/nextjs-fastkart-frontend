@@ -88,7 +88,8 @@ const ProductSection360 = ({
               <div className="col-sm-6">
                 <div className="p-3  text-section">
                   <div className="title-360">
-                    {ProductData[0]?.name?.substring(0, 16)}
+                    {/* {ProductData[0]?.name?.substring(0, 16)} */}
+                    {ProductData[0]?.name}
                   </div>
                   <ProductDetailAction360
                     productState={productState}

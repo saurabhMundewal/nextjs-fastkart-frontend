@@ -24,14 +24,15 @@ const ProductImageView = ({ imagePath, points }) => {
   return (
     <div className="product-image-container">
       <img src={imagePath} alt="Product" className="product-image" />
-      {points.map((point, index) => (
+    
+      {/* {points.map((point, index) => (
         <ClickablePoint
           key={index}
           point={point}
           onPointHover={handlePointHover}
           onPointLeave={handlePointLeave}
         />
-      ))}
+      ))} */}
       {hoveredPoint && (
         <div className="zoomed-image-container">
           <img src={hoveredPoint.zoomedImage} alt="Zoomed" className="img-fluid drs-img" />
