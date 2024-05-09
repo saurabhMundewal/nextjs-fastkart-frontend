@@ -106,8 +106,8 @@ const ProductDetailAction360 = ({
   return (
     <>
       <div className="row justify-content-center">
-        <div className="col-md-12 text-center">
-         {productState?.product?.sale_starts_at ? <OfferTimer productState={productState} />: (<h3>Sale is over</h3>)}
+        <div className="col-md-12 text-center mt-1">
+         {productState?.product?.sale_starts_at ? <OfferTimer productState={productState} />: (null)}
           {/* Render the OfferTimer component */}
         </div>
       </div>
@@ -116,7 +116,7 @@ const ProductDetailAction360 = ({
         {selectedImage && (
           <div className="row mt-1 text-align-center">
             <div className="col">
-              <h3 className="name">{selectedImage?.sku}</h3>
+              <h3 className="name">{selectedImage?.sku?.replace(/\(COPY\)/g, "").trim()}</h3>
               <div className="price-rating">
                 <h3 className="theme-color price">
                   {`Price : ${
@@ -138,7 +138,6 @@ const ProductDetailAction360 = ({
             {allVariationImage &&
                   Object.keys(allVariationImage).map(key => {
                     const value = allVariationImage[key];
-                    console.log("Values for", key, ":", value[0].id, allVariationImage[key]);
                     return (
                       <div
                         key={key}

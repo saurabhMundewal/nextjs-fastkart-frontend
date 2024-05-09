@@ -5,7 +5,7 @@ const MapSection = () => {
     <WrapperComponent classes={{ sectionClass: 'map-section', fluidClass: 'p-0' }} noRowCol={true}>
       <div className='map-box'>
         <iframe
-          src='https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d2994.3803116994895!2d55.29773782339708!3d25.222534631321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m5!1s0x3e5f43496ad9c645%3A0xbde66e5084295162!2sDubai%20-%20United%20Arab%20Emirates!3m2!1d25.2048493!2d55.2707828!4m0!5e1!3m2!1sen!2sin!4v1652217109535!5m2!1sen!2sin'
+          src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3408.0565127041846!2d75.52311137441612!3d31.329812356534255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a5bec1b096ac9%3A0x94f37e8f8cfa562!2sVector%20x!5e0!3m2!1sen!2sin!4v1715146507198!5m2!1sen!2sin'
           style={{ border: 0 }}
           allowFullScreen=''
           loading='lazy'
