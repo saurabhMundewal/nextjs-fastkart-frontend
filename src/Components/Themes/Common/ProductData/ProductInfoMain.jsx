@@ -47,7 +47,8 @@ const ProductInfoMain = (dataAPI) => {
     if (dataAPI?.dataAPI?.product2_id) getSecondProductProduct();
   }, []);
   return (
-    <div className="hidden-on-mobile">
+    <div>
+    {/* <div className="hidden-on-mobile"> */}
       {/* <h1>Product Page</h1> */}
       <ProductImageView
         imagePath={dataAPI?.dataAPI?.main_image_url}
