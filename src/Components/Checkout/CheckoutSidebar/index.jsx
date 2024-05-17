@@ -30,6 +30,7 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
       setErrorCoupon(resDta?.response?.data?.message);
     }
   }, false);
+  
 
   // Submitting data on Checkout
   useEffect(() => {
@@ -74,10 +75,10 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
               <h4>{t('Shipping')}</h4>
               <h4 className='price'>{data?.data?.total?.shipping_total >= 0 ? convertCurrency(data?.data?.total?.shipping_total) : t(`Notcalculatedyet`)}</h4>
             </li>
-            <li>
+            {/* <li>
               <h4>{t('Tax')}</h4>
               <h4 className='price'>{data?.data?.total?.tax_total ? convertCurrency(data?.data?.total?.tax_total) : t(`Notcalculatedyet`)}</h4>
-            </li>
+            </li> */}
 
             <PointWallet values={values} setFieldValue={setFieldValue} data={data} />
 
@@ -85,7 +86,7 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
 
             <li className='list-total'>
               <h4>{t('Total')}</h4>
-              <h4 className='price'>{data?.data?.total?.total ? convertCurrency(data?.data?.total?.total) : t(`Notcalculatedyet`)}</h4>
+              <h4 className='price'>{data?.data?.total?.total ? convertCurrency(data?.data?.total?.total-data?.data?.total?.tax_total) : t(`Notcalculatedyet`)}</h4>
             </li>
           </ul>
         </div>

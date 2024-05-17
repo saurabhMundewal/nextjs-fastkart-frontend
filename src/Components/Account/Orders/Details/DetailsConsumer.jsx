@@ -81,9 +81,9 @@ const DetailsConsumer = ({ data }) => {
                   <li>
                     {t('Shipping')} <span>{data?.shipping_total ? convertCurrency(data?.shipping_total) : 0}</span>
                   </li>
-                  <li>
+                  {/* <li>
                     {t('Tax')} <span>{data?.tax_total ? convertCurrency(data?.tax_total) : 0}</span>
-                  </li>
+                  </li> */}
                   {data?.points_amount != 0 ? (
                     <li className='txt-primary fw-bold'>
                       {t('Points')} <span>{data?.points_amount}</span>
@@ -95,7 +95,7 @@ const DetailsConsumer = ({ data }) => {
                     </li>
                   ) : null}
                   <li>
-                    {t('Total')} <span>{data?.total ? convertCurrency(data?.total) : 0}</span>
+                    {t('Total')} <span>{data?.total ? convertCurrency(data?.total-data?.tax_total) : 0}</span>
                   </li>
                 </ul>
               </div>
