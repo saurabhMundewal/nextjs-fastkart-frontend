@@ -3,7 +3,7 @@ import { OrderAPI } from '@/Utils/AxiosUtils/API';
 import useCreate from '@/Utils/Hooks/useCreate';
 import { useTranslation } from "react-i18next";
 import { useRouter } from 'next/navigation';
-import React, {  useContext, useState } from 'react';
+import React, {  useContext, useState, useEffect } from 'react';
 import SettingContext from '@/Helper/SettingContext';
 import Cookies from 'js-cookie';
 import CartContext from '@/Helper/CartContext';
@@ -17,6 +17,7 @@ const PlaceOrder = ({ values }) => {
   const { cartProducts, setCartProducts } = useContext(CartContext);
   const [getOrderNumber, setGetOrderNumber] = useState('');
   const [errorOrder, setErrorOrder] = useState('');
+ 
  
   const { data, mutate, isLoading } = useCreate(OrderAPI, false, false, true, (resDta) => {
     if (resDta?.status == 200 || resDta?.status == 201) {
@@ -35,6 +36,8 @@ const PlaceOrder = ({ values }) => {
       setErrorOrder(resDta?.data?.message);
     }
   });
+
+
 
   const handleClick = () => {
     if (settingData?.activation?.guest_checkout && !access_token) {

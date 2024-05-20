@@ -28,12 +28,9 @@ const RelatedProduct = ({ productState }) => {
   // Calling Product API when params is there
 
   useEffect(() => {
-    console.log('i am inside')
-    productState?.product?.id &&  refetch(); 
-  
+    productState?.product?.id &&  refetch();   
   }, [productState]);
 
-console.log(relatedProductData, 'relatedProductData')
   return (
     <WrapperComponent classes={{ sectionClass: 'product-list-section section-b-space pt-0' }} noRowCol={true}>
     <CustomHeading title="YouMayAlsoLike" svgUrl={<SportSVG className='icon-width' />} />

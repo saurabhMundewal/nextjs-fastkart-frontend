@@ -55,6 +55,9 @@ export const ClearCart = 'clear/cart'
 // Contact Us API
 export const ContactUsAPI = '/contact-us'
 
+// Tax API
+export const TaxAPI = '/tax'
+
 // Store API
 export const StoreAPI = "/store"
 

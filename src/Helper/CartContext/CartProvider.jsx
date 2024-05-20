@@ -4,9 +4,10 @@ import { ToastNotification } from "@/Utils/CustomFunctions/ToastNotification";
 import useCreate from "@/Utils/Hooks/useCreate";
 import useDelete from "@/Utils/Hooks/useDelete";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import TaxContext from '@/Helper/TaxContext';
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState,useContext } from "react";
 import CartContext from ".";
 
 const CartProvider = (props) => {
@@ -16,6 +17,7 @@ const CartProvider = (props) => {
   const [variationModal, setVariationModal] = useState("");
   const [cartTotal, setCartTotal] = useState(0);
   const [cartToggle, setCartToggle] = useState(false);
+  const { taxState } = useContext(TaxContext);
   // const cookies = useCookies();
   // Getting data from Cart API
   const { data: CartAPIData, isLoading: getCartLoading, refetch } = useQuery([AddToCartAPI], () => request({ url: AddToCartAPI }, router), { enabled: false, refetchOnWindowFocus: false, select: (res) => res?.data });
@@ -52,7 +54,11 @@ const CartProvider = (props) => {
       }
     },
   });
-
+  const getTax = (price, tax) =>{
+    const getTaxVal =  taxState?.find(elem => elem.id === tax)
+      const taxAmount = (Number(price) * Number(getTaxVal?.rate))/100   
+      return taxAmount
+    }
   // Refetching Cart API
   useEffect(() => {
     if (isCookie && !deleteCartLoader) {
@@ -135,7 +141,6 @@ const CartProvider = (props) => {
     if (cart[index]?.variation && cloneVariation?.variation_id && tempProductId == tempVariantProductId && cloneVariation?.variation_id !== cart[index]?.variation_id) {
       return replaceCart(updatedQty, productObj, cloneVariation);
     }
-
     // } else if (index === -1) {
     // Add data when not presence in Cart variable
     if (index === -1) {
@@ -143,6 +148,7 @@ const CartProvider = (props) => {
         id: cartUid?.id ? cartUid?.id : null,
         product: productObj,
         product_id: productObj?.id,
+        tax:  getTax(productObj?.price, productObj?.tax_id),
         variation: cloneVariation?.selectedVariation ? cloneVariation?.selectedVariation : null,
         variation_id: cloneVariation?.selectedVariation?.id ? cloneVariation?.selectedVariation?.id : null,
         quantity: cloneVariation?.selectedVariation?.productQty ? cloneVariation?.selectedVariation?.productQty : updatedQty,
@@ -189,6 +195,7 @@ const CartProvider = (props) => {
     const obj = {
       id: cartUid?.id ? cartUid?.id : null,
       product_id: productObj?.id,
+      tax:  getTax(productObj?.price, productObj?.tax_id),
       variation_id: cloneVariation?.selectedVariation?.id ? cloneVariation?.selectedVariation?.id : cart[index]?.variation_id ? cart[index]?.variation_id : null,
       quantity: qty,
     };
@@ -228,6 +235,7 @@ const CartProvider = (props) => {
       id: cartUid?.id ? cartUid?.id : null,
       product: productObj,
       product_id: productObj?.id,
+      tax:  getTax(productObj?.price, productObj?.tax_id),
       variation: cloneVariation?.selectedVariation ? cloneVariation?.selectedVariation : null,
       variation_id: cloneVariation?.selectedVariation?.id ? cloneVariation?.selectedVariation?.id : null,
       quantity: cloneVariation?.productQty ? cloneVariation?.productQty : updatedQty,
@@ -259,6 +267,7 @@ const CartProvider = (props) => {
         _method: "PUT",
         id: cartUid?.id ? cartUid?.id : null,
         product_id: productObj?.id,
+        tax:  getTax(productObj?.price, productObj?.tax_id),
         variation_id: cloneVariation?.selectedVariation?.id ? cloneVariation?.selectedVariation?.id : null,
         quantity: cloneVariation?.productQty ? cloneVariation?.productQty : updatedQty,
       });
