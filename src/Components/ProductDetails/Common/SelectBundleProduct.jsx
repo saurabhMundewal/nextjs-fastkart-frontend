@@ -3,6 +3,7 @@ import CartContext from '@/Helper/CartContext';
 import ProductIdsContext from '@/Helper/ProductIdsContext';
 import SettingContext from '@/Helper/SettingContext';
 import { AddToCartAPI } from '@/Utils/AxiosUtils/API';
+import TaxContext from '@/Helper/TaxContext';
 import { ToastNotification } from '@/Utils/CustomFunctions/ToastNotification';
 import useCreate from '@/Utils/Hooks/useCreate';
 import { useTranslation } from "react-i18next";
@@ -15,6 +16,7 @@ const SelectBundleProduct = ({ crossSellProduct }) => {
   const { t } = useTranslation( 'common');
   const isLogin = Cookies.get('uat');
   const { cartProducts, setCartProducts } = useContext(CartContext);
+  const { taxState } = useContext(TaxContext);
   const { convertCurrency } = useContext(SettingContext);
   const { filteredProduct } = useContext(ProductIdsContext);
   const [selectedProductIds, setSelectedProductIds] = useState([]);
@@ -30,6 +32,11 @@ const SelectBundleProduct = ({ crossSellProduct }) => {
       setSelectedProductIds((prev) => prev.filter((id) => id !== productId));
     }
   };
+  const getTax = (price, tax) =>{
+    const getTaxVal =  taxState?.find(elem => elem.id === tax)
+      const taxAmount = (Number(price) * Number(getTaxVal?.rate))/100   
+      return taxAmount
+    }
   useEffect(() => {
     const selected = filteredProduct?.filter((elem) => selectedProductIds?.includes(elem?.id));
     setSelectedProducts(selected);
@@ -51,10 +58,10 @@ const SelectBundleProduct = ({ crossSellProduct }) => {
           let temp = { ...cloneCart[index], quantity: cloneCart[index].quantity + qty, sub_total: (cloneCart[index].quantity + qty) * cloneCart[index]?.product?.sale_price };
           setCartProducts((prev) => [...prev.filter((value) => value?.product_id !== cloneCart[index]?.product_id), temp]);
         } else {
-          let params = { product: elem, product_id: elem.id, quantity: qty, sub_total: elem?.sale_price, };
+          let params = { product: elem, product_id: elem.id, quantity: qty, tax:getTax(elem?.sale_price, elem?.tax),  sub_total: elem?.sale_price, };
           setCartProducts((prev) => [...prev, params]);
         }
-        let obj = { product: elem, product_id: elem.id, quantity: qty, sub_total: elem?.sale_price, variation_id: null, };
+        let obj = { product: elem, product_id: elem.id, quantity: qty, tax:getTax(elem?.sale_price, elem?.tax), sub_total: elem?.sale_price, variation_id: null, };
         isLogin && mutate(obj);
       });
     }

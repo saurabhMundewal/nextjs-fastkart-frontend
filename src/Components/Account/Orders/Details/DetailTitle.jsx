@@ -36,11 +36,11 @@ const DetailTitle = ({ params, data }) => {
               </a>
             )}
             {data?.invoice_url && data?.payment_status && data?.payment_status === 'COMPLETED' && (
-              <div onClick={() => InvoiceMutate()} className='btn btn-md fw-bold text-light theme-bg-color ms-auto'>
+               <Link href={data?.invoice_url?.replace('https://apis.vector-x.com/', 'https://apis.vector-x.com/api/')} className='btn btn-md fw-bold text-light theme-bg-color ms-auto'>
                 {t('Invoice')} <RiDownload2Fill className='ms-2' />
-              </div>
+              </Link>
             )}
-          </div>
+            </div>
         </div>
       </div>
       <PaynowModal modal={modal} setModal={setModal} params={params} />

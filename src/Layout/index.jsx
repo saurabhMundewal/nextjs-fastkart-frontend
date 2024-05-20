@@ -6,6 +6,7 @@ import CartProvider from "@/Helper/CartContext/CartProvider";
 import CategoryProvider from "@/Helper/CategoryContext/CategoryProvider";
 import CompareProvider from "@/Helper/CompareContext/CompareProvider";
 import CurrencyProvider from "@/Helper/CurrencyContext/CurrencyProvider";
+import TaxProvider from "@/Helper/TaxContext/TaxProvider";
 import ProductProvider from "@/Helper/ProductContext/ProductProvider";
 import ProductIdsProvider from "@/Helper/ProductIdsContext/ProductIdsProvider";
 import SellerProvider from "@/Helper/SellerContext/SellerProvider";
@@ -41,23 +42,25 @@ const MainLayout = ({ children }) => {
                   <BlogProvider>
                     <ProductIdsProvider>
                       <CompareProvider>
+                      <TaxProvider>
                         <CartProvider>
                           <WishlistProvider>
                             <CategoryProvider>
                               <ProductProvider>
                                 <SettingProvider>
-                                  <CurrencyProvider>
+                                  <CurrencyProvider>                                    
                                     <BrandIdsProvider>
                                     <BlogIdsProvider>
                                       <SubLayout children={children} />
                                     </BlogIdsProvider>
-                                    </BrandIdsProvider>
+                                    </BrandIdsProvider>                                    
                                   </CurrencyProvider>
                                 </SettingProvider>
                               </ProductProvider>
                             </CategoryProvider>
                           </WishlistProvider>
                         </CartProvider>
+                        </TaxProvider>
                       </CompareProvider>
                     </ProductIdsProvider>
                   </BlogProvider>
