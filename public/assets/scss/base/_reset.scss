@@ -409,3 +409,55 @@ input {
     z-index: 1;
   }
 }
+
+/****main banner slider image */
+.slide {
+  position: relative;
+  text-align: center;
+}
+.slider-image{
+  width: 100%;
+  max-height: auto;
+}
+.slide-button-1 {
+  position: absolute;
+  @include mq-max(lg) {
+    bottom: 5%;
+  } 
+  bottom:20%; 
+  left: 15%;
+  transform: translateX(-50%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.slide-button-2 {
+  position: absolute;
+  @include mq-max(lg) {
+    bottom: 5%;
+  } 
+  bottom:20%; 
+  left: 15%;
+  transform: translateX(-50%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.slide-button-3 {
+  position: absolute;
+  @include mq-max(lg) {
+    bottom: 5%;
+  } 
+  bottom:27%; 
+  left: 62%;
+  transform: translateX(-50%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}

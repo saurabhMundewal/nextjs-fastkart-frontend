@@ -128,26 +128,7 @@ header.active .sticky-header{
   height: auto !important;
   width: fit-content;
 }
-/****main banner slider image */
-.slide {
-  position: relative;
-  text-align: center;
-}
-.slider-image{
-  width: 100%;
-  max-height: auto;
-}
-.slide-button {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
+
 /* 360 view product css */
 .text-section {
   background-color: $light-gray;
