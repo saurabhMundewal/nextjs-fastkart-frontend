@@ -85,6 +85,8 @@ export const CheckoutAPI = "/checkout";
 // Orders API
 export const OrderAPI = '/order';
 
+export const CancelOrder = '/cancel/order'
+
 // Tracking API
 export const TrackingAPI = '/trackOrder';
 

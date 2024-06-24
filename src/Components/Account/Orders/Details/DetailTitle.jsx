@@ -3,12 +3,17 @@ import Link from 'next/link';
 import { RiDownload2Fill, RiRefreshLine } from 'react-icons/ri';
 import { useTranslation } from "react-i18next";
 import PaynowModal from './PaynowModal';
-import { OrderInvoiceAPI } from '@/Utils/AxiosUtils/API';
+import { OrderInvoiceAPI, CancelOrder } from '@/Utils/AxiosUtils/API';
 import { useQuery } from '@tanstack/react-query';
 import useCreate from '@/Utils/Hooks/useCreate';
+import request from "@/Utils/AxiosUtils";
+import { useRouter } from 'next/navigation';
+import { ToastNotification } from '@/Utils/CustomFunctions/ToastNotification';
+
 
 const DetailTitle = ({ params, data }) => {
   const [modal, setModal] = useState(false);
+  const router = useRouter();
   const { t } = useTranslation('common');
 
   const { mutate: InvoiceMutate, isLoading } = useCreate(OrderInvoiceAPI, false, false, "Downloaded Successfully", (resDta) => {
@@ -22,6 +27,21 @@ const DetailTitle = ({ params, data }) => {
           window.URL.revokeObjectURL(url);
       }
   }, false, 'blob')
+
+  const handleCancelOrder = async () => {
+    try {
+        const cancelOrderResponse = await request({ url: CancelOrder, data, method: "post" });        
+          ToastNotification("success", 'Order Cancel Succesfully')
+          setTimeout(() => {
+            router.push(`/account/order`);
+          }, 500);
+          
+    } catch (error) {
+      ToastNotification("error", 'Order is not Cancle')
+      //console.error('Error cancelling order:', error.message);
+      // Handle error as needed
+    }
+  };
 
   return (
     <>
@@ -41,6 +61,14 @@ const DetailTitle = ({ params, data }) => {
               </Link>
             )}
             </div>
+            <div className='left-option'>
+            {data?.order_status?.slug === "pending" ||  data?.order_status?.slug === "processing" ?              
+              <button className="btn btn-md fw-bold text-light theme-bg-color btn-sm d-inline-block"
+               href="javascript:void(0)" onClick={() => handleCancelOrder()}>
+                {t('Cancel')}
+              </button>: null}
+            </div>
+            
         </div>
       </div>
       <PaynowModal modal={modal} setModal={setModal} params={params} />

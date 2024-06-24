@@ -445,6 +445,7 @@
   "Wait": "Wait",
   "payment_method": "Payment Method",
   "RefundStatus": "Refund Status",
+  "CancleOrder": "Order Cancel",
   "IsRequired": "Is required",
   "EnterTitle": "Enter Title",
   "EnterAddress": "Enter Address",
