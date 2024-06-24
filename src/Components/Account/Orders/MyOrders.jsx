@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { RiEyeLine } from 'react-icons/ri';
 import { Table } from 'reactstrap';
@@ -26,6 +26,10 @@ const MyOrders = () => {
     refetchOnMount: false,
     select: (res) => res?.data,
   });
+  useEffect(() => {    
+      refetch();
+  }, [data]);
+  
   if (isLoading) return <Loader />;
   return (
     <>
@@ -37,21 +41,21 @@ const MyOrders = () => {
               <Table>
                 <tbody>
                   <tr>
-                    <th>{t('No')}</th>
                     <th>{t('OrderNumber')}</th>
-                    <th>{t('Date')}</th>
+                    {/* <th>{t('Date')}</th> */}
                     <th>{t('Amount')}</th>
                     <th>{t('PaymentStatus')}</th>
                     <th>{t('PaymentMethod')}</th>
+                    <th>{t('Order Status')}</th>
                     <th>{t('Option')}</th>
                   </tr>
                   {data?.data?.map((order, i) => (
                     <tr key={i}>
-                      <td>{i + 1}</td>
+                      {console.log(order, 'order')}
                       <td>
                         <span className='fw-bolder'>#{order.order_number}</span>
                       </td>
-                      <td>{dateFormate(order?.created_at)}</td>
+                      {/* <td>{dateFormate(order?.created_at)}</td> */}
                       <td>{convertCurrency(order?.total)} </td>
                       <td>
                         <div className={`status-${order.payment_status.toLowerCase()}`}>
@@ -59,6 +63,7 @@ const MyOrders = () => {
                         </div>
                       </td>
                       <td>{order.payment_method.toUpperCase()}</td>
+                      <td>{order?.order_status?.name?.toUpperCase()}</td>
                       <td>
                         <Link href={`/account/order/details/${order.order_number}`}>
                           <RiEyeLine />
