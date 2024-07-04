@@ -7,8 +7,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { mainBannerSlider } from '../../../../../Data/SliderSettingsData';
+import sliderImage from '../../../../../public/assets/images/sliderImage.jpg'
 import ProductIdsContext from '@/Helper/ProductIdsContext';
 import Link from 'next/link';
+import Image from "next/image";
+
 
 const ParisBanner = ({ dataAPI }) => {
   const { filteredProduct } = useContext(ProductIdsContext);
@@ -52,6 +55,11 @@ const ParisBanner = ({ dataAPI }) => {
       <img src={dataAPI?.home_banner?.sub_banner_2?.image_url} className="slider-image"/>
     {redirectSlider(dataAPI?.home_banner?.sub_banner_2?.redirect_link)}
     </div>
+    <div className="slide">
+      <img src='https://apis.vector-x.com//storage/20251/sliderImage.jpg' className="slider-image"/>
+      { redirectSlider('/about-us')}
+      {/* <Image src={sliderImage} alt="payment"  className="slider-image"/> */}
+     </div>
        </Slider>
 </div>
 </SkeletonWrapper>
