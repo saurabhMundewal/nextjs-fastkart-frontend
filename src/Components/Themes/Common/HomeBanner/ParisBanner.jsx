@@ -17,20 +17,20 @@ const ParisBanner = ({ dataAPI }) => {
     return 'product/' + product?.slug;
   };
 
-  const redirectSlider = (redirectType) =>{
+  const redirectSlider = (redirectType ,buttonClass) =>{
     if(redirectType?.link_type === 'external_url'){
    return   <Link href={redirectType?.link || '/'} target='_blank'>
-      <button className="slide-button">Shop Now</button>     
+      <button className={`${buttonClass} bg-theme btn-md`}>Shop Now</button>     
     </Link>
     }
     else if(redirectType?.link_type === 'collection'){
      return <Link href={`/collections?category=${redirectType?.link}` || '/'}>
-     <button className="slide-button">Go to Collection</button> 
+     <button className={`${buttonClass} bg-theme btn-md`}>Shop Now</button> 
    </Link>
     }
     else if(redirectType?.link_type === 'product'){
     return  <Link href={`/${redirectToProduct(redirectType?.link)}` || '/'}>
-          <button className="slide-button">Go to Collection</button>  
+          <button className={`${buttonClass} bg-theme btn-md`}>Shop Now</button>  
         </Link>
     }
      }
@@ -42,16 +42,22 @@ const ParisBanner = ({ dataAPI }) => {
   <Slider {...mainBannerSlider}>
     <div className="slide">
        <img src={dataAPI?.home_banner?.main_banner?.image_url}  className="slider-image"/>
-      {redirectSlider(dataAPI?.home_banner?.main_banner?.redirect_link)}
+      {redirectSlider(dataAPI?.home_banner?.main_banner?.redirect_link, 'slide-button-1')}
     </div>
     <div className="slide">
       <img src={dataAPI?.home_banner?.sub_banner_1?.image_url} className="slider-image"/>
-      { redirectSlider(dataAPI?.home_banner?.sub_banner_1?.redirect_link)}
+      { redirectSlider(dataAPI?.home_banner?.sub_banner_1?.redirect_link, 'slide-button-2')}
     </div>
     <div className="slide">
       <img src={dataAPI?.home_banner?.sub_banner_2?.image_url} className="slider-image"/>
-    {redirectSlider(dataAPI?.home_banner?.sub_banner_2?.redirect_link)}
+    {redirectSlider(dataAPI?.home_banner?.sub_banner_2?.redirect_link, 'slide-button-3')}
     </div>
+     <div className="slide">
+      <img src='https://apis.vector-x.com//storage/20251/sliderImage.jpg' className="slider-image"/>
+      <Link href={'/about-us'}>
+     <button className="bg-theme btn-md slide-button-4">Read More</button> 
+   </Link>
+     </div>
        </Slider>
 </div>
 </SkeletonWrapper>
