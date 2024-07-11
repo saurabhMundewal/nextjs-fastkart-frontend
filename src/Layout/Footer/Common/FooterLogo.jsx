@@ -19,7 +19,7 @@ const FooterLogo = () => {
   const path = useSearchParams()
   const theme = path.get('theme')
   useEffect(() => {
-    let logo = themeOption?.logo?.footer_logo;
+    let logo = themeOption?.logo?.header_logo;
     if ((theme == `paris`) || (theme == `osaka`)) {
       logo = { original_url: ParisLogo };
     } else if (theme == `tokyo`) {
@@ -32,10 +32,10 @@ const FooterLogo = () => {
     else if (theme == `cairo`) {
       logo = { original_url: MadridLogo };
     } else {
-      logo = themeOption?.logo?.footer_logo;
+      logo = themeOption?.logo?.header_logo;
     }
     setLogo(logo);
-  }, [theme, themeOption?.logo?.footer_logo]);
+  }, [theme, themeOption?.logo?.header_logo]);
   return (
     <div className='theme-logo'>
       <Link href='/'>

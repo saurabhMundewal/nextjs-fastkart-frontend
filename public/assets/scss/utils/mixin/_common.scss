@@ -108,7 +108,12 @@ header.active .sticky-header{
 .homePage-title {
   margin-bottom: calc(16px + 14*(100vw - 320px) / 1600);
   text-align: center;
+  font-weight: bold;
+  h2{
+    font-weight: bold !important;
+  }
 }
+
 .title-padding-top {
   padding-top: calc(15px + (50 - 30) * ((100vw - 320px) / (1920 - 320)));
 }

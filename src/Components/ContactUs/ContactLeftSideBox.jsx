@@ -8,14 +8,15 @@ import { RiBuildingLine, RiMailLine, RiMapPin2Line, RiPhoneLine, RiSmartphoneLin
 
 const ContactLeftSideBox = () => {
   const { themeOption } = useContext(ThemeOptionContext);
-  const { t } = useTranslation( 'common');
+  const { t } = useTranslation('common');
   return (
     <Col lg={6}>
       <div className='left-sidebar-box'>
         <Row>
           <Col xl={12}>
             <div className='contact-image'>
-              {themeOption?.contact_us?.contact_image_url &&<Image src={themeOption?.contact_us?.contact_image_url || contactUsImage} className='img-fluid' alt='contact' height={461} width={386} />}
+              {themeOption?.contact_us?.imageUrl && <Image src={themeOption?.contact_us?.imageUrl
+                || contactUsImage} className='img-fluid' alt='contact' height={461} width={386} />}
             </div>
           </Col>
           <Col xl={12}>
