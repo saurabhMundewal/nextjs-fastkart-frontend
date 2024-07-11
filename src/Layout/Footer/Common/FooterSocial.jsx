@@ -10,32 +10,32 @@ const FooterSocial = () => {
   return (
     <>
       {themeOption?.footer?.social_media_enable && themeOption?.footer?.facebook && themeOption?.footer?.twitter && themeOption?.footer?.instagram && themeOption?.footer?.pinterest ? (
-        <div className='social-link'>
+        <div className='social-link '>
           <h6 className='text-content-white'>{t('Stayconnected')}:</h6>
           <ul>
             {themeOption?.footer?.facebook && (
-              <li>
+              <li className='display-flex'>
                 <Link href={themeOption?.footer?.facebook} target='_blank'>
                   <RiFacebookFill />
                 </Link>
               </li>
             )}
             {themeOption?.footer?.twitter && (
-              <li>
+              <li className='display-flex'>
                 <Link href={themeOption?.footer?.twitter} target='_blank'>
                   <RiTwitterFill />
                 </Link>
               </li>
             )}
             {themeOption?.footer?.instagram && (
-              <li>
+              <li className='display-flex'>
                 <Link href={themeOption?.footer?.instagram} target='_blank'>
                   <RiInstagramFill />
                 </Link>
               </li>
             )}
             {themeOption?.footer?.pinterest && (
-              <li>
+              <li className='display-flex'>
                 <Link href={themeOption?.footer?.pinterest} target='_blank'>
                   <RiPinterestFill />
                 </Link>

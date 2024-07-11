@@ -84,7 +84,9 @@ const BasicFooter = () => {
               ""
             )}
             <FooterContact />
+            {/* <FooterSocial /> */}
           </Col>
+          
         </Row>
       </div>
       <div className="sub-footer section-small-space">
@@ -101,7 +103,7 @@ const BasicFooter = () => {
             <Image src={paymentImage} alt="payment" height={35} width={302} />
           )}
         </div>
-        <FooterSocial />
+        {/* <FooterSocial /> */}
       </div>
     </div>
   );

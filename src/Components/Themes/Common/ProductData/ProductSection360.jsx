@@ -12,6 +12,7 @@ const ProductSection360 = ({
   customClass,
 }) => {
   const [rotationDisabled, setRotationDisabled] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [productState, setProductState] = useState({
     product: ProductData,
     attributeValues: [],
@@ -76,7 +77,7 @@ const ProductSection360 = ({
               <div className="col-sm-6">
                 <div className="p-3  bg-white mt-2">
                   <ReactImageTurntable
-                    images={uniqueImagesArray}
+                    images={selectedImage ? [selectedImage.variation_image.original_url] : uniqueImagesArray}
                     autoRotate={{ disabled: rotationDisabled, interval: 800 }}
                     onPointerDown={() => setRotationDisabled(true)}
                     onPointerUp={() => setRotationDisabled(true)}
@@ -95,7 +96,9 @@ const ProductSection360 = ({
                     productState={productState}
                     setProductState={setProductState}
                     ProductData={ProductData}
+                    selectedImage={selectedImage}
                     extraOption={false}
+                    setSelectedImage={setSelectedImage}
                   />
                 </div>
               </div>

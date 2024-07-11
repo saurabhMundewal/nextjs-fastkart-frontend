@@ -432,6 +432,9 @@ input {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 10px;
+  @include mq-max(sm) {
+    display: none;
+  }
 }
 .slide-button-2 {
   position: absolute;
@@ -446,13 +449,33 @@ input {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 10px;
+  @include mq-max(sm) {
+    display: none;
+  }
 }
 .slide-button-3 {
   position: absolute;
+  bottom: 15%;
+  left: 65%;
+  transform: translateX(-50%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+
   @include mq-max(lg) {
     bottom: 5%;
   } 
-  bottom:10%; 
+
+  @include mq-max(sm) {
+    display: none;
+  }
+}
+
+.slide-button-4 {
+  position: absolute;
+  bottom: 10%;
   left: 67%;
   transform: translateX(-50%);
   color: white;
@@ -460,4 +483,12 @@ input {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 10px;
+
+  @include mq-max(lg) {
+    bottom: 5%;
+  } 
+
+  @include mq-max(sm) {
+    display: none;
+  }
 }

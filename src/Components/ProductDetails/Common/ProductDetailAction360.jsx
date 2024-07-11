@@ -14,10 +14,12 @@ const ProductDetailAction360 = ({
   setProductState,
   ProductData,
   extraOption,
+  selectedImage,
+  setSelectedImage,
 }) => {
   const { handleIncDec, isLoading } = useContext(CartContext);
   const { convertCurrency } = useContext(SettingContext);
-  const [selectedImage, setSelectedImage] = useState(null); // Initialize selectedImage state
+  //const [selectedImage, setSelectedImage] = useState(null); // Initialize selectedImage state
   const [allVariationImage, setAllVariationImage] = useState(null); // Initialize selectedImage state
   const router = useRouter();
 
@@ -116,7 +118,7 @@ const ProductDetailAction360 = ({
         {selectedImage && (
           <div className="row mt-1 text-align-center">
             <div className="col">
-              <h3 className="name">{selectedImage?.sku?.replace(/\(COPY\)/g, "").trim()}</h3>
+              {/* <h3 className="name">{selectedImage?.sku?.replace(/\(COPY\)/g, "").trim()}</h3> */}
               <div className="price-rating">
                 <h3 className="theme-color price">
                   {`Price : ${

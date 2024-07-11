@@ -1,5 +1,5 @@
 import { Col, Row } from 'reactstrap';
-import { useContext } from 'react';
+import { useContext , useEffect, useState} from 'react';
 import WrapperComponent from '@/Components/Common/WrapperComponent';
 import ImageLink from '@/Components/Themes/Common/ImageLink'
 import SkeletonWrapper from '@/Components/Common/SkeletonWrapper';
@@ -12,6 +12,21 @@ import Link from 'next/link';
 
 const ParisBanner = ({ dataAPI }) => {
   const { filteredProduct } = useContext(ProductIdsContext);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize(); // Check the screen size on component mount
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [])
+
   const redirectToProduct = (productId) => {
     const product = filteredProduct.find((elem) => elem?.id == productId);
     return 'product/' + product?.slug;
@@ -39,26 +54,39 @@ const ParisBanner = ({ dataAPI }) => {
     <>
     <SkeletonWrapper classes={{ colProps: { xl: 12 }, colClass: 'ratio_65', divClass: 'home-contain h-100 skeleton-banner-xl' }}>
     <div className="slider-container">
-  <Slider {...mainBannerSlider}>
-    <div className="slide">
-       <img src={dataAPI?.home_banner?.main_banner?.image_url}  className="slider-image"/>
-      {redirectSlider(dataAPI?.home_banner?.main_banner?.redirect_link, 'slide-button-1')}
-    </div>
-    <div className="slide">
-      <img src={dataAPI?.home_banner?.sub_banner_1?.image_url} className="slider-image"/>
-      { redirectSlider(dataAPI?.home_banner?.sub_banner_1?.redirect_link, 'slide-button-2')}
-    </div>
-    <div className="slide">
-      <img src={dataAPI?.home_banner?.sub_banner_2?.image_url} className="slider-image"/>
-    {redirectSlider(dataAPI?.home_banner?.sub_banner_2?.redirect_link, 'slide-button-3')}
-    </div>
-     <div className="slide">
-      <img src='https://apis.vector-x.com//storage/20251/sliderImage.jpg' className="slider-image"/>
-      <Link href={'/about-us'}>
-     <button className="bg-theme btn-md slide-button-4">Read More</button> 
-   </Link>
-     </div>
-       </Slider>
+    <Slider {...mainBannerSlider}>
+      <div className="slide">
+        <img 
+          src={isMobile ? dataAPI?.home_Mobile_banner?.main_banner?.image_url : dataAPI?.home_banner?.main_banner?.image_url} 
+          className="slider-image" 
+        />
+        {!isMobile && redirectSlider(dataAPI?.home_banner?.main_banner?.redirect_link, 'slide-button-1')}
+      </div>
+      <div className="slide">
+        <img 
+          src={isMobile ? dataAPI?.home_Mobile_banner?.sub_banner_1?.image_url : dataAPI?.home_banner?.sub_banner_1?.image_url} 
+          className="slider-image" 
+        />
+        {!isMobile && redirectSlider(dataAPI?.home_banner?.sub_banner_1?.redirect_link, 'slide-button-2')}
+      </div>
+      <div className="slide">
+        <img 
+          src={isMobile ? dataAPI?.home_Mobile_banner?.sub_banner_2?.image_url : dataAPI?.home_banner?.sub_banner_2?.image_url} 
+          className="slider-image" 
+        />
+        {!isMobile && redirectSlider(dataAPI?.home_banner?.sub_banner_2?.redirect_link, 'slide-button-3')}
+      </div>
+      
+      <div className="slide">
+        <img 
+          src={isMobile ? dataAPI?.home_Mobile_banner?.sub_banner_1?.image_url : 'https://apis.vector-x.com/storage/20251/sliderImage.jpg'} 
+          className="slider-image" 
+        />
+        {/* <Link href={'/about-us'}>
+          <button className="bg-theme btn-md slide-button-4">Read More</button> 
+        </Link> */}
+      </div>
+    </Slider>
 </div>
 </SkeletonWrapper>
 </>
