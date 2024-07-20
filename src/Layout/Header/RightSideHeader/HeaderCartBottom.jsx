@@ -25,6 +25,11 @@ const HeaderCartBottom = ({ modal, setModal, shippingFreeAmt, shippingCal }) => 
     return getTotal(cartProducts);
   }, [cartProducts, modal]);
 
+  const handleCheckoutSidebar =() =>{
+    setCartCanvas(prev => !prev)
+    return   handelCheckout()
+  }
+
   const handelCheckout = () => {
     Cookies.set('CallBackUrl', '/checkout');
   }
@@ -88,7 +93,7 @@ const HeaderCartBottom = ({ modal, setModal, shippingFreeAmt, shippingCal }) => 
             <Link href={`/cart`} className='btn btn-sm cart-button' onClick={() => setCartCanvas('')}>
                 {t('ViewCart')}
               </Link>
-              <Link href={'/checkout'} className='btn btn-sm cart-button theme-bg-color text-white' onClick={() => setCartCanvas(''), handelCheckout}>
+              <Link href={'/checkout'} className='btn btn-sm cart-button theme-bg-color text-white' onClick = {handleCheckoutSidebar} >
                 {t('Checkout')}
               </Link>
             </div>
