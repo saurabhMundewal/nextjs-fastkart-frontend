@@ -51,7 +51,6 @@ const MyOrders = () => {
                   </tr>
                   {data?.data?.map((order, i) => (
                     <tr key={i}>
-                      {console.log(order, 'order')}
                       <td>
                         <span className='fw-bolder'>#{order.order_number}</span>
                       </td>

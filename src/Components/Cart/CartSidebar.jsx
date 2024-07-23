@@ -58,9 +58,9 @@ const CartSidebar = () => {
             </li>
 
             <li>
-              <Btn className='btn btn-light shopping-button text-dark'>
+              <Link href="/collections" className='btn btn-light shopping-button text-dark'>
                 <RiArrowLeftLine /> {t('ReturnToShopping')}
-              </Btn>
+              </Link>
             </li>
           </ul>
         </div>

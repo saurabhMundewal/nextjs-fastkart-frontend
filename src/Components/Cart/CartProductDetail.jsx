@@ -22,30 +22,30 @@ const CartProductDetail = ({ elem }) => {
             </li>
 
             <li className='text-content'>
-              <span className='text-title'>{t('SoldBy')} : </span> {elem?.product?.store?.store_name}
+            <span className='text-title'>{t('SoldBy')} : </span>  Soccer International {/* {elem?.product?.store?.store_name} */}
             </li>
 
-            <li className='text-content'>
+            {/* <li className='text-content'>
               <span className='text-title'>{t('Unit')}</span> : {elem?.variation?.unit ?? elem?.product?.unit}
-            </li>
+            </li> */}
 
-            <li>
+            {/* <li>
               <h5 className='text-content d-inline-block'>{t('Price')} :</h5>
               <span>{convertCurrency(elem?.product?.sale_price)}</span>
               
               <span className='text-content'>{convertCurrency(elem?.variation?.price) ?? convertCurrency(elem?.product?.price)}</span>
-            </li>
+            </li> */}
 
-            <li>
+            {/* <li>
               <h5 className='saving theme-color'>
                 {t('Saving')} : {convertCurrency(Number((elem?.variation?.price ?? elem?.product?.price) - (elem?.variation?.sale_price ?? elem?.product?.sale_price)))}
               </h5>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <h5>
                 {t('Total')}: ${elem?.sub_total}
               </h5>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
