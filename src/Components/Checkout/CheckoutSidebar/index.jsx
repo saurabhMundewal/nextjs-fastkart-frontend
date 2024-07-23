@@ -174,7 +174,6 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
               mutate={mutate}
               isLoading={isLoading}
             />
-
             <li className="list-total">
               <h4>{t("Total")}</h4>
               <h4 className="price">
@@ -189,7 +188,17 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
             </li>
           </ul>
         </div>
-        <PlaceOrder values={values} />
+        <PlaceOrder
+          values={values}
+          cartValueTotal={
+            data?.data?.total?.total
+              ? data?.data?.total?.total +
+                totalShipping() -
+                data?.data?.total?.tax_total
+              : 0
+          }
+          shippingCharge={totalShipping()}
+        />
       </Card>
     </Col>
   );
