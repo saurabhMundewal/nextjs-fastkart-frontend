@@ -22,20 +22,30 @@ import ThemeOptionContext from "@/Helper/ThemeOptionsContext";
 import { useSearchParams } from "next/navigation";
 import ProductBox from "@/Components/Common/ProductBox";
 import HomePageYouTube from "@/Components/ProductDetails/Common/HomePageYouTube";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useMediaQuery } from "react-responsive";
 
 const RightSection = ({ dataAPI }) => {
   const { filteredProduct } = useContext(ProductIdsContext);
   const [sliderOptions, setSliderOptions] = useState(productSliderOptions5);
   const [section13Product, setSection13Product] = useState([]);
   const { themeOption } = useContext(ThemeOptionContext);
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 769px)" });
 
   const topSellingProduct = useMemo(() => {
-    return filteredProduct?.filter((el) => dataAPI?.main_content?.section4_products?.product_ids?.includes(el.id));
-}, [dataAPI?.main_content?.section4_products, filteredProduct]);
+    return filteredProduct?.filter((el) =>
+      dataAPI?.main_content?.section4_products?.product_ids?.includes(el.id)
+    );
+  }, [dataAPI?.main_content?.section4_products, filteredProduct]);
 
-const trendingProduct = useMemo(() => {
-  return filteredProduct?.filter((el) => dataAPI?.main_content?.section7_products?.product_ids?.includes(el.id));
-}, [dataAPI?.main_content?.section4_products, filteredProduct]);
+  const trendingProduct = useMemo(() => {
+    return filteredProduct?.filter((el) =>
+      dataAPI?.main_content?.section7_products?.product_ids?.includes(el.id)
+    );
+  }, [dataAPI?.main_content?.section4_products, filteredProduct]);
 
   const path = useSearchParams();
   const theme = path.get("theme");
@@ -48,6 +58,16 @@ const trendingProduct = useMemo(() => {
       .catch((err) => console.log("err", err));
     setSection13Product(product13Data?.data);
   }
+  const sliderSetting = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1, // Adjust based on your layout needs
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    adaptiveHeight: true,
+  };
 
   // Calling Product API when params is there
   useEffect(() => {
@@ -101,6 +121,7 @@ const trendingProduct = useMemo(() => {
         </>
       )}
       {/* Categories Section   */}
+      {console.log(dataAPI?.main_content?.section2_categories_list, 'dataAPI?.main_content?.section2_categories_list')}
       {dataAPI?.main_content?.section2_categories_list?.status && (
         <>
           <CustomHeading
@@ -174,13 +195,15 @@ const trendingProduct = useMemo(() => {
             noCustomClass={true}
           />
           <Row
-            className={"g-sm-4 g-4 product-list-section row-cols-xl-5 row-cols-xxl-5"}
+            className={
+              "g-sm-4 g-4 product-list-section row-cols-xl-5 row-cols-xxl-5"
+            }
             xs={2}
             md={3}
           >
             {topSellingProduct?.slice(0, 10)?.map((product, i) => (
               <Col key={i}>
-               <ProductBox
+                <ProductBox
                   product={product}
                   className="boxClass"
                   style="'horizontal'"
@@ -224,35 +247,195 @@ const trendingProduct = useMemo(() => {
         </div>
       )}
 
-      {/* Two Column Banner Section  */}
-      {dataAPI?.main_content?.section6_two_column_banners?.status && (
-        <div className="section-b-space">
-          <Row className="g-md-4 g-3">
-            <Col xxl={12} xl={12} md={7}>
-              <ImageLink
-                classes={{
-                  customHoverClass: "banner-contain hover-effect b-left",
-                  customClass: "h-100",
-                }}
-                imgUrl={
-                  dataAPI?.main_content?.section6_two_column_banners?.banner_1
-                    ?.image_url
-                }
-                ratioImage={false}
-                link={
-                  dataAPI?.main_content?.section6_two_column_banners?.banner_1
-                }
-                height={283}
-                width={781}
-              />
-            </Col>
+      {/* this code is mobile menu slider and desktop slider*/}
 
-            {/* <Col xl={12} xxl={4} md={5}>
-                            <ImageLink classes={{ customHoverClass: 'banner-contain hover-effect b-left' }} imgUrl={dataAPI?.main_content?.section6_two_column_banners?.banner_2?.image_url} ratioImage={false} link={dataAPI?.main_content?.section6_two_column_banners?.banner_1} height={283} width={378} />
-                        </Col> */}
-          </Row>
-        </div>
-      )}
+      <div className="section-b-space" style={{ overflowX: "hidden" }}>
+        <Row className="g-md-4 g-3" style={{ overflowX: "hidden" }}>
+          {isDesktop && (
+            <Col
+              xxl={12}
+              xl={12}
+              md={7}
+              style={{ overflowX: "hidden", overflowY: "hidden" }}
+            >
+              <Slider {...sliderSetting}>
+                <div
+                  className="slide"
+                  tabIndex="-1"
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    overflow: "hidden",
+                  }}
+                >
+                  <a
+                    href="https://vector-x.com/product/vector-x-flexible-portable-water-bottle-with-flip-top-lid-for-travel-hiking-camping-500-ml-bottle-pack-of-1-blue-silicone"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="../assets/images/1-Water Bottle.jpg"
+                      className="slider-image"
+                      alt="Water Bottle"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                </div>
+
+                <div
+                  className="slide"
+                  tabIndex="-1"
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    overflow: "hidden",
+                  }}
+                >
+                  <a
+                    href="https://vector-x.com/product/trigger-3d-textured-football-shoes-for-men-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="../assets/images/2-TRIGGER SHOE.jpg"
+                      className="slider-image"
+                      alt="Trigger Shoe"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                </div>
+
+                <div
+                  className="slide"
+                  tabIndex="-1"
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    overflow: "hidden",
+                  }}
+                >
+                  <a
+                    href="https://vector-x.com/product/vector-x-stride-shoe-running-jogging-shoe-casual-gym-occasions-sports-running-shoes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="../assets/images/3-SHOE POSTER.jpg"
+                      className="slider-image"
+                      alt="Stride Shoe"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                </div>
+              </Slider>
+            </Col>
+          )}
+
+          {isMobile && (
+            <Col
+              xxl={12}
+              xl={12}
+              md={7}
+              style={{ overflowX: "hidden", overflowY: "hidden" }}
+            >
+              <Slider {...sliderSetting}>
+                <div
+                  className="slide"
+                  tabIndex="-1"
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    overflow: "hidden",
+                  }}
+                >
+                  <a
+                    href="https://vector-x.com/product/vector-x-stride-shoe-running-jogging-shoe-casual-gym-occasions-sports-running-shoes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="../assets/images/4-SHOE POSTER.JPG"
+                      className="slider-image"
+                      alt="Mobile Banner 1"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                </div>
+
+                <div
+                  className="slide"
+                  tabIndex="-1"
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    overflow: "hidden",
+                  }}
+                >
+                  <a
+                    href="https://vector-x.com/product/vector-x-flexible-portable-water-bottle-with-flip-top-lid-for-travel-hiking-camping-500-ml-bottle-pack-of-1-blue-silicone"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="../assets/images/2-Water Bottle.jpg"
+                      className="slider-image"
+                      alt="Mobile Banner 2"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                </div>
+
+                <div
+                  className="slide"
+                  tabIndex="-1"
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    overflow: "hidden",
+                  }}
+                >
+                  <a
+                    href="https://vector-x.com/product/trigger-3d-textured-football-shoes-for-men-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="../assets/images/3-TRIGGER SHOE.jpg"
+                      className="slider-image"
+                      alt="Mobile Banner 3"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                </div>
+              </Slider>
+            </Col>
+          )}
+        </Row>
+      </div>
 
       {/* Our Best Seller Section  */}
       {dataAPI?.main_content?.section7_products?.status && (
@@ -264,22 +447,24 @@ const trendingProduct = useMemo(() => {
               subTitle={dataAPI?.main_content?.section7_products?.description}
               noCustomClass={true}
             />
-           <Row
-            className={"g-sm-4 g-4 product-list-section row-cols-xl-5 row-cols-xxl-5"}
-            xs={2}
-            md={3}
-          >
-            {trendingProduct?.slice(0, 10)?.map((product, i) => (
-              <Col key={i}>
-               <ProductBox
-                  product={product}
-                  className="boxClass"
-                  style="'horizontal'"
-                />
-              </Col>
-            ))}
-          </Row>
-            
+            <Row
+              className={
+                "g-sm-4 g-4 product-list-section row-cols-xl-5 row-cols-xxl-5"
+              }
+              xs={2}
+              md={3}
+            >
+              {trendingProduct?.slice(0, 10)?.map((product, i) => (
+                <Col key={i}>
+                  <ProductBox
+                    product={product}
+                    className="boxClass"
+                    style="'horizontal'"
+                  />
+                </Col>
+              ))}
+            </Row>
+
             {/* <ProductData
               style="horizontal"
               slider={true}
