@@ -121,8 +121,7 @@ const RightSection = ({ dataAPI }) => {
         </>
       )}
       {/* Categories Section   */}
-      {console.log(dataAPI?.main_content?.section2_categories_list, 'dataAPI?.main_content?.section2_categories_list')}
-      {dataAPI?.main_content?.section2_categories_list?.status && (
+       {dataAPI?.main_content?.section2_categories_list?.status && (
         <>
           <CustomHeading
             title={dataAPI?.main_content?.section2_categories_list?.title}
@@ -366,7 +365,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/4-SHOE POSTER.JPG"
+                      src="../assets/images/4-SHOE_POSTER.JPG"
                       className="slider-image"
                       alt="Mobile Banner 1"
                       style={{
