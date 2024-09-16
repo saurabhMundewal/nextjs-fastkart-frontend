@@ -47,6 +47,10 @@ const RightSection = ({ dataAPI }) => {
     );
   }, [dataAPI?.main_content?.section4_products, filteredProduct]);
 
+  const finalTrandingProduct = isMobile ? trendingProduct?.slice(0, 6) : trendingProduct?.slice(0, 5)
+
+  const finalTopSellingProduct = isMobile ? topSellingProduct?.slice(0, 6) : topSellingProduct?.slice(0, 5)
+
   const path = useSearchParams();
   const theme = path.get("theme");
 
@@ -121,7 +125,7 @@ const RightSection = ({ dataAPI }) => {
         </>
       )}
       {/* Categories Section   */}
-       {dataAPI?.main_content?.section2_categories_list?.status && (
+      {dataAPI?.main_content?.section2_categories_list?.status && (
         <>
           <CustomHeading
             title={dataAPI?.main_content?.section2_categories_list?.title}
@@ -200,7 +204,7 @@ const RightSection = ({ dataAPI }) => {
             xs={2}
             md={3}
           >
-            {topSellingProduct?.slice(0, 10)?.map((product, i) => (
+            {finalTopSellingProduct?.slice(0, 10)?.map((product, i) => (
               <Col key={i}>
                 <ProductBox
                   product={product}
@@ -273,7 +277,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/1-Water Bottle.jpg"
+                      src="../assets/images/desktopslider/1-Water Bottle.jpg"
                       className="slider-image"
                       alt="Water Bottle"
                       style={{
@@ -300,7 +304,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/2-TRIGGER SHOE.jpg"
+                      src="../assets/images/desktopslider/2-TRIGGER SHOE.jpg"
                       className="slider-image"
                       alt="Trigger Shoe"
                       style={{
@@ -327,7 +331,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/3-SHOE POSTER.jpg"
+                      src="../assets/images/desktopslider/3-SHOE POSTER.jpg"
                       className="slider-image"
                       alt="Stride Shoe"
                       style={{
@@ -365,7 +369,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/4-SHOE_POSTER.JPG"
+                      src="../assets/images/mobileslider/4-SHOE POSTER.jpg"
                       className="slider-image"
                       alt="Mobile Banner 1"
                       style={{
@@ -392,7 +396,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/2-Water Bottle.jpg"
+                      src="../assets/images/mobileslider/2-Water Bottle.jpg"
                       className="slider-image"
                       alt="Mobile Banner 2"
                       style={{
@@ -419,7 +423,7 @@ const RightSection = ({ dataAPI }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="../assets/images/3-TRIGGER SHOE.jpg"
+                      src="../assets/images/mobileslider/3-TRIGGER SHOE.jpg"
                       className="slider-image"
                       alt="Mobile Banner 3"
                       style={{
@@ -453,7 +457,7 @@ const RightSection = ({ dataAPI }) => {
               xs={2}
               md={3}
             >
-              {trendingProduct?.slice(0, 10)?.map((product, i) => (
+              {finalTrandingProduct?.slice(0, 10)?.map((product, i) => (
                 <Col key={i}>
                   <ProductBox
                     product={product}
@@ -485,9 +489,50 @@ const RightSection = ({ dataAPI }) => {
           noCustomClass={true}
         />
       )}
+      {/* this code panther images */}
 
-      {dataAPI?.main_content?.section12_youtube?.status && (
-        <ProductInfoMain dataAPI={dataAPI?.main_content?.section12_youtube} />
+      {/* Desktop View */}
+      <a href="https://vector-x.com/product/vector-x-panther-rubberized-thermo-fusion-fifa-basic-certified-football-size-5-pack-of-1-white-red">
+        {!isMobile && dataAPI?.main_content?.section12_youtube?.status && (
+          <ProductInfoMain dataAPI={dataAPI?.main_content?.section12_youtube} />
+        )}
+      </a>
+
+      {/* Mobile View */}
+      {isMobile && (
+        <Col
+          xxl={12}
+          xl={12}
+          md={7}
+          style={{ overflowX: "hidden", overflowY: "hidden" }}
+        >
+          <div
+            className="slide"
+            style={{
+              width: "100%",
+              display: "inline-block",
+              overflow: "hidden",
+              marginBottom: "20px",
+            }}
+          >
+            <a
+              href="https://vector-x.com/product/vector-x-panther-rubberized-thermo-fusion-fifa-basic-certified-football-size-5-pack-of-1-white-red"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../assets/images/mobileslider/PantherFootblal.jpg"
+                className="slider-image"
+                alt="Mobile Banner 1"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                }}
+              />
+            </a>
+          </div>
+        </Col>
       )}
 
       {dataAPI?.main_content?.section12_youtube?.status && (
