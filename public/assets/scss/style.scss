@@ -18,6 +18,12 @@
   --theme-color: #417394;
 }
 
+.association-image-slider {
+  /* Prevent page from shaking */
+  overflow: hidden;
+  width: 100%; /* Set the width to prevent horizontal overflow */
+}
+
 /* utils */
 @import 'utils/variables';
 @import 'utils/mixin/animation';
