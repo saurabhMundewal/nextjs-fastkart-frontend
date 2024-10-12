@@ -72,6 +72,24 @@ const RightSection = ({ dataAPI }) => {
     autoplaySpeed: 3000,
     adaptiveHeight: true,
   };
+  const associationSliderSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 7, // Show 7 images at a time
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    adaptiveHeight: true,
+    cssEase: 'linear',
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 3, // Show 1 image on very small screens
+        },
+      },
+    ],
+  };
 
   // Calling Product API when params is there
   useEffect(() => {
@@ -206,6 +224,7 @@ const RightSection = ({ dataAPI }) => {
           >
             {finalTopSellingProduct?.slice(0, 10)?.map((product, i) => (
               <Col key={i}>
+                {console.log(finalTopSellingProduct, 'finalTopSellingProduct')}
                 <ProductBox
                   product={product}
                   className="boxClass"
@@ -547,6 +566,62 @@ const RightSection = ({ dataAPI }) => {
       {/* {dataAPI?.main_content?.section8_full_width_banner?.status &&
                 <ImageLink classes={{ customHoverClass: 'banner-contain hover-effect b-left', customClass: 'section-b-space' }} imgUrl={dataAPI?.main_content?.section8_full_width_banner?.image_url} ratioImage={false} link={dataAPI?.main_content?.section8_full_width_banner?.redirect_link?.link_type} height={293} width={1183} />
             } */}
+
+
+
+<div>
+        <CustomHeading
+          title="Our Association" // Changed the main title
+          subTitle="" // Removed the subtitle
+          svgUrl={<SportSVG className="icon-width" />}
+        />
+
+        {/* Unique Slider container */}
+
+        <div className="association-image-slider">
+          <Slider {...associationSliderSettings}>
+            {[
+              "../assets/images/ourassociation/1.jpg",
+
+              "../assets/images/ourassociation/2.jpg",
+
+              "../assets/images/ourassociation/3.jpg",
+
+              "../assets/images/ourassociation/4.jpg",
+
+              "../assets/images/ourassociation/5.jpg",
+
+              "../assets/images/ourassociation/6.jpg",
+
+              "../assets/images/ourassociation/7.jpg",
+
+              "../assets/images/ourassociation/8.jpg",
+
+              "../assets/images/ourassociation/9.jpg",
+
+              "../assets/images/ourassociation/10.jpg",
+
+              "../assets/images/ourassociation/11.jpg",
+
+              "../assets/images/ourassociation/12.jpg",
+
+              "../assets/images/ourassociation/13.jpg",
+
+              "../assets/images/ourassociation/14.jpg",
+
+              "../assets/images/ourassociation/15.jpg",
+            ].map((src, index) => (
+              <div key={index}>
+                <img
+                  src={src}
+                  className="association-slider-image" // Changed class name
+                  alt={`Mobile Banner ${index + 1}`}
+                />
+              </div>
+            ))}
+          </Slider>
+        </div>
+      </div>
 
       {/* Blogs Section */}
       {dataAPI?.main_content?.section9_featured_blogs?.status && (

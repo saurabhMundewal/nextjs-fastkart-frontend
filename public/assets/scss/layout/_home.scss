@@ -836,3 +836,136 @@
     }
   }
 }
+
+/**** New Changes by Deviram ***/
+
+/*------------*/
+body {
+  font-family: Poppins;
+}
+header .navbar.navbar-expand-xl .navbar-nav .nav-item > a {
+  color: white;
+  
+  font-weight: 700 !important;
+}
+.homePage-title .h2, .homePage-title h2 {
+  font-weight: 700 !important;
+  font-size: 31px;
+}
+.category-box h5, .category-box .h5 {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  font-weight: 700 !important;
+  font-size: 18px;
+}
+header .delivery-login-box .delivery-detail h6, header .delivery-login-box .delivery-detail .h6 {
+  color: #fff !important;
+  margin-bottom: 3px;
+}
+header .delivery-login-box .delivery-detail h5, header .delivery-login-box .delivery-detail .h5 {
+  font-weight: 500;
+  color: #fff !important;
+}
+.product-section .product-box .price {    
+  color: #000 !important;
+}
+footer .main-footer .footer-title h4, footer .main-footer .footer-title .h4 {    
+  text-transform: uppercase !important;
+}
+.product-section .right-box-contain .name {
+  line-height: 1.3;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 28px;
+  text-align: justify;
+}
+.product-box .price {    
+  color: #000 !important;
+}
+.product-main-1 .slider-image {
+  background-color: #f8f8f8;
+  box-shadow: 0px 0px 5px 0px #bbb;
+}
+.product-section .right-box-contain .price-rating .price {    
+  font-size: 25px !important;
+}
+.product-section .right-box-contain .price-rating .price del{
+font-size: 25px !important;
+}
+.product-section .right-box-contain .price-rating .price span{
+font-size: 25px !important;
+}
+header .navbar.navbar-expand-xl .navbar-nav .nav-item>a {
+  color: #222;
+  padding: none !important;
+  font-weight: 700;
+}
+
+.title-padding-top {
+  padding-top: 15px;
+}
+.section-t-space, section {
+  padding-top: 15px;
+}
+
+.product-section .product-box {
+  padding: 0px;
+  position: relative;
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+}
+@media only screen and (min-width: 676px) {
+  .product-section .product-box .product-image {
+      margin-top: 0px;
+      text-align: center !important;
+      padding: 0 0 0px !important;
+      position: relative !important;
+  min-height: 0px !important;
+      max-height: 360px !important;
+      overflow: hidden !important;
+      object-fit: contain !important;
+      background-size: cover !important;
+      background-position: 50% !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+  }
+}
+
+@media only screen and (min-width: 676px) {
+  .product-section .product-box .product-image img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
+      margin: auto !important;
+      vertical-align: middle !important;
+  }
+}
+.product-box.product-white-bg {   
+  padding: 0px;    
+}
+.product-section .product-box {
+  padding: 0px !important;    
+}
+.position-relative {
+  position: relative !important;
+  padding: 10px !important;
+}
+@media only screen and (min-width: 676px) {
+  .product_img_bg .product-box .product-image img {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      transition: opacity 0.5s, transform 1.25s cubic-bezier(0, 0, 0.44, 1.18) !important;
+  }
+}
+
+@media only screen and (min-width: 676px) {
+  .product-box .product-image {
+      text-align: center !important;
+      padding: 0px !important;
+  min-height: auto !important;
+      max-height: none !important;
+}
+}
