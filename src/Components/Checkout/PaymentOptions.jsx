@@ -19,9 +19,10 @@ const PaymentOptions = ({ values, setFieldValue }) => {
         return ModifyString(paymentMode, "upper");
     }
   };
+ 
   useEffect(() => {
-    setFieldValue("payment_method", "cod");
-    setInitial(0);
+    setFieldValue("payment_method", "razorpay");
+    setInitial(12);
   }, []);
   return (
     <CheckoutCard icon={<RiBankCardLine />}>
@@ -32,7 +33,8 @@ const PaymentOptions = ({ values, setFieldValue }) => {
         <Row className="g-sm-4 g-3">
           {settingData?.payment_methods?.map((elem, i) => (
             <Fragment key={i}>
-              {elem?.status && (
+              
+              {elem?.status && i!==0 && (
                 <Col xxl={6}>
                   <div className="payment-option">
                     <div className="payment-category w-100">

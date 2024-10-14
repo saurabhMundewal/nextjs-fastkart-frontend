@@ -9,31 +9,41 @@ const DeliveryOptions = ({ values, setFieldValue }) => {
   const { t } = useTranslation("common");
   const { settingData } = useContext(SettingContext);
   const [defaultDe, setDefaultDe] = useState(0);
-  useEffect(() => {
-    if (
-      settingData?.delivery?.default?.title &&
-      settingData?.delivery?.default?.description
-    ) {
-      setFieldValue(
-        "delivery_description",
-        `${settingData?.delivery?.same_day?.title} | ${settingData?.delivery?.same_day?.description}`
-      );
+
+    useEffect(() => {
+    
       setDefaultDe(1);
-    }
+  
   }, [settingData]);
 
   useEffect(() => {
-    if (values?.delivery_description === "Express Delivery | Schedule") {
-      setDefaultDe(2);
-    } else {
-      setDefaultDe(1);
+    if (settingData?.delivery?.default?.title && settingData?.delivery?.default?.description) {
+      setFieldValue('delivery_description', `${settingData?.delivery?.default?.title} | ${settingData?.delivery?.default?.description}`);
+      //setFieldValue('delivery_description', `${settingData?.delivery?.same_day?.title} | ${settingData?.delivery?.same_day?.description}`);
     }
-  }, [values?.delivery_description]);
+      // if (
+    //   settingData?.delivery?.default?.title &&
+    //   settingData?.delivery?.default?.description
+    // ) {
+    //   setFieldValue(
+    //     "delivery_description",
+    //     `${settingData?.delivery?.same_day?.title} | ${settingData?.delivery?.same_day?.description}`
+    //   );
+    //   setDefaultDe(1);
+    // }
+  }, [settingData]);
+  // useEffect(() => {
+  //   if (values?.delivery_description === "Express Delivery | Schedule") {
+  //     setDefaultDe(2);
+  //   } else {
+  //     setDefaultDe(1);
+  //   }
+  // }, [values?.delivery_description]);
 
   return (
     <CheckoutCard icon={<RiTruckLine />}>
       <div className="checkout-title">
-        <h4>{t("DeliveryOption")}</h4>
+        <h4>{t("Delivery Option")}</h4>
       </div>
       <div className="checkout-detail">
         <Row className="g-4">

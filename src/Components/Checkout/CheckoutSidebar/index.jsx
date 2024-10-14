@@ -40,39 +40,59 @@ const CheckoutSidebar = ({ values, setFieldValue, errors }) => {
 
   const shippingCalculation = () => {
     if (data?.data?.total?.sub_total <= 299) {
-      if (values?.delivery_description === "Express Delivery | Schedule") {
-        return convertCurrency("148");
-      } else {
-        return convertCurrency("49");
-      }
-    } else {
-      if (values?.delivery_description === "Express Delivery | Schedule") {
-        return convertCurrency("99");
-      } else if (data?.data?.total?.shipping_total >= 0) {
+      return convertCurrency("99");
+    } else if (data?.data?.total?.shipping_total >= 0) {
         return convertCurrency(data?.data?.total?.shipping_total);
       } else {
         return t(`Notcalculatedyet`);
       }
     }
-  };
 
   const totalShipping = () => {
     if (data?.data?.total?.sub_total <= 299) {
-      if (values?.delivery_description === "Express Delivery | Schedule") {
-        return 148;
-      } else {
-        return 49;
-      }
-    } else {
-      if (values?.delivery_description === "Express Delivery | Schedule") {
-        return 99;
-      } else if (data?.data?.total?.shipping_total >= 0) {
+        return 99;    
+    } else if (data?.data?.total?.shipping_total >= 0) {
         return data?.data?.total?.shipping_total;
       } else {
         return 0;
       }
     }
-  };
+
+  // const shippingCalculation = () => {
+  //   if (data?.data?.total?.sub_total <= 299) {
+  //     if (values?.delivery_description === "Express Delivery | Schedule") {
+  //       return convertCurrency("148");
+  //     } else {
+  //       return convertCurrency("49");
+  //     }
+  //   } else {
+  //     if (values?.delivery_description === "Express Delivery | Schedule") {
+  //       return convertCurrency("99");
+  //     } else if (data?.data?.total?.shipping_total >= 0) {
+  //       return convertCurrency(data?.data?.total?.shipping_total);
+  //     } else {
+  //       return t(`Notcalculatedyet`);
+  //     }
+  //   }
+  // };
+
+  // const totalShipping = () => {
+  //   if (data?.data?.total?.sub_total <= 299) {
+  //     if (values?.delivery_description === "Express Delivery | Schedule") {
+  //       return 148;
+  //     } else {
+  //       return 49;
+  //     }
+  //   } else {
+  //     if (values?.delivery_description === "Express Delivery | Schedule") {
+  //       return 99;
+  //     } else if (data?.data?.total?.shipping_total >= 0) {
+  //       return data?.data?.total?.shipping_total;
+  //     } else {
+  //       return 0;
+  //     }
+  //   }
+  // };
 
   // Submitting data on Checkout
   useEffect(() => {

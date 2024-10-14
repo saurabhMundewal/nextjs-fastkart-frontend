@@ -224,7 +224,6 @@ const RightSection = ({ dataAPI }) => {
           >
             {finalTopSellingProduct?.slice(0, 10)?.map((product, i) => (
               <Col key={i}>
-                {console.log(finalTopSellingProduct, 'finalTopSellingProduct')}
                 <ProductBox
                   product={product}
                   className="boxClass"
