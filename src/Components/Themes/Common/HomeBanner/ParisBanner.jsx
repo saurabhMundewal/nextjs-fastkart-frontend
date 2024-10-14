@@ -9,6 +9,7 @@ import Slider from "react-slick";
 import { mainBannerSlider } from "../../../../../Data/SliderSettingsData";
 import ProductIdsContext from "@/Helper/ProductIdsContext";
 import Link from "next/link";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const ParisBanner = ({ dataAPI }) => {
   const { filteredProduct } = useContext(ProductIdsContext);
@@ -26,6 +27,33 @@ const ParisBanner = ({ dataAPI }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const NextArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", right: "10px" }}
+        onClick={onClick}
+      >
+        <FaArrowRight />
+      </div>
+    );
+  };
+  
+  const PrevArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", left: "10px" }}
+        onClick={onClick}
+      >
+        <FaArrowLeft />
+      </div>
+    );
+  };
+
 
   const redirectToProduct = (productId) => {
     const product = filteredProduct.find((elem) => elem?.id == productId);
@@ -74,7 +102,8 @@ const ParisBanner = ({ dataAPI }) => {
         }}
       >
         <div className="slider-container">
-          <Slider {...mainBannerSlider}>
+          <Slider {...mainBannerSlider} prevArrow={<PrevArrow />}
+                  nextArrow={<NextArrow />}>
             <div className="slide">
               <Link href={redirectSliderLink(dataAPI?.home_banner?.sub_banner_1?.redirect_link)} target="_blank">
               <img

@@ -11,6 +11,7 @@ import NoDataFound from "../NoDataFound";
 import Slider from "react-slick";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { Col, Row } from "reactstrap";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const CategoryBox = ({
   dataAPI,
@@ -23,7 +24,31 @@ const CategoryBox = ({
   image = true,
 }) => {
   const [categoryData, setCategoryData] = useState([]);
-
+  const NextArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", right: "10px" }}
+        onClick={onClick}
+      >
+        <FaArrowRight />
+      </div>
+    );
+  };
+  
+  const PrevArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", left: "10px" }}
+        onClick={onClick}
+      >
+        <FaArrowLeft />
+      </div>
+    );
+  };
   async function getCategorydata() {
     try {
       const response = await fetch(
@@ -131,8 +156,9 @@ const CategoryBox = ({
 
       {/* Category Style Horizontal */}
       {style == "'horizontal'" && (
-        <div className="product-wrapper no-arrow category-slider">
-          <Slider {...classes?.sliderOption}>
+        <div className="product-wrapper category-slider">
+          <Slider {...classes?.sliderOption}  prevArrow={<PrevArrow />}
+                  nextArrow={<NextArrow />}>
             {categoryData?.map((category, index) => (
               <div key={index}>
                 {theme == "'paris'" && (
@@ -316,6 +342,8 @@ const CategoryBox = ({
               {categoryData?.length > 0 ? (
                 <Slider
                   {...classes?.sliderOption}
+                  prevArrow={<PrevArrow />}
+                  nextArrow={<NextArrow />}
                   className="slider-9 book-category-slider"
                 >
                   {categoryData?.map((elem, i) => (

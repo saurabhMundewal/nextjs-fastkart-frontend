@@ -26,6 +26,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useMediaQuery } from "react-responsive";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const RightSection = ({ dataAPI }) => {
   const { filteredProduct } = useContext(ProductIdsContext);
@@ -89,6 +90,32 @@ const RightSection = ({ dataAPI }) => {
         },
       },
     ],
+  };
+
+  const NextArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", right: "10px" }}
+        onClick={onClick}
+      >
+        <FaArrowRight />
+      </div>
+    );
+  };
+  
+  const PrevArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", left: "10px" }}
+        onClick={onClick}
+      >
+        <FaArrowLeft />
+      </div>
+    );
   };
 
   // Calling Product API when params is there
@@ -578,7 +605,8 @@ const RightSection = ({ dataAPI }) => {
         {/* Unique Slider container */}
 
         <div className="association-image-slider">
-          <Slider {...associationSliderSettings}>
+          <Slider {...associationSliderSettings} prevArrow={<PrevArrow />}
+                  nextArrow={<NextArrow />}>
             {[
               "../assets/images/ourassociation/1.jpg",
 
