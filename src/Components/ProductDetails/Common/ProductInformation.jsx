@@ -13,7 +13,7 @@ const ProductInformation = ({ productState }) => {
           {productState?.selectedVariation?.short_description ??
             productState?.product?.short_description}
         </div>
-        <ul className="product-info-list">
+        {/* <ul className="product-info-list">
           <li>
             {t("SKU")} :{" "}
             {productState?.selectedVariation?.sku ?? productState?.product?.sku}
@@ -43,7 +43,7 @@ const ProductInformation = ({ productState }) => {
               productState?.product?.quantity}{" "}
             Items Left
           </li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

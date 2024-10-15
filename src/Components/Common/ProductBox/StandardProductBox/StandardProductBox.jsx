@@ -17,6 +17,14 @@ const StandardProductBox = ({ product, isClose, isProductAction = true }) => {
   return (
     <div className="product-box product-white-bg">
       <div className="product-image">
+        {/* <div className="label-flex">
+          {product.discount && (
+            <div className="discount">
+              <label>{product.discount}%</label>
+            </div>
+          )}
+
+          <AddToWishlist productObj={product} customClass="btn p-0 wishlist btn-wishlist notifi-wishlist" />         </div> */}
         <Link href={`/product/${product?.slug}`}>
           {
             <Image
@@ -61,11 +69,18 @@ const StandardProductBox = ({ product, isClose, isProductAction = true }) => {
           {/* <h6 className="price theme-color m-0">
             {convertCurrency(product?.sale_price)}
           </h6> */}
-             <h5 className='sold text-content'>
-                    <span className='theme-color price'>{convertCurrency(product?.sale_price)}</span>
-                    {product?.discount && <del className='ms-1'>{convertCurrency(product?.price)}</del>}
-                </h5>
+          <h5 className="sold text-content">
+            <span className="theme-color price">
+              {convertCurrency(product?.sale_price)}
+            </span>
+            {product?.discount && (
+              <del className="ms-1">{convertCurrency(product?.price)}</del>
+            )}
+           {product.discount ?  <span class="offer-bottom">{product.discount}% Off</span> : null}
+          </h5>
+
           <div className="add-to-cart-btn-2 addtocart_btn mt-2">
+          
             <ProductCartButton productObj={product} iconClass={true} />
           </div>
         </div>

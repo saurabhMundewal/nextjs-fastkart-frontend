@@ -47,7 +47,7 @@ const RightVariationModal = ({ cloneVariation }) => {
         {/* <div className='product-title'>
           <h4>{t('ProductInformation')}</h4>
         </div> */}
-        <div className='product-info'>
+        {/* <div className='product-info'>
           <ul className='product-info-list'>
             <li>
               {t('SKU')} : {cloneVariation?.selectedVariation?.sku ?? cloneVariation?.product?.sku}
@@ -62,7 +62,7 @@ const RightVariationModal = ({ cloneVariation }) => {
               {t('Quantity')} : {cloneVariation?.selectedVariation?.quantity ?? cloneVariation?.product?.quantity} {t('ItemsLeft')}
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </>
   );
