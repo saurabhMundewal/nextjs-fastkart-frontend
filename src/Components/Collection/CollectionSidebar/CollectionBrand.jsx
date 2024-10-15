@@ -1,44 +1,59 @@
-import NoDataFound from '@/Components/Common/NoDataFound';
-import BrandContext from '@/Helper/BrandContext';
-import { useCustomSearchParams } from '@/Utils/Hooks/useCustomSearchParams';
-import { usePathname, useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
-import { RiSearchLine } from 'react-icons/ri';
+import NoDataFound from "@/Components/Common/NoDataFound";
+import BrandContext from "@/Helper/BrandContext";
+import { useCustomSearchParams } from "@/Utils/Hooks/useCustomSearchParams";
+import { usePathname, useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { RiSearchLine } from "react-icons/ri";
 import { AccordionBody, Input, InputGroup, Label } from "reactstrap";
 
 const CollectionBrand = ({ filter, setFilter }) => {
-  const [category, attribute, price, rating, sortBy, field, layout, page] = useCustomSearchParams(['category', 'attribute', 'price', 'rating', 'sortBy', 'field', 'layout', "page"]);
+  const [category, attribute, price, rating, sortBy, field, layout, page] =
+    useCustomSearchParams([
+      "category",
+      "attribute",
+      "price",
+      "rating",
+      "sortBy",
+      "field",
+      "layout",
+      "page",
+    ]);
   const { brandState } = useContext(BrandContext);
   const [showList, setShowList] = useState();
   useEffect(() => {
-    setShowList(brandState)
-  }, [brandState])
+    setShowList(brandState);
+  }, [brandState]);
   const router = useRouter();
   const pathname = usePathname();
   const hasValue = (item, term) => {
     let valueToReturn = false;
-    if (item && item["name"] && item["name"].toLowerCase().includes(term?.toLowerCase())) {
+    if (
+      item &&
+      item["name"] &&
+      item["name"].toLowerCase().includes(term?.toLowerCase())
+    ) {
       valueToReturn = true;
     }
-    return valueToReturn
-  }
+    return valueToReturn;
+  };
   const handleChange = (event) => {
     const keyword = event.target.value;
     if (keyword !== "") {
-      const updatedData = []
-      brandState?.forEach(item => { hasValue(item, keyword) && updatedData.push(item) })
-      setShowList(updatedData)
+      const updatedData = [];
+      brandState?.forEach((item) => {
+        hasValue(item, keyword) && updatedData.push(item);
+      });
+      setShowList(updatedData);
     } else {
-      setShowList(brandState)
+      setShowList(brandState);
     }
-  }
+  };
   const redirectToCollection = (event, slug) => {
     event.preventDefault();
     let temp = [...filter?.brand];
 
     if (!temp.includes(slug)) {
       temp.push(slug);
-
     } else {
       temp = temp.filter((elem) => elem !== slug);
     }
@@ -49,15 +64,34 @@ const CollectionBrand = ({ filter, setFilter }) => {
       };
     });
     if (temp.length > 0) {
-      const queryParams = new URLSearchParams({ ...category, ...attribute, ...price, ...sortBy, ...field, ...rating, ...layout, ...page, brand: temp }).toString();
+      const queryParams = new URLSearchParams({
+        ...category,
+        ...attribute,
+        ...price,
+        ...sortBy,
+        ...field,
+        ...rating,
+        ...layout,
+        ...page,
+        brand: temp,
+      }).toString();
       router.push(`${pathname}?${queryParams}`);
     } else {
-      const queryParams = new URLSearchParams({ ...category, ...attribute, ...price, ...sortBy, ...field, ...rating, ...layout, ...page }).toString();
+      const queryParams = new URLSearchParams({
+        ...category,
+        ...attribute,
+        ...price,
+        ...sortBy,
+        ...field,
+        ...rating,
+        ...layout,
+        ...page,
+      }).toString();
       router.push(`${pathname}?${queryParams}`);
     }
   };
   return (
-    <AccordionBody accordionId='2'>
+    <AccordionBody accordionId="2">
       {brandState.length > 5 && (
         <div className="theme-form search-box">
           <Input
@@ -72,20 +106,31 @@ const CollectionBrand = ({ filter, setFilter }) => {
         </div>
       )}
       {showList?.length > 0 ? (
-        <ul className='category-list custom-padding custom-height'>
+        <ul className="category-list custom-padding custom-height">
           {showList?.map((elem, i) => (
             <li key={i}>
-              <div className='form-check category-list-box'>
-                <Input className='checkbox_animated' type='checkbox' id={elem?.name} checked={filter?.brand?.includes(elem?.slug)} onChange={(e) => redirectToCollection(e, elem?.slug)} />
-                <Label className='form-check-label' htmlFor={elem?.name}>
-                  <span className='name'>{elem?.name}</span>
+              <div className="form-check category-list-box">
+                <Input
+                  className="checkbox_animated"
+                  type="checkbox"
+                  id={elem?.name}
+                  checked={filter?.brand?.includes(elem?.slug)}
+                  onChange={(e) => redirectToCollection(e, elem?.slug)}
+                />
+                <Label className="form-check-label" htmlFor={elem?.name}>
+                  <span className="name">{elem?.name}</span>
                 </Label>
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <NoDataFound data={{ customClass: 'bg-light no-data-added', title: 'No Brand Found' }} />
+        <NoDataFound
+          data={{
+            customClass: "bg-light no-data-added",
+            title: "No Brand Found",
+          }}
+        />
       )}
     </AccordionBody>
   );

@@ -49,6 +49,7 @@ const CollectionProducts = ({ setFilter, filter, grid }) => {
       });
     }
   }, [page]);
+ 
 
   const { data, fetchStatus } = useQuery(
     [page, filter],

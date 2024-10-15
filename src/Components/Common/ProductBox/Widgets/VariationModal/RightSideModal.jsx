@@ -1,49 +1,58 @@
-
-import SettingContext from '@/Helper/SettingContext';
-import TextLimit from '@/Utils/CustomFunctions/TextLimit';
+import SettingContext from "@/Helper/SettingContext";
+import TextLimit from "@/Utils/CustomFunctions/TextLimit";
 import { useTranslation } from "react-i18next";
-import { useContext } from 'react';
-import { Label } from 'reactstrap';
-import ProductRating from '../ProductRating';
-import { ModifyString } from '@/Utils/CustomFunctions/ModifyString';
+import { useContext } from "react";
+import { Label } from "reactstrap";
+import ProductRating from "../ProductRating";
+import { ModifyString } from "@/Utils/CustomFunctions/ModifyString";
 
 const RightVariationModal = ({ cloneVariation }) => {
   const { convertCurrency } = useContext(SettingContext);
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   return (
     <>
-      <h4 className='title-name'>{cloneVariation?.selectedVariation ? cloneVariation?.selectedVariation?.name : cloneVariation?.product?.name}</h4>
-      <h4 className='price'>
-        {cloneVariation?.selectedVariation ? convertCurrency(cloneVariation?.selectedVariation?.sale_price) : convertCurrency(cloneVariation?.product?.sale_price)}
-        {
-          cloneVariation?.selectedVariation ?  cloneVariation?.selectedVariation?.discount : cloneVariation?.product?.discount? (
-            <del>{cloneVariation?.selectedVariation ? convertCurrency(cloneVariation?.selectedVariation?.price) : convertCurrency(cloneVariation?.product?.price)}</del>
-
-          ) : null
-        }
-        {
-          cloneVariation?.selectedVariation ? cloneVariation?.selectedVariation?.discount : cloneVariation?.product?.discount ? (
-            <Label className='modal-label mb-0'>
-              {cloneVariation?.selectedVariation ? cloneVariation?.selectedVariation?.discount : cloneVariation?.product?.discount}% {t('Off')}
-            </Label>
-
-          ) : null
-        }
-
+      <h4 className="title-name">
+        {cloneVariation?.selectedVariation
+          ? cloneVariation?.selectedVariation?.name
+          : cloneVariation?.product?.name}
       </h4>
-      <div className='product-rating'>
+      <h4 className="price">
+        {cloneVariation?.selectedVariation
+          ? convertCurrency(cloneVariation?.selectedVariation?.sale_price)
+          : convertCurrency(cloneVariation?.product?.sale_price)}
+        {cloneVariation?.product?.discount ? (
+          <del>
+            {cloneVariation?.selectedVariation
+              ? convertCurrency(cloneVariation?.selectedVariation?.price)
+              : convertCurrency(cloneVariation?.product?.price)}
+          </del>
+        ) : null}
+        {cloneVariation?.product?.discount ? (
+          <Label className="modal-label mb-0">
+            {cloneVariation?.selectedVariation
+              ? cloneVariation?.selectedVariation?.discount
+              : cloneVariation?.product?.discount}
+            % {t("Off")}
+          </Label>
+        ) : null}
+      </h4>
+      <div className="product-rating">
         <ProductRating totalRating={cloneVariation?.product?.rating_count} />
-        <div className='fs-14 ms-2'>
-          {cloneVariation?.product?.reviews_count} {t('Reviews')}
+        <div className="fs-14 ms-2">
+          {cloneVariation?.product?.reviews_count} {t("Reviews")}
         </div>
       </div>
-      <div className='product-detail'>
-        <h4>{t('ProductDetails')}:</h4>
-        <div className='mt-2'>
-          <TextLimit value={cloneVariation?.product?.short_description} maxLength={200} tag={'p'} />
+      <div className="product-detail">
+        <h4>{t("ProductDetails")}:</h4>
+        <div className="mt-2">
+          <TextLimit
+            value={cloneVariation?.product?.short_description}
+            maxLength={200}
+            tag={"p"}
+          />
         </div>
       </div>
-      <div className='pickup-box'>
+      <div className="pickup-box">
         {/* <div className='product-title'>
           <h4>{t('ProductInformation')}</h4>
         </div> */}
