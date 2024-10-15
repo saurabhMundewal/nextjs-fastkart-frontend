@@ -40,15 +40,51 @@ const CollectionProducts = ({ filter, grid }) => {
   return (
     <>
       {fetchStatus == "fetching" ? (
-        <Row className={`g-sm-4 g-3 product-list-section ${grid == "list" ? "list-style" : grid == 4 ? "row-cols-xl-4" : grid == 5 ? "row-cols-xl-4 row-cols-xxl-5" : ""}`} xs={2} md={3}>
+        <Row
+          className={`g-sm-4 g-3 product-list-section ${
+            grid == "list"
+              ? "list-style"
+              : grid == 4
+              ? "row-cols-xl-4"
+              : grid == 5
+              ? "row-cols-xl-4 row-cols-xxl-5"
+              : ""
+          }`}
+          xs={2}
+          md={3}
+        >
           <ProductSkeletonComponent item={40} />
         </Row>
       ) : data?.data?.length > 0 ? (
-        <div className={`${themeOption?.product?.full_border ? "full_border" : ""} ${themeOption?.product?.image_bg ? "product_img_bg" : ""} ${themeOption?.product?.product_box_bg ? "full_bg" : ""} ${themeOption?.product?.product_box_border ? "product_border" : ""} `}>
-          <Row className={`g-sm-4 g-3 product-list-section ${grid == "list" ? "list-style" : grid == 4 ? "row-cols-xl-4" : grid == 5 ? "row-cols-xl-4 row-cols-xxl-5" : ""}`} xs={2} md={3}>
+        <div
+          className={`${
+            themeOption?.product?.full_border ? "full_border" : ""
+          } ${themeOption?.product?.image_bg ? "product_img_bg" : ""} ${
+            themeOption?.product?.product_box_bg ? "full_bg" : ""
+          } ${
+            themeOption?.product?.product_box_border ? "product_border" : ""
+          } `}
+        >
+          <Row
+            className={`g-sm-4 g-3 product-list-section ${
+              grid == "list"
+                ? "list-style"
+                : grid == 4
+                ? "row-cols-xl-4"
+                : grid == 5
+                ? "row-cols-xl-4 row-cols-xxl-5"
+                : ""
+            }`}
+            xs={2}
+            md={3}
+          >
             {data?.data?.map((product, i) => (
               <Col key={i}>
-                <ProductBox product={product} className="boxClass" style="'horizontal'" />
+                <ProductBox
+                  product={product}
+                  className="boxClass"
+                  style="'horizontal'"
+                />
               </Col>
             ))}
           </Row>
@@ -61,7 +97,8 @@ const CollectionProducts = ({ filter, grid }) => {
             imageUrl: noProduct,
             customClass: "no-data-added collection-no-data",
             title: "Sorry! Couldn't find the products you were looking For!",
-            description: "Please check if you have misspelt something or try searching with other way.",
+            description:
+              "Please check if you have misspelt something or try searching with other way.",
             height: 345,
             width: 345,
           }}
@@ -70,7 +107,12 @@ const CollectionProducts = ({ filter, grid }) => {
 
       {data?.data?.length > 0 && (
         <nav className="custome-pagination">
-          <Pagination current_page={data?.current_page} total={data?.total} per_page={data?.per_page} setPage={setPage} />
+          <Pagination
+            current_page={data?.current_page}
+            total={data?.total}
+            per_page={data?.per_page}
+            setPage={setPage}
+          />
         </nav>
       )}
     </>

@@ -998,3 +998,14 @@ header .navbar.navbar-expand-xl .navbar-nav .nav-item>a {
     display: inline-block;
     margin-bottom: 0px;
 }
+
+.association-image-slider{
+.slick-prev::before,
+.slick-next::before {
+  font-size: 30px !important;
+  color: #fff;
+  background-color: #000;
+  line-height: 0 !important;
+  padding: 10px 2px;
+}
+}

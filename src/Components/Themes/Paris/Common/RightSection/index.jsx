@@ -306,7 +306,7 @@ const RightSection = ({ dataAPI }) => {
               md={7}
               style={{ overflowX: "hidden", overflowY: "hidden" }}
             >
-              <Slider {...sliderSetting}>
+              <Slider {...sliderSetting}  >
                 <div
                   className="slide"
                   tabIndex="-1"
@@ -595,7 +595,7 @@ const RightSection = ({ dataAPI }) => {
 
 
 
-<div>
+<div className="mt-4">
         <CustomHeading
           title="Our Association" // Changed the main title
           subTitle="" // Removed the subtitle
@@ -649,7 +649,7 @@ const RightSection = ({ dataAPI }) => {
           </Slider>
         </div>
       </div>
-
+      <div className="mt-4">
       {/* Blogs Section */}
       {dataAPI?.main_content?.section9_featured_blogs?.status && (
         <>
@@ -659,6 +659,7 @@ const RightSection = ({ dataAPI }) => {
               dataAPI?.main_content?.section9_featured_blogs?.description
             }
             svgUrl={<SportSVG className="icon-width" />}
+            className={'mt-6'}
           />
 
           {dataAPI?.main_content?.section9_featured_blogs?.blog_ids?.length >
@@ -681,6 +682,7 @@ const RightSection = ({ dataAPI }) => {
           )}
         </>
       )}
+      </div>
     </Col>
   );
 };
