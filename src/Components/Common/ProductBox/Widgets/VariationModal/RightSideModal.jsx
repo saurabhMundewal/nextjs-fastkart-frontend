@@ -9,6 +9,7 @@ import { ModifyString } from "@/Utils/CustomFunctions/ModifyString";
 const RightVariationModal = ({ cloneVariation }) => {
   const { convertCurrency } = useContext(SettingContext);
   const { t } = useTranslation("common");
+  
   return (
     <>
       <h4 className="title-name">

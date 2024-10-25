@@ -12,6 +12,7 @@ const LeftSideModal = ({ cloneVariation, productObj }) => {
   const [audioType, setAudioType] = useState(['audio/mpeg', 'audio/wav', 'audio/ogg']);
   const slider1 = useRef();
   const slider2 = useRef();
+  const [variationImages, setVariationImages] = useState([]);
   const { nav1, nav2 } = state;
   useEffect(() => {
     setState({
@@ -19,6 +20,12 @@ const LeftSideModal = ({ cloneVariation, productObj }) => {
       nav2: slider2.current,
     });
   }, []);
+
+  useEffect(() => {
+    const variationImagesDetail = cloneVariation?.selectedVariation?.variation_galleries?.length ? cloneVariation?.selectedVariation?.variation_galleries : cloneVariation?.product?.product_galleries
+    setVariationImages(variationImagesDetail)
+  }, [cloneVariation?.selectedVariation?.id]);
+
   return (
     <Col lg='6'>
       <div className='view-image-slider'>
@@ -45,7 +52,7 @@ const LeftSideModal = ({ cloneVariation, productObj }) => {
       </div>
       <div className="thumbnail-slider">
         <Slider {...viewModalSliderOption} adaptiveHeight={true} slidesToShow={cloneVariation?.product?.product_galleries?.length - 1} asNavFor={nav1} ref={(slider) => (slider2.current = slider)}>
-          {cloneVariation?.product?.product_galleries?.map((item, i) => (
+          {variationImages?.map((item, i) => (
             <div className='slider-image' key={i}>
               <div className="thumbnail-image">
                 {videType.includes(item.mime_type) ? (

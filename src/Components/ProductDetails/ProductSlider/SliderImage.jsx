@@ -11,6 +11,7 @@ const SliderImage = ({ productState }) => {
   const [state, setState] = useState({ nav1: null, nav2: null });
   const [videType, setVideType] = useState(['video/mp4', 'video/webm', 'video/ogg']);
   const [audioType, setAudioType] = useState(['audio/mpeg', 'audio/wav', 'audio/ogg']);
+  const [variationImages, setVariationImages] = useState([]);
   const slider1 = useRef();
   const slider2 = useRef();
   const { nav1, nav2 } = state;
@@ -20,6 +21,12 @@ const SliderImage = ({ productState }) => {
       nav2: slider2.current,
     });
   }, []);
+
+  useEffect(() => {
+    const variationImagesDetail = productState?.selectedVariation?.variation_galleries?.length ? productState?.selectedVariation?.variation_galleries : productState?.product?.product_galleries
+    setVariationImages(variationImagesDetail)
+  }, [productState?.selectedVariation?.id]);
+  
   const { t } = useTranslation('common');
   return (
     <WrapperComponent colProps={{ xs: 12 }}>
@@ -35,7 +42,7 @@ const SliderImage = ({ productState }) => {
             </div>
           ) : null}
           <Slider {...productDetailTopSlider}>
-          {productState?.product?.product_galleries?.map((image, i) => (
+          {variationImages?.map((image, i) => (
                 <div key={i}>
                   <div className='slider-image position-relative'>
                     {videType.includes(image.mime_type) ? (

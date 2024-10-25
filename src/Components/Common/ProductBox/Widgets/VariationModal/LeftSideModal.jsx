@@ -10,20 +10,29 @@ const LeftSideModal = ({ cloneVariation, productObj }) => {
   const [state, setState] = useState({ nav1: null, nav2: null });
   const [videType, setVideType] = useState(['video/mp4', 'video/webm', 'video/ogg']);
   const [audioType, setAudioType] = useState(['audio/mpeg', 'audio/wav', 'audio/ogg']);
+  const [variationImages, setVariationImages] = useState([]);
   const slider1 = useRef();
   const slider2 = useRef();
   const { nav1, nav2 } = state;
+
   useEffect(() => {
     setState({
       nav1: slider1.current,
       nav2: slider2.current,
     });
   }, []);
+
+  useEffect(() => {
+    const variationImagesDetail = cloneVariation?.selectedVariation?.variation_galleries?.length ? cloneVariation?.selectedVariation?.variation_galleries : cloneVariation?.product?.product_galleries
+    setVariationImages(variationImagesDetail)
+  }, [cloneVariation?.selectedVariation?.id, variationImages]);
+
+
   return (
     <Col lg='6'>
       <div className='view-image-slider'>
         <Slider asNavFor={nav2} adaptiveHeight={true} ref={(slider) => (slider1.current = slider)}>
-          {cloneVariation?.product?.product_galleries?.map((item, i) => (
+          {variationImages?.map((item, i) => (
             <div className='slider-image' key={i}>
               {videType.includes(item.mime_type) ? (
                 <video className="w-100 " controls>
@@ -45,7 +54,7 @@ const LeftSideModal = ({ cloneVariation, productObj }) => {
       </div>
       <div className="thumbnail-slider">
         <Slider {...viewModalSliderOption} adaptiveHeight={true} slidesToShow={cloneVariation?.product?.product_galleries?.length - 1} asNavFor={nav1} ref={(slider) => (slider2.current = slider)}>
-          {cloneVariation?.product?.product_galleries?.map((item, i) => (
+          {variationImages?.map((item, i) => (
             <div className='slider-image' key={i}>
               <div className="thumbnail-image position-relative">
                 {videType.includes(item.mime_type) ? (
