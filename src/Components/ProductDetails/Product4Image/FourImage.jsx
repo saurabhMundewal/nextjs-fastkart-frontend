@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Image from "next/image";
 import { Col, Row } from "reactstrap";
 import ImageZoom from "react-image-zooom";
@@ -16,6 +16,14 @@ const FourImage = ({ productState }) => {
     "audio/wav",
     "audio/ogg",
   ]);
+  const [variationImages, setVariationImages] = useState([]);
+
+
+  useEffect(() => {
+    const variationImagesDetail = productState?.selectedVariation?.variation_galleries?.length ? productState?.selectedVariation?.variation_galleries : productState?.product?.product_galleries
+    setVariationImages(variationImagesDetail)
+  }, [productState?.selectedVariation?.id]);
+ 
 
   const { t } = useTranslation("common");
   return (
@@ -31,22 +39,26 @@ const FourImage = ({ productState }) => {
           </div>
         ) : null}
         <Row className="row g-sm-4 g-2">
-            {productState?.selectedVariation?.variation_image?.original_url &&
-        <Col xs={6} className="col-grid-box">
-            {/* <div key={i}> */}
-            <div className="slider-image w-100 h-100 d-flex align-items-center justify-content-center">
-              <ImageZoom
-                src={productState?.selectedVariation?.variation_image?.original_url}
-                alt={productState?.selectedVariation?.name}
-                zoom="300"
-                className="img-fluid"
-                height={130}
-                width={130}
-              />
-            </div>
-            {/* </div> */}
-          </Col>}
-          {productState?.product?.product_galleries?.map((image, i) => (
+          {/* {productState?.selectedVariation?.variation_galleries?.length ?.original_url && (
+            <Col xs={6} className="col-grid-box">
+              {/* <div key={i}> *
+              <div className="slider-image w-100 h-100 d-flex align-items-center justify-content-center">
+                <ImageZoom
+                  src={
+                    productState?.selectedVariation?.variation_image
+                      ?.original_url
+                  }
+                  alt={productState?.selectedVariation?.name}
+                  zoom="300"
+                  className="img-fluid"
+                  height={130}
+                  width={130}
+                />
+              </div>
+              {/* </div> *
+            </Col>
+          )} */}
+          {variationImages?.map((image, i) => (
             <Col xs={6} className="col-grid-box" key={i}>
               {/* <div key={i}> */}
               <div className="slider-image w-100 h-100 d-flex align-items-center justify-content-center">
