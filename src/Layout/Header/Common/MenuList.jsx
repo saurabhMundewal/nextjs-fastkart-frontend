@@ -1,18 +1,23 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import React, { useContext } from 'react';
 import { useTranslation } from "react-i18next";
 import LinkWithImage from '../../../../public/assets/images/menu_banner_3.jpg';
 import LinkBox from './LinkBox';
 import MenuSlider from './MenuSlider';
+import ThemeOptionContext from '@/Helper/ThemeOptionsContext';
 
 
 const MenuList = ({ menu ,isOpen, setIsOpen, level }) => {
   const { t } = useTranslation('common');
+  const { mobileSideBar, setMobileSideBar } = useContext(ThemeOptionContext);
   const router = useRouter()
 
   const redirect = (path) => {
     router.push(`/${path}`)
+   if(mobileSideBar) setMobileSideBar(!mobileSideBar)
   }
+  console.log(mobileSideBar, 'mobileSideBar')
   return (
     <>
       <li className={`${menu.link_type == 'sub' && menu.child ? 'nav-item dropdown' : 'nav-item'} ${menu?.badge_text ? 'new-nav-item' : ''} ${menu.mega_menu ? 'dropdown-mega' : ''}`}>
